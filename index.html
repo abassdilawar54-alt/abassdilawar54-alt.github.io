@@ -4,176 +4,629 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dilawar Abbas | Portfolio</title>
+<title>DILAWAR ABBAS | Future Developer</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --blue: #00d9ff;
+    --purple: #9b5cff;
+    --bg: #050816;
+    --card: rgba(15,25,50,.75);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
-    background: #07111f;
+    background: var(--bg);
     color: white;
-    font-family: Arial, sans-serif;
-    line-height: 1.7;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
-header {
-    text-align: center;
-    padding: 30px 15px;
-}
-
-.banner {
+#particles {
+    position: fixed;
+    inset: 0;
     width: 100%;
-    max-width: 1000px;
-    display: block;
-    margin: auto;
-    border-radius: 18px;
-    border: 2px solid #38bdf8;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
 }
 
 nav {
-    text-align: center;
-    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5,8,22,.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid #18304b;
+    z-index: 100;
+}
+
+.logo {
+    font-family: Orbitron;
+    font-size: 20px;
+    color: var(--blue);
+    text-shadow: 0 0 15px var(--blue);
 }
 
 nav a {
-    color: #38bdf8;
+    color: white;
     text-decoration: none;
-    margin: 10px;
+    margin-left: 23px;
+    font-size: 13px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--blue);
+    text-shadow: 0 0 10px var(--blue);
 }
 
 section {
-    padding: 35px 20px;
+    padding: 110px 8% 65px;
     text-align: center;
 }
 
-h1, h2 {
-    color: #38bdf8;
-    margin-bottom: 15px;
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-ring {
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(135deg,var(--blue),var(--purple),var(--blue));
+    box-shadow: 0 0 30px var(--blue);
+    animation: rotate 5s linear infinite;
+    margin-bottom: 28px;
+}
+
+.profile-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #101a30;
+}
+
+@keyframes rotate {
+    to { filter: hue-rotate(360deg); }
+}
+
+.hero h1 {
+    font-family: Orbitron;
+    font-size: clamp(30px,6vw,65px);
+    background: linear-gradient(90deg,var(--blue),white,var(--purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+}
+
+.hero h2 {
+    font-size: 20px;
+    color: var(--blue);
+    min-height: 35px;
+}
+
+.hero p {
+    color: #aabbd0;
+    margin: 18px auto;
+    max-width: 650px;
+}
+
+.status {
+    color: #5cffaa;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.status span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #5cffaa;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #5cffaa;
+    margin-right: 7px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 26px;
+    margin: 10px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(90deg,#0077ff,#963cff);
+    transition: .3s;
+    box-shadow: 0 0 15px #0077ff55;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px var(--blue);
+}
+
+.heading {
+    font-family: Orbitron;
+    color: var(--blue);
+    font-size: clamp(23px,4vw,34px);
+    margin-bottom: 35px;
+    text-shadow: 0 0 15px #00d9ff55;
 }
 
 .card {
-    background: #12243b;
-    border: 1px solid #234365;
-    border-radius: 15px;
-    padding: 25px;
-    margin: 18px auto;
-    max-width: 700px;
+    background: var(--card);
+    border: 1px solid #23466b;
+    border-radius: 18px;
+    padding: 28px;
+    max-width: 750px;
+    margin: 20px auto;
+    transition: .4s;
+    backdrop-filter: blur(10px);
 }
 
-p {
-    color: #d1d5db;
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--blue);
+    box-shadow: 0 0 25px #00d9ff30;
 }
 
-.button {
-    display: inline-block;
-    background: #0284c7;
-    color: white;
-    padding: 12px 22px;
-    margin: 10px;
-    border-radius: 8px;
-    text-decoration: none;
+.card h3 {
+    color: var(--blue);
+    margin-bottom: 12px;
 }
 
-.button:hover {
-    background: #0369a1;
+.card p {
+    color: #b9c8db;
+    line-height: 1.8;
+}
+
+.skills {
+    max-width: 650px;
+    margin: auto;
+}
+
+.skill {
+    margin: 22px 0;
+    text-align: left;
+}
+
+.skill-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #dceaff;
+}
+
+.bar {
+    height: 9px;
+    border-radius: 20px;
+    background: #18253e;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    border-radius: 20px;
+    background: linear-gradient(90deg,var(--blue),var(--purple));
+    box-shadow: 0 0 12px var(--blue);
+    transition: width 1.7s ease;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.project {
+    background: var(--card);
+    padding: 30px 22px;
+    border: 1px solid #23466b;
+    border-radius: 18px;
+    transition: .4s;
+}
+
+.project:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--blue);
+    box-shadow: 0 0 30px #00d9ff35;
+}
+
+.project .emoji {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.project h3 {
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.project p {
+    color: #aabbd0;
+    font-size: 14px;
+}
+
+.tags {
+    margin-top: 18px;
+    color: #bb9cff;
+    font-size: 12px;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 footer {
+    border-top: 1px solid #18304b;
     text-align: center;
     padding: 30px;
-    color: #94a3b8;
+    color: #8da2bb;
+    font-size: 13px;
 }
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: .8s;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#clock {
+    color: var(--blue);
+    font-family: Orbitron;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+@media(max-width:650px) {
+    nav {
+        padding: 15px 4%;
+    }
+
+    nav a {
+        margin-left: 9px;
+        font-size: 10px;
+    }
+
+    .logo {
+        font-size: 14px;
+    }
+
+    section {
+        padding: 95px 5% 45px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<header>
-    <img src="banner.png" alt="Dilawar Abbas Portfolio Banner" class="banner">
-    <h1>DILAWAR ABBAS</h1>
-    <p>Computer Science Engineering Student | Kashmir</p>
-    <p>Code • Build • Innovate</p>
-</header>
+<canvas id="particles"></canvas>
 
 <nav>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+    <div class="logo">DILAWAR.DEV</div>
+    <div>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </div>
 </nav>
 
-<section id="about">
+<section class="hero" id="home">
+
+    <div class="profile-ring">
+        <img src="banner.png" alt="Dilawar Abbas">
+    </div>
+
+    <h1>DILAWAR ABBAS</h1>
+
+    <h2><span id="typing"></span></h2>
+
+    <p>
+        Computer Science Engineering Student from Kashmir.
+        Exploring the world of programming, artificial intelligence
+        and futuristic technology.
+    </p>
+
+    <div class="status">
+        <span></span> BUILDING MY FUTURE WITH CODE
+    </div>
+
+    <div>
+        <a href="#projects" class="btn">Explore Projects ↗</a>
+        <a href="#contact" class="btn">Connect With Me</a>
+    </div>
+
+    <div id="clock"></div>
+
+</section>
+
+<section id="about" class="reveal">
+    <h2 class="heading">ABOUT ME</h2>
+
     <div class="card">
-        <h2>About Me</h2>
+        <h3>Who Am I?</h3>
         <p>
         Hello! I am Dilawar Abbas from Kashmir.
         I am pursuing B.Tech in Computer Science Engineering.
-        I am passionate about computers, programming,
-        artificial intelligence and technology.
-        My goal is to become a successful software engineer.
+
+        I love exploring Python, C programming, web development
+        and artificial intelligence.
+
+        My mission is to learn, create useful technology
+        and become a successful software engineer.
         </p>
     </div>
 </section>
 
-<section id="skills">
-    <h2>My Technical Skills</h2>
-    <div class="card">
-        <p>Python | C Programming | HTML | CSS</p>
-        <p>Artificial Intelligence | Web Development</p>
+<section id="skills" class="reveal">
+    <h2 class="heading">MY TECHNICAL SKILLS</h2>
+
+    <div class="skills">
+
+        <div class="skill">
+            <div class="skill-title"><span>Python</span><span>Learning</span></div>
+            <div class="bar"><div class="progress" data-width="65%"></div></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-title"><span>C Programming</span><span>Learning</span></div>
+            <div class="bar"><div class="progress" data-width="55%"></div></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-title"><span>HTML</span><span>Learning</span></div>
+            <div class="bar"><div class="progress" data-width="70%"></div></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-title"><span>CSS</span><span>Learning</span></div>
+            <div class="bar"><div class="progress" data-width="55%"></div></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-title"><span>Artificial Intelligence</span><span>Exploring</span></div>
+            <div class="bar"><div class="progress" data-width="35%"></div></div>
+        </div>
+
     </div>
 </section>
 
-<section id="projects">
-    <h2>My Projects</h2>
+<section id="projects" class="reveal">
+    <h2 class="heading">MY PROJECTS</h2>
 
-    <div class="card">
-        <h2>🤖 DILAWAR AI</h2>
-        <p>
-        My personal AI chatbot project,
-        exploring artificial intelligence
-        and conversational technology.
-        </p>
-    </div>
+    <div class="project-grid">
 
-    <div class="card">
-        <h2>⚡ DILAWAR JARVIS</h2>
-        <p>
-        My Python-based virtual assistant project,
-        inspired by intelligent voice assistants.
-        </p>
-    </div>
+        <div class="project">
+            <div class="emoji">🤖</div>
+            <h3>DILAWAR AI</h3>
+            <p>
+                A personal AI chatbot project exploring
+                artificial intelligence and conversational technology.
+            </p>
+            <div class="tags">PYTHON • AI</div>
+        </div>
 
-    <div class="card">
-        <h2>🔍 Smart Profile Finder</h2>
-        <p>
-        A profile discovery project featuring
-        profile submission and approval features.
-        </p>
+        <div class="project">
+            <div class="emoji">⚡</div>
+            <h3>DILAWAR JARVIS</h3>
+            <p>
+                A Python-based virtual assistant project
+                inspired by intelligent voice assistants.
+            </p>
+            <div class="tags">PYTHON • AUTOMATION</div>
+        </div>
+
+        <div class="project">
+            <div class="emoji">🔍</div>
+            <h3>SMART PROFILE FINDER</h3>
+            <p>
+                A profile discovery application with
+                profile submission and approval features.
+            </p>
+            <div class="tags">PYTHON • FLASK • WEB</div>
+        </div>
+
     </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="reveal">
+    <h2 class="heading">LET'S CONNECT</h2>
+
     <div class="card">
-        <h2>Connect With Me</h2>
+        <h3>Find Me Online</h3>
+        <p>
+            Interested in technology, programming
+            and building something amazing?
+            Connect with me.
+        </p>
 
-        <a class="button"
-        href="https://github.com/abassdilawar54-alt"
-        target="_blank">GitHub</a>
+        <div class="contact-links">
+            <a class="btn"
+               href="https://github.com/abassdilawar54-alt"
+               target="_blank" rel="noopener">GitHub ↗</a>
 
-        <a class="button"
-        href="https://www.instagram.com/dilawar__abass/"
-        target="_blank">Instagram</a>
+            <a class="btn"
+               href="https://www.instagram.com/dilawar__abass/"
+               target="_blank" rel="noopener">Instagram ↗</a>
+        </div>
     </div>
 </section>
 
 <footer>
-    © 2026 Dilawar Abbas | Personal Portfolio
+    <p>© 2026 DILAWAR ABBAS | DESIGNED WITH CODE</p>
+    <p>FROM KASHMIR WITH PASSION 💙</p>
 </footer>
+
+<script>
+
+// TYPING ANIMATION
+
+const words = [
+    "Computer Science Student",
+    "Python Developer",
+    "Future Software Engineer",
+    "Technology Explorer"
+];
+
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeEffect() {
+    const current = words[wordIndex];
+    document.getElementById("typing").textContent =
+        current.substring(0, charIndex);
+
+    if (!deleting && charIndex < current.length) {
+        charIndex++;
+        setTimeout(typeEffect, 90);
+    } else if (deleting && charIndex > 0) {
+        charIndex--;
+        setTimeout(typeEffect, 45);
+    } else {
+        deleting = !deleting;
+        if (!deleting) {
+            wordIndex = (wordIndex + 1) % words.length;
+        }
+        setTimeout(typeEffect, 700);
+    }
+}
+
+typeEffect();
+
+
+// LIVE CLOCK
+
+function updateClock() {
+    document.getElementById("clock").textContent =
+        "LOCAL TIME: " +
+        new Date().toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata"
+        });
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+// SCROLL ANIMATIONS
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, {threshold: 0.12});
+
+document.querySelectorAll(".reveal").forEach(element => {
+    observer.observe(element);
+});
+
+
+// ANIMATED SKILL BARS
+
+const skillObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.width =
+                entry.target.dataset.width;
+            skillObserver.unobserve(entry.target);
+        }
+    });
+}, {threshold: 0.3});
+
+document.querySelectorAll(".progress").forEach(bar => {
+    skillObserver.observe(bar);
+});
+
+
+// MOVING PARTICLES
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    particles = [];
+
+    for (let i = 0; i < 85; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5
+        });
+    }
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "#00d9ff";
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "#00d9ff";
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+animateParticles();
+
+</script>
 
 </body>
 </html>
-
