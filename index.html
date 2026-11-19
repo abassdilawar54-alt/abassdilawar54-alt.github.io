@@ -4,628 +4,586 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DILAWAR ABBAS | Future Developer</title>
+<title>Dilawar Abass | Developer</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-    --blue: #00d9ff;
-    --purple: #9b5cff;
-    --bg: #050816;
-    --card: rgba(15,25,50,.75);
+  --bg: #070b14;
+  --card: #101827;
+  --accent: #00e5ff;
+  --purple: #a78bfa;
+  --white: #f4f7ff;
+  --muted: #9aa9bf;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
-    background: var(--bg);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
-#particles {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(#17263b 1px, transparent 1px),
+    linear-gradient(90deg, #17263b 1px, transparent 1px);
+  background-size: 55px 55px;
+  opacity: .13;
+  pointer-events: none;
+  z-index: -1;
 }
+
+a { text-decoration: none; color: inherit; }
 
 nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 18px 8%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(5,8,22,.85);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid #18304b;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 9%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(7,11,20,.88);
+  backdrop-filter: blur(15px);
+  z-index: 100;
+  border-bottom: 1px solid #ffffff10;
 }
 
 .logo {
-    font-family: Orbitron;
-    font-size: 20px;
-    color: var(--blue);
-    text-shadow: 0 0 15px var(--blue);
+  font-size: 23px;
+  font-weight: 900;
+  font-family: 'Space Grotesk';
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 23px;
-    font-size: 13px;
-    transition: .3s;
+.logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
 }
 
-nav a:hover {
-    color: var(--blue);
-    text-shadow: 0 0 10px var(--blue);
+.nav-links a {
+  color: var(--muted);
+  font-size: 13px;
+  transition: .3s;
 }
 
-section {
-    padding: 110px 8% 65px;
-    text-align: center;
+.nav-links a:hover { color: var(--accent); }
+
+.menu {
+  display: none;
+  background: none;
+  color: white;
+  border: 0;
+  font-size: 26px;
+  cursor: pointer;
 }
 
 .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  min-height: 100vh;
+  padding: 150px 9% 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
 }
 
-.profile-ring {
-    width: 155px;
-    height: 155px;
-    border-radius: 50%;
-    padding: 5px;
-    background: linear-gradient(135deg,var(--blue),var(--purple),var(--blue));
-    box-shadow: 0 0 30px var(--blue);
-    animation: rotate 5s linear infinite;
-    margin-bottom: 28px;
-}
-
-.profile-ring img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #101a30;
-}
-
-@keyframes rotate {
-    to { filter: hue-rotate(360deg); }
+.tag {
+  display: inline-block;
+  border: 1px solid #00e5ff55;
+  color: var(--accent);
+  padding: 9px 16px;
+  border-radius: 30px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
 }
 
 .hero h1 {
-    font-family: Orbitron;
-    font-size: clamp(30px,6vw,65px);
-    background: linear-gradient(90deg,var(--blue),white,var(--purple));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 12px;
+  font-family: 'Space Grotesk';
+  font-size: clamp(45px, 7vw, 85px);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  background: linear-gradient(90deg, var(--accent), var(--purple));
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .hero h2 {
-    font-size: 20px;
-    color: var(--blue);
-    min-height: 35px;
+  color: var(--muted);
+  margin-top: 22px;
+  font-size: 21px;
+  font-weight: 500;
 }
+
+.typing { color: var(--accent); }
 
 .hero p {
-    color: #aabbd0;
-    margin: 18px auto;
-    max-width: 650px;
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 550px;
+  margin-top: 22px;
+  font-size: 15px;
 }
 
-.status {
-    color: #5cffaa;
-    font-size: 13px;
-    margin-top: 12px;
-}
-
-.status span {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: #5cffaa;
-    border-radius: 50%;
-    box-shadow: 0 0 12px #5cffaa;
-    margin-right: 7px;
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 35px;
+  flex-wrap: wrap;
 }
 
 .btn {
-    display: inline-block;
-    padding: 13px 26px;
-    margin: 10px;
-    border-radius: 30px;
-    text-decoration: none;
-    color: white;
-    background: linear-gradient(90deg,#0077ff,#963cff);
-    transition: .3s;
-    box-shadow: 0 0 15px #0077ff55;
+  padding: 14px 23px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: .3s;
+  display: inline-block;
+}
+
+.primary {
+  background: var(--accent);
+  color: #06111c;
+}
+
+.secondary {
+  border: 1px solid #ffffff35;
 }
 
 .btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 30px var(--blue);
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px #00e5ff40;
 }
 
-.heading {
-    font-family: Orbitron;
-    color: var(--blue);
-    font-size: clamp(23px,4vw,34px);
-    margin-bottom: 35px;
-    text-shadow: 0 0 15px #00d9ff55;
+.orb {
+  width: 310px;
+  height: 310px;
+  min-width: 240px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, #17334d, #101827 65%);
+  border: 1px solid #00e5ff55;
+  box-shadow: 0 0 70px #00e5ff20,
+              inset 0 0 40px #a78bfa20;
+  animation: float 4s ease-in-out infinite;
 }
 
-.card {
-    background: var(--card);
-    border: 1px solid #23466b;
-    border-radius: 18px;
-    padding: 28px;
-    max-width: 750px;
-    margin: 20px auto;
-    transition: .4s;
-    backdrop-filter: blur(10px);
+.orb strong {
+  font-family: 'Space Grotesk';
+  font-size: 90px;
+  color: var(--accent);
+  text-shadow: 0 0 35px #00e5ff;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    border-color: var(--blue);
-    box-shadow: 0 0 25px #00d9ff30;
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
 }
 
-.card h3 {
-    color: var(--blue);
-    margin-bottom: 12px;
+section {
+  padding: 100px 9%;
 }
 
-.card p {
-    color: #b9c8db;
-    line-height: 1.8;
+.section-title {
+  text-align: center;
+  font-family: 'Space Grotesk';
+  font-size: 38px;
+  margin-bottom: 15px;
 }
 
-.skills {
-    max-width: 650px;
-    margin: auto;
+.section-title span { color: var(--accent); }
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 50px;
 }
 
-.skill {
-    margin: 22px 0;
-    text-align: left;
+.about-box {
+  max-width: 850px;
+  margin: auto;
+  padding: 35px;
+  background: var(--card);
+  border: 1px solid #ffffff12;
+  border-radius: 18px;
+  line-height: 2;
+  color: var(--muted);
+  text-align: center;
 }
 
-.skill-title {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    color: #dceaff;
+.about-box strong { color: var(--accent); }
+
+.skills-grid, .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.bar {
-    height: 9px;
-    border-radius: 20px;
-    background: #18253e;
-    overflow: hidden;
+.skill, .project {
+  padding: 28px;
+  border-radius: 15px;
+  background: var(--card);
+  border: 1px solid #ffffff12;
+  transition: .3s;
 }
 
-.progress {
-    height: 100%;
-    width: 0;
-    border-radius: 20px;
-    background: linear-gradient(90deg,var(--blue),var(--purple));
-    box-shadow: 0 0 12px var(--blue);
-    transition: width 1.7s ease;
+.skill:hover, .project:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 35px #00e5ff12;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
-    gap: 20px;
-    max-width: 1100px;
-    margin: auto;
+.skill .symbol {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.skill h3, .project h3 { margin-bottom: 12px; }
+
+.skill p, .project p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
 }
 
 .project {
-    background: var(--card);
-    padding: 30px 22px;
-    border: 1px solid #23466b;
-    border-radius: 18px;
-    transition: .4s;
+  min-height: 200px;
 }
 
-.project:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: var(--blue);
-    box-shadow: 0 0 30px #00d9ff35;
+.project small {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
 }
 
-.project .emoji {
-    font-size: 40px;
-    margin-bottom: 15px;
+.contact-box {
+  max-width: 650px;
+  margin: auto;
+  text-align: center;
+  padding: 40px 25px;
+  background: linear-gradient(135deg, #101827, #14243b);
+  border: 1px solid #00e5ff40;
+  border-radius: 20px;
 }
 
-.project h3 {
-    color: var(--blue);
-    margin-bottom: 12px;
-}
-
-.project p {
-    color: #aabbd0;
-    font-size: 14px;
-}
-
-.tags {
-    margin-top: 18px;
-    color: #bb9cff;
-    font-size: 12px;
-}
-
-.contact-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
+.contact-box p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin: 20px 0;
 }
 
 footer {
-    border-top: 1px solid #18304b;
-    text-align: center;
-    padding: 30px;
-    color: #8da2bb;
-    font-size: 13px;
+  padding: 30px;
+  text-align: center;
+  border-top: 1px solid #ffffff12;
+  color: var(--muted);
+  font-size: 12px;
 }
 
+footer span { color: var(--accent); }
+
 .reveal {
-    opacity: 0;
-    transform: translateY(35px);
-    transition: .8s;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: .8s;
 }
 
 .reveal.show {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
-#clock {
-    color: var(--blue);
-    font-family: Orbitron;
-    font-size: 13px;
-    margin-top: 15px;
+@media(max-width: 800px) {
+  nav { padding: 17px 6%; }
+  .menu { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    padding: 25px;
+    background: #101827;
+    flex-direction: column;
+    text-align: center;
+  }
+  .nav-links.active { display: flex; }
+  .hero {
+    padding: 130px 7% 70px;
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .hero p { margin-left: auto; margin-right: auto; }
+  .buttons { justify-content: center; }
+  .orb { width: 220px; height: 220px; }
+  .orb strong { font-size: 65px; }
+  section { padding: 75px 7%; }
+  .skills-grid, .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .section-title { font-size: 31px; }
 }
 
-@media(max-width:650px) {
-    nav {
-        padding: 15px 4%;
-    }
-
-    nav a {
-        margin-left: 9px;
-        font-size: 10px;
-    }
-
-    .logo {
-        font-size: 14px;
-    }
-
-    section {
-        padding: 95px 5% 45px;
-    }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }
-
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
 <nav>
-    <div class="logo">DILAWAR.DEV</div>
-    <div>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </div>
+  <div class="logo">DILAWAR<span>.</span></div>
+
+  <button class="menu" id="menu" aria-label="Toggle navigation">☰</button>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<section class="hero" id="home">
+<!-- HOME -->
+<div class="hero" id="home">
 
-    <div class="profile-ring">
-        <img src="banner.png" alt="Dilawar Abbas">
-    </div>
+  <div>
+    <div class="tag">WELCOME TO MY DIGITAL WORLD</div>
 
-    <h1>DILAWAR ABBAS</h1>
+    <h1>Hi, I'm<br><span>Dilawar Abass.</span></h1>
 
-    <h2><span id="typing"></span></h2>
+    <h2>I'm a <span class="typing" id="typing"></span></h2>
 
     <p>
-        Computer Science Engineering Student from Kashmir.
-        Exploring the world of programming, artificial intelligence
-        and futuristic technology.
+      A Computer Science Engineering student from Kashmir,
+      passionate about technology, programming and building
+      creative digital experiences. I turn ideas into code
+      and curiosity into innovation.
     </p>
 
-    <div class="status">
-        <span></span> BUILDING MY FUTURE WITH CODE
+    <div class="buttons">
+      <a href="#projects" class="btn primary">Explore My Work ↗</a>
+      <a href="#contact" class="btn secondary">Contact Me</a>
     </div>
+  </div>
 
-    <div>
-        <a href="#projects" class="btn">Explore Projects ↗</a>
-        <a href="#contact" class="btn">Connect With Me</a>
-    </div>
+  <div class="orb">
+    <strong>DA.</strong>
+  </div>
 
-    <div id="clock"></div>
+</div>
 
+<!-- ABOUT -->
+<section id="about">
+  <h2 class="section-title">About <span>Me</span></h2>
+  <p class="subtitle">A little introduction about myself</p>
+
+  <div class="about-box reveal">
+    Hello! I'm <strong>Dilawar Abass</strong>, a first-year
+    Computer Science Engineering student at
+    <strong>SSM College of Engineering, Baramulla</strong>.
+
+    <br><br>
+
+    I'm interested in programming, software development,
+    artificial intelligence and modern technologies.
+
+    <br><br>
+
+    My goal is to become a skilled software engineer,
+    build meaningful projects and never stop learning.
+  </div>
 </section>
 
-<section id="about" class="reveal">
-    <h2 class="heading">ABOUT ME</h2>
+<!-- SKILLS -->
+<section id="skills">
+  <h2 class="section-title">My <span>Skills</span></h2>
+  <p class="subtitle">Technologies I'm learning and exploring</p>
 
-    <div class="card">
-        <h3>Who Am I?</h3>
-        <p>
-        Hello! I am Dilawar Abbas from Kashmir.
-        I am pursuing B.Tech in Computer Science Engineering.
+  <div class="skills-grid">
 
-        I love exploring Python, C programming, web development
-        and artificial intelligence.
-
-        My mission is to learn, create useful technology
-        and become a successful software engineer.
-        </p>
+    <div class="skill reveal">
+      <div class="symbol">⚙️</div>
+      <h3>C Programming</h3>
+      <p>Learning programming logic, algorithms, pointers and memory management.</p>
     </div>
+
+    <div class="skill reveal">
+      <div class="symbol">🐍</div>
+      <h3>Python</h3>
+      <p>Exploring Python programming and developing useful applications.</p>
+    </div>
+
+    <div class="skill reveal">
+      <div class="symbol">🌐</div>
+      <h3>HTML & CSS</h3>
+      <p>Creating responsive websites with modern layouts and animations.</p>
+    </div>
+
+    <div class="skill reveal">
+      <div class="symbol">⚡</div>
+      <h3>JavaScript</h3>
+      <p>Exploring interactive websites and dynamic web experiences.</p>
+    </div>
+
+    <div class="skill reveal">
+      <div class="symbol">💻</div>
+      <h3>Problem Solving</h3>
+      <p>Developing logical thinking and finding solutions through code.</p>
+    </div>
+
+    <div class="skill reveal">
+      <div class="symbol">🚀</div>
+      <h3>Learning Mindset</h3>
+      <p>Always curious, always experimenting and always improving.</p>
+    </div>
+
+  </div>
 </section>
 
-<section id="skills" class="reveal">
-    <h2 class="heading">MY TECHNICAL SKILLS</h2>
+<!-- PROJECTS -->
+<section id="projects">
+  <h2 class="section-title">My <span>Projects</span></h2>
+  <p class="subtitle">Things I'm building and experimenting with</p>
 
-    <div class="skills">
+  <div class="projects-grid">
 
-        <div class="skill">
-            <div class="skill-title"><span>Python</span><span>Learning</span></div>
-            <div class="bar"><div class="progress" data-width="65%"></div></div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-title"><span>C Programming</span><span>Learning</span></div>
-            <div class="bar"><div class="progress" data-width="55%"></div></div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-title"><span>HTML</span><span>Learning</span></div>
-            <div class="bar"><div class="progress" data-width="70%"></div></div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-title"><span>CSS</span><span>Learning</span></div>
-            <div class="bar"><div class="progress" data-width="55%"></div></div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-title"><span>Artificial Intelligence</span><span>Exploring</span></div>
-            <div class="bar"><div class="progress" data-width="35%"></div></div>
-        </div>
-
+    <div class="project reveal">
+      <small>PROJECT 01</small>
+      <h3>Personal Portfolio</h3>
+      <p>A responsive personal website showcasing my journey as a CSE student.</p>
     </div>
+
+    <div class="project reveal">
+      <small>PROJECT 02</small>
+      <h3>Attendance System</h3>
+      <p>A student attendance website developed using Python and Flask.</p>
+    </div>
+
+    <div class="project reveal">
+      <small>PROJECT 03</small>
+      <h3>Python Experiments</h3>
+      <p>Small Python applications created to improve my programming skills.</p>
+    </div>
+
+  </div>
 </section>
 
-<section id="projects" class="reveal">
-    <h2 class="heading">MY PROJECTS</h2>
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="section-title">Let's <span>Connect</span></h2>
+  <p class="subtitle">Have an idea? Let's build something amazing.</p>
 
-    <div class="project-grid">
+  <div class="contact-box reveal">
+    <h2>Let's create something together.</h2>
+    <p>
+      I'm always interested in learning, collaborating
+      and exploring new technology.
+    </p>
 
-        <div class="project">
-            <div class="emoji">🤖</div>
-            <h3>DILAWAR AI</h3>
-            <p>
-                A personal AI chatbot project exploring
-                artificial intelligence and conversational technology.
-            </p>
-            <div class="tags">PYTHON • AI</div>
-        </div>
-
-        <div class="project">
-            <div class="emoji">⚡</div>
-            <h3>DILAWAR JARVIS</h3>
-            <p>
-                A Python-based virtual assistant project
-                inspired by intelligent voice assistants.
-            </p>
-            <div class="tags">PYTHON • AUTOMATION</div>
-        </div>
-
-        <div class="project">
-            <div class="emoji">🔍</div>
-            <h3>SMART PROFILE FINDER</h3>
-            <p>
-                A profile discovery application with
-                profile submission and approval features.
-            </p>
-            <div class="tags">PYTHON • FLASK • WEB</div>
-        </div>
-
-    </div>
-</section>
-
-<section id="contact" class="reveal">
-    <h2 class="heading">LET'S CONNECT</h2>
-
-    <div class="card">
-        <h3>Find Me Online</h3>
-        <p>
-            Interested in technology, programming
-            and building something amazing?
-            Connect with me.
-        </p>
-
-        <div class="contact-links">
-            <a class="btn"
-               href="https://github.com/abassdilawar54-alt"
-               target="_blank" rel="noopener">GitHub ↗</a>
-
-            <a class="btn"
-               href="https://www.instagram.com/dilawar__abass/"
-               target="_blank" rel="noopener">Instagram ↗</a>
-        </div>
-    </div>
+    <a href="https://github.com/abassdilawar54-alt"
+       target="_blank" rel="noopener noreferrer"
+       class="btn primary">Visit My GitHub ↗</a>
+  </div>
 </section>
 
 <footer>
-    <p>© 2026 DILAWAR ABBAS | DESIGNED WITH CODE</p>
-    <p>FROM KASHMIR WITH PASSION 💙</p>
+  Designed & Developed by <span>Dilawar Abass</span> |
+  © <span id="year"></span> All Rights Reserved.
 </footer>
 
 <script>
-
-// TYPING ANIMATION
-
 const words = [
-    "Computer Science Student",
-    "Python Developer",
-    "Future Software Engineer",
-    "Technology Explorer"
+  "CSE Student",
+  "Programmer",
+  "Web Developer",
+  "Future Engineer"
 ];
 
 let wordIndex = 0;
 let charIndex = 0;
 let deleting = false;
 
-function typeEffect() {
-    const current = words[wordIndex];
-    document.getElementById("typing").textContent =
-        current.substring(0, charIndex);
+const typing = document.getElementById("typing");
 
-    if (!deleting && charIndex < current.length) {
-        charIndex++;
-        setTimeout(typeEffect, 90);
-    } else if (deleting && charIndex > 0) {
-        charIndex--;
-        setTimeout(typeEffect, 45);
-    } else {
-        deleting = !deleting;
-        if (!deleting) {
-            wordIndex = (wordIndex + 1) % words.length;
-        }
-        setTimeout(typeEffect, 700);
+function typeEffect() {
+  const current = words[wordIndex];
+
+  typing.textContent = current.substring(0, charIndex);
+
+  if (!deleting) {
+    charIndex++;
+    if (charIndex > current.length) {
+      deleting = true;
+      setTimeout(typeEffect, 1100);
+      return;
     }
+  } else {
+    charIndex--;
+    if (charIndex < 0) {
+      deleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      charIndex = 0;
+    }
+  }
+
+  setTimeout(typeEffect, deleting ? 45 : 100);
 }
 
 typeEffect();
 
+const menu = document.getElementById("menu");
+const navLinks = document.getElementById("navLinks");
 
-// LIVE CLOCK
+menu.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
 
-function updateClock() {
-    document.getElementById("clock").textContent =
-        "LOCAL TIME: " +
-        new Date().toLocaleTimeString("en-IN", {
-            timeZone: "Asia/Kolkata"
-        });
-}
-
-setInterval(updateClock, 1000);
-updateClock();
-
-
-// SCROLL ANIMATIONS
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("active");
+  });
+});
 
 const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
-    });
-}, {threshold: 0.12});
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, { threshold: 0.12 });
 
 document.querySelectorAll(".reveal").forEach(element => {
-    observer.observe(element);
+  observer.observe(element);
 });
 
-
-// ANIMATED SKILL BARS
-
-const skillObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.width =
-                entry.target.dataset.width;
-            skillObserver.unobserve(entry.target);
-        }
-    });
-}, {threshold: 0.3});
-
-document.querySelectorAll(".progress").forEach(bar => {
-    skillObserver.observe(bar);
-});
-
-
-// MOVING PARTICLES
-
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-let particles = [];
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    particles = [];
-
-    for (let i = 0; i < 85; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 0.5,
-            speedX: (Math.random() - 0.5) * 0.5,
-            speedY: (Math.random() - 0.5) * 0.5
-        });
-    }
-}
-
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#00d9ff";
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = "#00d9ff";
-        ctx.fill();
-        ctx.shadowBlur = 0;
-    });
-
-    requestAnimationFrame(animateParticles);
-}
-
-window.addEventListener("resize", resizeCanvas);
-
-resizeCanvas();
-animateParticles();
-
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 </script>
 
 </body>
