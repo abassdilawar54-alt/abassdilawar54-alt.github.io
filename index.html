@@ -4,760 +4,542 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070b14">
-<meta name="description" content="Dilawar Abass - Computer Science Engineering student, programmer and developer from Kashmir.">
-<title>Dilawar Abass | CSE Developer</title>
+<meta name="description" content="Dilawar Abbas - Computer Science Engineering Student, Programmer and Developer from Kashmir.">
+<title>Dilawar Abbas | Developer Portfolio</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#070b14;
-  --card:#101827;
-  --accent:#00e5ff;
-  --purple:#a78bfa;
-  --white:#f4f7ff;
-  --muted:#9aa9bf;
-}
-
 * {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  scroll-behavior:smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
-  background:var(--bg);
-  color:var(--white);
-  font-family:Inter,sans-serif;
-  overflow-x:hidden;
+    background: #070b16;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
-body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(#17263b 1px,transparent 1px),
-    linear-gradient(90deg,#17263b 1px,transparent 1px);
-  background-size:55px 55px;
-  opacity:.13;
-  pointer-events:none;
-  z-index:-1;
+:root {
+    --blue: #00eaff;
+    --purple: #9b5cff;
 }
 
-a {
-  text-decoration:none;
-  color:inherit;
+#particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
 }
 
-nav {
-  position:fixed;
-  top:0;
-  width:100%;
-  padding:20px 8%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(7,11,20,.92);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid #ffffff12;
-  z-index:100;
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 8%;
+    background: rgba(7,11,22,.9);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid #1c2940;
 }
 
 .logo {
-  font-family:"Space Grotesk";
-  font-size:23px;
-  font-weight:900;
+    font-family: Orbitron;
+    font-size: 21px;
+    color: var(--blue);
 }
 
-.logo span {color:var(--accent)}
-
-.nav-links {
-  display:flex;
-  gap:25px;
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 22px;
+    font-size: 13px;
+    transition: .3s;
 }
 
-.nav-links a {
-  color:var(--muted);
-  font-size:13px;
-  transition:.3s;
+nav a:hover {
+    color: var(--blue);
 }
 
-.nav-links a:hover {color:var(--accent)}
-
-.menu {
-  display:none;
-  background:none;
-  border:0;
-  color:white;
-  font-size:26px;
-  cursor:pointer;
+section {
+    padding: 110px 9%;
+    scroll-margin-top: 65px;
 }
 
 .hero {
-  min-height:100vh;
-  padding:150px 9% 80px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:45px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+}
+
+.hero-content {
+    max-width: 650px;
 }
 
 .tag {
-  display:inline-block;
-  padding:10px 17px;
-  border:1px solid #00e5ff55;
-  border-radius:30px;
-  color:var(--accent);
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:25px;
+    color: var(--blue);
+    letter-spacing: 3px;
+    font-size: 13px;
 }
 
 .hero h1 {
-  font-family:"Space Grotesk";
-  font-size:clamp(45px,7vw,82px);
-  line-height:1.08;
+    font-size: clamp(38px, 6vw, 65px);
+    margin: 15px 0;
 }
 
-.gradient {
-  background:linear-gradient(90deg,var(--accent),var(--purple));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+.hero h1 span {
+    color: var(--blue);
 }
 
 .hero h2 {
-  margin-top:22px;
-  font-size:21px;
-  color:var(--muted);
+    font-size: 23px;
+    color: #b8c5df;
+    margin-bottom: 20px;
 }
 
-.typing {color:var(--accent)}
-
 .hero p {
-  color:var(--muted);
-  max-width:550px;
-  line-height:1.9;
-  margin-top:22px;
-  font-size:15px;
+    color: #aab6ca;
+    line-height: 1.9;
 }
 
 .buttons {
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  margin-top:32px;
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .btn {
-  display:inline-block;
-  padding:14px 22px;
-  border-radius:9px;
-  font-size:13px;
-  font-weight:700;
-  transition:.3s;
-}
-
-.primary {
-  background:var(--accent);
-  color:#07111a;
-}
-
-.secondary {
-  border:1px solid #ffffff35;
+    display: inline-block;
+    padding: 12px 25px;
+    border: 1px solid var(--blue);
+    border-radius: 30px;
+    text-decoration: none;
+    color: var(--blue);
+    transition: .3s;
 }
 
 .btn:hover {
-  transform:translateY(-5px);
-  box-shadow:0 0 25px #00e5ff35;
+    background: var(--blue);
+    color: #070b16;
+    box-shadow: 0 0 20px var(--blue);
 }
 
-.orb {
-  width:300px;
-  height:300px;
-  min-width:230px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:radial-gradient(circle,#17334d,#101827 70%);
-  border:1px solid #00e5ff70;
-  box-shadow:0 0 80px #00e5ff20,inset 0 0 45px #a78bfa25;
-  animation:float 4s ease-in-out infinite;
+.profile {
+    width: 300px;
+    height: 300px;
+    min-width: 250px;
+    border-radius: 50%;
+    padding: 7px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    box-shadow: 0 0 45px #00eaff55;
+    animation: float 4s ease-in-out infinite;
 }
 
-.orb strong {
-  font-family:"Space Grotesk";
-  font-size:85px;
-  color:var(--accent);
-  text-shadow:0 0 35px var(--accent);
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 @keyframes float {
-  50% {transform:translateY(-18px)}
+    50% { transform: translateY(-15px); }
 }
 
-section {padding:95px 9%}
-
-.section-title {
-  font-family:"Space Grotesk";
-  font-size:38px;
-  text-align:center;
+.heading {
+    font-family: Orbitron;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 45px;
 }
 
-.section-title span {color:var(--accent)}
-
-.subtitle {
-  color:var(--muted);
-  text-align:center;
-  font-size:14px;
-  margin:14px 0 45px;
+.heading span {
+    color: var(--blue);
 }
 
-.about-box {
-  max-width:850px;
-  margin:auto;
-  padding:35px;
-  background:var(--card);
-  border:1px solid #ffffff15;
-  border-radius:18px;
-  color:var(--muted);
-  text-align:center;
-  line-height:2;
+.about {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+    line-height: 2;
+    color: #b9c5d9;
 }
 
-.about-box strong {color:var(--accent)}
-
-.skills-grid,.projects-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
 }
 
-.skill,.project {
-  background:var(--card);
-  border:1px solid #ffffff12;
-  padding:28px;
-  border-radius:16px;
-  transition:.3s;
+.card {
+    background: #101a2d;
+    border: 1px solid #263b55;
+    padding: 28px;
+    border-radius: 15px;
+    transition: .3s;
 }
 
-.skill:hover,.project:hover {
-  transform:translateY(-8px);
-  border-color:var(--accent);
-  box-shadow:0 10px 35px #00e5ff15;
+.card:hover {
+    transform: translateY(-9px);
+    border-color: var(--blue);
+    box-shadow: 0 0 20px #00eaff22;
 }
 
-.symbol {
-  font-size:32px;
-  margin-bottom:17px;
+.card h3 {
+    color: var(--blue);
+    margin-bottom: 15px;
 }
 
-.skill h3,.project h3 {margin-bottom:12px}
-
-.skill p,.project p {
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
+.card p {
+    color: #aab6ca;
+    line-height: 1.7;
+    font-size: 14px;
 }
 
-.project-number {
-  color:var(--accent);
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:16px;
+.skills {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.status {
-  display:inline-block;
-  margin-top:18px;
-  padding:6px 10px;
-  background:#00e5ff12;
-  border:1px solid #00e5ff35;
-  border-radius:20px;
-  color:var(--accent);
-  font-size:10px;
+.skill {
+    padding: 13px 25px;
+    background: #101a2d;
+    border: 1px solid #263b55;
+    border-radius: 10px;
+    color: var(--blue);
+    transition: .3s;
 }
 
-.contact-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  max-width:800px;
-  margin:auto;
+.skill:hover {
+    transform: scale(1.08);
+    background: #142b40;
 }
 
-.contact-card {
-  background:var(--card);
-  padding:25px;
-  border:1px solid #ffffff15;
-  border-radius:14px;
-  transition:.3s;
+.contact {
+    text-align: center;
 }
 
-.contact-card:hover {
-  border-color:var(--accent);
-  transform:translateY(-5px);
+.contact p {
+    color: #aab6ca;
+    margin: 12px 0;
 }
 
-.contact-card .symbol {font-size:27px}
-
-.contact-card h3 {
-  margin-bottom:8px;
-  font-size:16px;
+.socials {
+    margin-top: 25px;
 }
 
-.contact-card p {
-  color:var(--muted);
-  font-size:13px;
-  overflow-wrap:anywhere;
+.socials a {
+    display: inline-block;
+    color: var(--blue);
+    text-decoration: none;
+    border: 1px solid var(--blue);
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin: 8px;
+    transition: .3s;
 }
 
-.contact-card a {color:var(--accent)}
-
-.location-box {
-  max-width:800px;
-  margin:25px auto 0;
-  padding:25px;
-  background:linear-gradient(120deg,#101827,#17243b);
-  border:1px solid #00e5ff40;
-  border-radius:15px;
-  text-align:center;
-}
-
-.location-box p {
-  color:var(--muted);
-  margin-top:10px;
-  font-size:14px;
+.socials a:hover {
+    background: var(--blue);
+    color: #070b16;
 }
 
 footer {
-  border-top:1px solid #ffffff15;
-  padding:30px 15px;
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
+    text-align: center;
+    padding: 25px;
+    color: #7e8da5;
+    border-top: 1px solid #263b55;
+    font-size: 13px;
 }
-
-footer span {color:var(--accent)}
 
 .reveal {
-  opacity:0;
-  transform:translateY(25px);
-  transition:.8s;
+    opacity: 0;
+    transform: translateY(35px);
+    transition: .8s;
 }
 
-.reveal.show {
-  opacity:1;
-  transform:translateY(0);
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-@media(max-width:850px) {
-  nav {padding:17px 6%}
-  .menu {display:block}
-
-  .nav-links {
-    display:none;
-    position:absolute;
-    top:65px;
-    left:0;
-    width:100%;
-    padding:25px;
-    background:#101827;
-    flex-direction:column;
-    text-align:center;
-  }
-
-  .nav-links.active {display:flex}
-
-  .hero {
-    flex-direction:column-reverse;
-    text-align:center;
-    padding:125px 7% 70px;
-  }
-
-  .hero p {
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .buttons {justify-content:center}
-  .orb {width:220px;height:220px}
-  .orb strong {font-size:65px}
-  section {padding:75px 7%}
-  .skills-grid,.projects-grid {grid-template-columns:1fr 1fr}
+.menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-size: 27px;
+    cursor: pointer;
 }
 
-@media(max-width:550px) {
-  .skills-grid,.projects-grid,.contact-grid {
-    grid-template-columns:1fr;
-  }
-
-  .section-title {font-size:31px}
-  .about-box {padding:25px 18px}
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation:none!important;
-    scroll-behavior:auto!important;
-    transition:none!important;
-  }
-
-  .reveal {
-    opacity:1;
-    transform:none;
-  }
+@media(max-width: 800px) {
+    header { padding: 16px 5%; }
+    .menu { display: block; }
+    nav {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background: #0b1425;
+        padding: 20px;
+    }
+    nav.active { display: flex; flex-direction: column; }
+    nav a { margin: 12px 0; }
+    .hero {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+        padding-top: 130px;
+    }
+    .hero-content { margin-top: 25px; }
+    .buttons { justify-content: center; }
+    .profile { width: 230px; height: 230px; }
+    section { padding: 90px 6%; }
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">DILAWAR<span>.</span></div>
+<canvas id="particles"></canvas>
 
-  <button class="menu" id="menu" aria-label="Open navigation">☰</button>
+<header>
+    <div class="logo">DILAWAR.DEV</div>
+    <button class="menu" onclick="toggleMenu()" aria-label="Toggle navigation">☰</button>
+    <nav id="nav">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#about" onclick="closeMenu()">About</a>
+        <a href="#skills" onclick="closeMenu()">Skills</a>
+        <a href="#projects" onclick="closeMenu()">Projects</a>
+        <a href="#contact" onclick="closeMenu()">Contact</a>
+    </nav>
+</header>
 
-  <div class="nav-links" id="navLinks">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+<section class="hero" id="home">
 
-<!-- HOME -->
+    <div class="hero-content">
+        <div class="tag">WELCOME TO MY DIGITAL WORLD</div>
 
-<div class="hero" id="home">
+        <h1>Hi, I'm <span>Dilawar Abbas</span></h1>
 
-  <div>
-    <div class="tag">WELCOME TO MY DIGITAL WORLD</div>
+        <h2>Computer Science Engineer & Developer</h2>
 
-    <h1>Hi, I'm<br><span class="gradient">Dilawar Abass.</span></h1>
+        <p>
+            I'm a B.Tech Computer Science Engineering student from
+            Kashmir, passionate about programming, artificial intelligence,
+            software development and building innovative digital projects.
+            I believe in learning, creating and turning ideas into reality.
+        </p>
 
-    <h2>I'm a <span class="typing" id="typing"></span></h2>
-
-    <p>
-      A Computer Science Engineering student from Kashmir,
-      passionate about programming, artificial intelligence
-      and creating innovative digital experiences.
-
-      I believe every great idea starts with curiosity
-      and becomes reality through code.
-    </p>
-
-    <div class="buttons">
-      <a href="#projects" class="btn primary">Explore My Projects ↗</a>
-      <a href="#contact" class="btn secondary">Contact Me</a>
+        <div class="buttons">
+            <a href="#projects" class="btn">Explore Projects</a>
+            <a href="#contact" class="btn">Contact Me</a>
+        </div>
     </div>
-  </div>
 
-  <div class="orb">
-    <strong>DA.</strong>
-  </div>
+    <div class="profile">
+        <img src="profile.jpg" alt="Dilawar Abbas profile photo">
+    </div>
 
-</div>
-
-<!-- ABOUT -->
-
-<section id="about">
-  <h2 class="section-title">About <span>Me</span></h2>
-  <p class="subtitle">Get to know the developer behind the screen</p>
-
-  <div class="about-box reveal">
-    Hello! I'm <strong>Dilawar Abass</strong>, a first-year
-    Computer Science Engineering student at
-    <strong>SSM College of Engineering, Baramulla</strong>.
-
-    <br><br>
-
-    I'm from <strong>Shareefabad, HMT, Kashmir, India</strong>.
-
-    <br><br>
-
-    My interests include software development, artificial
-    intelligence, Python programming and web technologies.
-
-    <br><br>
-
-    My ambition is to become a successful software engineer
-    and create technology that makes a difference.
-  </div>
 </section>
 
-<!-- SKILLS -->
+<section id="about" class="reveal">
+    <h2 class="heading">About <span>Me</span></h2>
+    <div class="about">
+        My name is Dilawar Abbas. I am pursuing B.Tech in Computer
+        Science Engineering at SSM College of Engineering, Baramulla.
 
-<section id="skills">
-  <h2 class="section-title">My <span>Skills</span></h2>
-  <p class="subtitle">Technologies I'm learning and exploring</p>
+        <br><br>
 
-  <div class="skills-grid">
+        I enjoy exploring technology, writing code, solving problems
+        and developing creative software applications.
 
-    <div class="skill reveal">
-      <div class="symbol">⚙️</div>
-      <h3>C Programming</h3>
-      <p>Programming fundamentals, pointers, functions, arrays and problem solving.</p>
+        <br><br>
+
+        My ambition is to become a successful Computer Science Engineer
+        and build technology that makes a positive difference.
+        
+        <br><br>
+
+        <strong>Location:</strong> Kashmir, Jammu & Kashmir, India
     </div>
-
-    <div class="skill reveal">
-      <div class="symbol">🐍</div>
-      <h3>Python</h3>
-      <p>Python applications, programming logic and software development.</p>
-    </div>
-
-    <div class="skill reveal">
-      <div class="symbol">🌐</div>
-      <h3>HTML & CSS</h3>
-      <p>Modern websites, responsive layouts and creative web designs.</p>
-    </div>
-
-    <div class="skill reveal">
-      <div class="symbol">⚡</div>
-      <h3>JavaScript</h3>
-      <p>Interactive websites and dynamic web functionality.</p>
-    </div>
-
-    <div class="skill reveal">
-      <div class="symbol">🤖</div>
-      <h3>Artificial Intelligence</h3>
-      <p>Exploring AI assistants and intelligent software applications.</p>
-    </div>
-
-    <div class="skill reveal">
-      <div class="symbol">💡</div>
-      <h3>Problem Solving</h3>
-      <p>Developing logical thinking and finding solutions through code.</p>
-    </div>
-
-  </div>
 </section>
 
-<!-- PROJECTS -->
+<section id="skills" class="reveal">
+    <h2 class="heading">My <span>Skills</span></h2>
 
-<section id="projects">
-  <h2 class="section-title">My <span>Projects</span></h2>
-  <p class="subtitle">My programming journey and creations</p>
-
-  <div class="projects-grid">
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 01 / AI</div>
-      <div class="symbol">🧠</div>
-      <h3>Personal AI Assistant</h3>
-      <p>
-        My own AI assistant concept designed to explore
-        intelligent conversations, useful commands and
-        personal productivity.
-      </p>
-      <span class="status">In Development</span>
+    <div class="skills">
+        <div class="skill">C Programming</div>
+        <div class="skill">Python</div>
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">JavaScript</div>
+        <div class="skill">Problem Solving</div>
+        <div class="skill">Artificial Intelligence</div>
+        <div class="skill">Web Development</div>
+        <div class="skill">GitHub</div>
     </div>
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 02 / VOICE AI</div>
-      <div class="symbol">🤖</div>
-      <h3>JARVIS Assistant</h3>
-      <p>
-        A voice-controlled desktop assistant project inspired
-        by JARVIS, exploring voice commands and automation.
-      </p>
-      <span class="status">In Development</span>
-    </div>
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 03 / WEB</div>
-      <div class="symbol">📊</div>
-      <h3>Attendance Management System</h3>
-      <p>
-        A student attendance website developed with
-        Python and Flask for managing attendance records.
-      </p>
-      <span class="status">Built / Learning</span>
-    </div>
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 04 / PYTHON</div>
-      <div class="symbol">🐍</div>
-      <h3>Python Applications</h3>
-      <p>
-        A collection of Python experiments and small
-        applications created to improve programming skills.
-      </p>
-      <span class="status">Ongoing</span>
-    </div>
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 05 / WEB DESIGN</div>
-      <div class="symbol">💻</div>
-      <h3>Developer Portfolio</h3>
-      <p>
-        My personal website showcasing my skills,
-        programming journey and development projects.
-      </p>
-      <span class="status">Live Website</span>
-    </div>
-
-    <div class="project reveal">
-      <div class="project-number">PROJECT 06 / FUTURE</div>
-      <div class="symbol">🚀</div>
-      <h3>Future Innovations</h3>
-      <p>
-        Exploring new ideas in software engineering,
-        AI, automation and modern technologies.
-      </p>
-      <span class="status">Coming Soon</span>
-    </div>
-
-  </div>
 </section>
 
-<!-- CONTACT -->
+<section id="projects" class="reveal">
+    <h2 class="heading">My <span>Projects</span></h2>
 
-<section id="contact">
-  <h2 class="section-title">Let's <span>Connect</span></h2>
-  <p class="subtitle">Find me across the digital world</p>
+    <div class="cards">
 
-  <div class="contact-grid">
+        <div class="card">
+            <h3>AI Personal Assistant</h3>
+            <p>
+                An AI assistant project designed to interact with users
+                and help with everyday tasks.
+            </p>
+        </div>
 
-    <div class="contact-card">
-      <div class="symbol">📸</div>
-      <h3>Instagram</h3>
-      <p>
-        <a href="https://www.instagram.com/dilawar__abass/"
-           target="_blank" rel="noopener noreferrer">
-          @dilawar__abass ↗
+        <div class="card">
+            <h3>JARVIS Assistant</h3>
+            <p>
+                A personal voice assistant concept inspired by intelligent
+                computer systems and automation.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Attendance Management</h3>
+            <p>
+                A web-based attendance management project designed
+                to organize and track student attendance.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Python Applications</h3>
+            <p>
+                Creative Python programming experiments, applications
+                and interactive software projects.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Web Development</h3>
+            <p>
+                Personal websites and responsive web applications
+                created using HTML, CSS and JavaScript.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Future Innovations</h3>
+            <p>
+                Exploring new ideas in AI, automation, programming
+                and computer science.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section id="contact" class="contact reveal">
+    <h2 class="heading">Contact <span>Me</span></h2>
+
+    <p>Let's connect, collaborate and build something amazing.</p>
+
+    <p>📍 Kashmir, Jammu & Kashmir, India</p>
+
+    <div class="socials">
+        <a href="https://www.instagram.com/dilawar__abass/" target="_blank" rel="noopener noreferrer">
+            Instagram
         </a>
-      </p>
-    </div>
 
-    <div class="contact-card">
-      <div class="symbol">💻</div>
-      <h3>GitHub</h3>
-      <p>
-        <a href="https://github.com/abassdilawar54-alt"
-           target="_blank" rel="noopener noreferrer">
-          Visit My GitHub ↗
+        <a href="https://github.com/abassdilawar54-alt" target="_blank" rel="noopener noreferrer">
+            GitHub
         </a>
-      </p>
     </div>
-
-    <div class="contact-card">
-      <div class="symbol">📍</div>
-      <h3>Location</h3>
-      <p>Shareefabad, HMT, Kashmir, India</p>
-    </div>
-
-    <div class="contact-card">
-      <div class="symbol">🎓</div>
-      <h3>Education</h3>
-      <p>Computer Science Engineering<br>SSM College of Engineering, Baramulla</p>
-    </div>
-
-  </div>
-
-  <div class="location-box">
-    <div class="symbol">🌍</div>
-    <h3>Based in Kashmir, India</h3>
-    <p>Shareefabad, HMT · Kashmir</p>
-  </div>
-
 </section>
 
 <footer>
-  Designed & Developed by <span>Dilawar Abass</span>
-  <br><br>
-  © <span id="year"></span> All Rights Reserved.
-  <br>
-  Built with passion and code.
+    © 2026 Dilawar Abbas | Designed with passion and code.
 </footer>
 
 <script>
-
-// Animated typing effect
-
-const words = [
-  "CSE Student",
-  "Programmer",
-  "Python Developer",
-  "AI Enthusiast",
-  "Future Software Engineer"
-];
-
-let wordIndex = 0;
-let charIndex = 0;
-let deleting = false;
-
-const typing = document.getElementById("typing");
-
-function typeEffect() {
-  const current = words[wordIndex];
-
-  typing.textContent = current.substring(0,charIndex);
-
-  if (!deleting) {
-    charIndex++;
-
-    if (charIndex > current.length) {
-      deleting = true;
-      setTimeout(typeEffect,1100);
-      return;
-    }
-  } else {
-    charIndex--;
-
-    if (charIndex < 0) {
-      deleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      charIndex = 0;
-    }
-  }
-
-  setTimeout(typeEffect,deleting ? 45 : 100);
+function toggleMenu() {
+    document.getElementById("nav").classList.toggle("active");
 }
 
-typeEffect();
-
-// Mobile navigation
-
-const menu = document.getElementById("menu");
-const navLinks = document.getElementById("navLinks");
-
-menu.addEventListener("click",() => {
-  navLinks.classList.toggle("active");
-  menu.textContent = navLinks.classList.contains("active") ? "✕" : "☰";
-});
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click",() => {
-    navLinks.classList.remove("active");
-    menu.textContent = "☰";
-  });
-});
+function closeMenu() {
+    document.getElementById("nav").classList.remove("active");
+}
 
 // Scroll reveal animation
-
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:0.12});
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, { threshold: 0.12 });
 
 document.querySelectorAll(".reveal").forEach(element => {
-  observer.observe(element);
+    observer.observe(element);
 });
 
-// Automatic copyright year
+// Animated background particles
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+let particles = [];
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    particles = Array.from({length: 65}, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1
+    }));
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#00eaff";
+        ctx.fill();
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+animateParticles();
 </script>
 
 </body>
