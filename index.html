@@ -4,680 +4,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030807">
-<meta name="description" content="Dilawar Abbas | Computer Science Engineer, Programmer and Technology Explorer">
-<title>DILAWAR.exe | Digital Command Center</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
+<title>DILAWAR.exe</title>
 <style>
-:root{
- --green:#00ff9d;
- --green2:#00c879;
- --dark:#030807;
- --panel:#091510;
- --text:#e8fff4;
- --muted:#93aaa0;
- --border:rgba(0,255,157,.2);
+body {
+    background:#020604;
+    color:#00ff66;
+    font-family:Consolas,monospace;
+    text-align:center;
+    padding:30px 15px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
- background:var(--dark);
- color:var(--text);
- font-family:Inter,sans-serif;
- overflow-x:hidden;
+.box {
+    max-width:600px;
+    margin:50px auto;
+    padding:25px;
+    border:1px solid #00ff66;
+    border-radius:12px;
+    box-shadow:0 0 20px #00ff6655;
 }
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer}
-
-#matrix{
- position:fixed;inset:0;
- width:100%;height:100%;
- z-index:-4;opacity:.15;
- pointer-events:none;
+button {
+    background:#00ff66;
+    color:black;
+    border:0;
+    padding:15px 25px;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:6px;
 }
-#space{
- position:fixed;inset:0;
- width:100%;height:100%;
- z-index:-3;pointer-events:none;
+#terminal {
+    background:black;
+    text-align:left;
+    padding:15px;
+    min-height:180px;
+    line-height:1.8;
+    overflow-wrap:anywhere;
 }
-.grid-bg{
- position:fixed;inset:0;z-index:-2;
- background-image:
- linear-gradient(rgba(0,255,157,.035) 1px,transparent 1px),
- linear-gradient(90deg,rgba(0,255,157,.035) 1px,transparent 1px);
- background-size:55px 55px;
- pointer-events:none;
-}
-.glow{
- position:fixed;width:400px;height:400px;
- background:#00ff9d0a;filter:blur(100px);
- border-radius:50%;pointer-events:none;z-index:-1;
- left:35%;top:25%;
-}
-
-nav{
- position:fixed;top:0;left:0;width:100%;
- z-index:30;
- display:flex;justify-content:space-between;
- align-items:center;padding:19px 7%;
- background:#030807dc;
- backdrop-filter:blur(16px);
- border-bottom:1px solid var(--border);
-}
-.logo{
- font-family:Orbitron,sans-serif;
- font-size:19px;font-weight:800;
- color:var(--green);letter-spacing:2px;
-}
-.logo span{color:white}
-.nav-links{display:flex;gap:24px;font-size:12px;color:#a9c5b8}
-.nav-links a:hover{color:var(--green)}
-.menu-btn{
- display:none;background:none;border:1px solid var(--border);
- color:var(--green);padding:8px 12px;border-radius:6px;
-}
-.hero{
- min-height:100vh;padding:130px 8% 70px;
- display:flex;align-items:center;
- justify-content:space-between;gap:55px;
- flex-wrap:wrap;
-}
-.hero-content{flex:1;min-width:280px}
-.status{
- display:inline-flex;align-items:center;gap:9px;
- color:var(--green);font:11px 'Share Tech Mono';
- border:1px solid var(--border);
- padding:9px 14px;border-radius:30px;
- background:#00ff9d08;
-}
-.dot{
- width:7px;height:7px;background:var(--green);
- border-radius:50%;box-shadow:0 0 12px var(--green);
- animation:blink 1.2s infinite;
-}
-@keyframes blink{50%{opacity:.2}}
-.hero h1{
- font-family:Orbitron,sans-serif;
- font-size:clamp(42px,7vw,85px);
- line-height:1.12;margin-top:28px;
-}
-.hero h1 span{
- color:var(--green);
- text-shadow:0 0 35px #00ff9d55;
-}
-.subtitle{
- color:#c2d9ce;font-size:18px;
- margin-top:15px;letter-spacing:1px;
-}
-.description{
- color:var(--muted);line-height:1.9;
- max-width:570px;font-size:14px;margin-top:23px;
-}
-.buttons{margin-top:28px}
-.btn{
- display:inline-block;
- padding:13px 21px;
- border:1px solid var(--green);
- border-radius:6px;
- color:var(--green);
- font-size:12px;
- font-weight:600;
- letter-spacing:1px;
- margin:5px 8px 5px 0;
- transition:.3s;
- background:#00ff9d08;
-}
-.btn:hover{
- color:#00160c;background:var(--green);
- box-shadow:0 0 25px #00ff9d66;
- transform:translateY(-3px);
-}
-.social{display:flex;gap:13px;margin-top:25px}
-.social a{
- border:1px solid var(--border);
- padding:9px 14px;border-radius:5px;
- font-size:12px;color:var(--muted);
-}
-.social a:hover{border-color:var(--green);color:var(--green)}
-
-.scene{
- width:340px;height:390px;
- display:grid;place-items:center;
- perspective:1000px;
- margin:auto;
-}
-.holo-card{
- width:285px;height:350px;
- background:linear-gradient(145deg,#10271b,#06100c);
- border:1px solid #00ff9d66;
- border-radius:22px;
- display:flex;flex-direction:column;
- align-items:center;justify-content:center;
- position:relative;
- transform-style:preserve-3d;
- box-shadow:0 0 55px #00ff9d20,inset 0 0 35px #00ff9d0b;
- animation:float 5s ease-in-out infinite;
- transition:transform .2s;
-}
-.holo-card:before{
- content:"";position:absolute;inset:-9px;
- border:1px solid #00ff9d35;
- border-radius:27px;
- transform:translateZ(-15px);
-}
-.holo-card:after{
- content:"";position:absolute;
- width:120%;height:120%;
- border:1px dashed #00ff9d30;
- border-radius:50%;
- animation:spin 22s linear infinite;
- pointer-events:none;
-}
-@keyframes float{
- 0%,100%{transform:translateY(0) rotateY(-5deg)}
- 50%{transform:translateY(-17px) rotateY(5deg)}
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.profile-wrap{
- width:175px;height:175px;
- padding:7px;border-radius:50%;
- border:2px solid var(--green);
- box-shadow:0 0 30px #00ff9d55;
- margin-bottom:20px;
- transform:translateZ(35px);
-}
-.profile-wrap img{
- width:100%;height:100%;
- object-fit:cover;border-radius:50%;
-}
-.holo-card h2{
- font-family:Orbitron,sans-serif;
- font-size:19px;color:var(--green);
- transform:translateZ(25px);
-}
-.holo-card p{
- color:var(--muted);font-size:11px;
- margin-top:9px;letter-spacing:3px;
- transform:translateZ(20px);
-}
-.holo-status{
- font:10px 'Share Tech Mono';
- color:var(--green);margin-top:22px;
- transform:translateZ(25px);
-}
-section{padding:90px 8%;scroll-margin-top:70px}
-.section-title{
- text-align:center;
- font:700 34px Orbitron,sans-serif;
- margin-bottom:45px;
-}
-.section-title span{color:var(--green)}
-.section-title:after{
- content:"";display:block;width:55px;
- height:3px;background:var(--green);
- margin:15px auto;box-shadow:0 0 15px var(--green);
-}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:20px;
-}
-.panel{
- background:linear-gradient(145deg,#0b1a12,#06100c);
- border:1px solid var(--border);
- border-radius:12px;padding:26px;
- transition:.3s;
- position:relative;overflow:hidden;
-}
-.panel:hover{
- transform:translateY(-7px);
- border-color:var(--green);
- box-shadow:0 8px 35px #00ff9d14;
-}
-.panel .number{
- font:11px 'Share Tech Mono';
- color:var(--green);margin-bottom:16px;
-}
-.panel h3{
- font-family:Orbitron,sans-serif;
- font-size:15px;color:var(--green);
- margin-bottom:14px;
-}
-.panel p{font-size:13px;color:var(--muted);line-height:1.9}
-.skill{margin:21px 0;font-size:13px}
-.skill-top{display:flex;justify-content:space-between}
-.skill-top span:last-child{color:var(--green)}
-.bar{
- width:100%;height:6px;
- background:#1a3025;border-radius:10px;
- margin-top:10px;overflow:hidden;
-}
-.bar span{
- display:block;height:100%;
- width:0;background:var(--green);
- border-radius:10px;
- box-shadow:0 0 12px var(--green);
- transition:width 1.5s ease;
-}
-.project-link{
- display:inline-block;color:var(--green);
- margin-top:18px;font-size:12px;
-}
-.terminal{
- border:1px solid #00ff9d55;
- border-radius:12px;overflow:hidden;
- background:#020906;
- box-shadow:0 0 35px #00ff9d0c;
-}
-.terminal-top{
- padding:14px 18px;
- border-bottom:1px solid var(--border);
- display:flex;justify-content:space-between;
- color:var(--green);font:11px 'Share Tech Mono';
-}
-.terminal-dots{display:flex;gap:6px}
-.terminal-dots i{width:8px;height:8px;border-radius:50%;background:#00ff9d}
-.terminal-body{
- padding:23px;font:13px/2 'Share Tech Mono';
- min-height:190px;color:var(--green);
-}
-.terminal-output{white-space:pre-wrap;overflow-wrap:anywhere}
-.input-line{display:flex;align-items:center;gap:9px}
-.input-line span{color:var(--green)}
-#command{
- background:transparent;border:0;outline:0;
- color:white;width:100%;
- font:13px 'Share Tech Mono';
-}
-#command::placeholder{color:#557a66}
-.contact-item{
- display:block;margin-top:16px;
- color:var(--green);font-size:13px;
- overflow-wrap:anywhere;
-}
-footer{
- text-align:center;padding:35px;
- border-top:1px solid var(--border);
- color:#779487;font-size:12px;line-height:2;
-}
-.reveal{opacity:0;transform:translateY(30px);transition:.8s}
-.reveal.visible{opacity:1;transform:translateY(0)}
-#clock{font-family:'Share Tech Mono';color:var(--green)}
-@media(max-width:800px){
- nav{padding:16px 5%}
- .menu-btn{display:block}
- .nav-links{
- display:none;position:absolute;top:65px;right:5%;
- flex-direction:column;background:#07140d;
- padding:22px;border:1px solid var(--border);
- border-radius:8px;min-width:180px;
- }
- .nav-links.open{display:flex}
- .hero{text-align:center;padding-top:130px}
- .hero-content{width:100%}
- .description{margin-left:auto;margin-right:auto}
- .buttons,.social{justify-content:center}
- .scene{margin-top:25px}
- section{padding:75px 6%}
-}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+#reveal {display:none;margin-top:25px;}
 </style>
 </head>
-
 <body>
-<canvas id="matrix"></canvas>
-<canvas id="space"></canvas>
-<div class="grid-bg"></div>
-<div class="glow"></div>
+<div class="box">
+<h1>DILAWAR.exe</h1>
+<p>CYBER SECURITY SIMULATION</p>
 
-<nav>
- <a href="#home" class="logo">DILAWAR<span>.exe</span></a>
- <button class="menu-btn" id="menuBtn">MENU ☰</button>
- <div class="nav-links" id="navLinks">
-  <a href="#home">HOME</a>
-  <a href="#about">ABOUT</a>
-  <a href="#skills">SKILLS</a>
-  <a href="#projects">PROJECTS</a>
-  <a href="#terminal">TERMINAL</a>
-  <a href="#contact">CONTACT</a>
- </div>
-</nav>
-
-<header class="hero" id="home">
- <div class="hero-content">
-  <div class="status"><span class="dot"></span> DIGITAL SYSTEM ONLINE</div>
-  <h1>HELLO,<br>I'M <span>DILAWAR</span></h1>
-  <div class="subtitle">PROGRAMMER // CSE STUDENT</div>
-  <p class="description">
-   Welcome to my digital universe. I am Dilawar Abbas,
-   a Computer Science Engineering student passionate
-   about programming, artificial intelligence,
-   software development and futuristic technology.
-   I believe in learning, building and creating.
-  </p>
-  <div class="buttons">
-   <a class="btn" href="#projects">EXPLORE PROJECTS ↗</a>
-   <a class="btn" href="#contact">CONNECT WITH ME</a>
-  </div>
-  <div class="social">
-   <a href="https://github.com/" target="_blank" rel="noopener">GITHUB ↗</a>
-   <a href="https://www.instagram.com/dilawar__abass/" target="_blank" rel="noopener">INSTAGRAM ↗</a>
-  </div>
- </div>
-
- <div class="scene">
-  <div class="holo-card" id="holoCard">
-   <div class="profile-wrap">
-    <img src="IMG_5291.PNG" alt="Dilawar Abbas"
-    onerror="this.style.display='none';document.getElementById('photoError').style.display='block'">
-   </div>
-   <div id="photoError" style="display:none;color:#ffb86c;font-size:11px">PHOTO NOT FOUND</div>
-   <h2>DILAWAR ABBAS</h2>
-   <p>KASHMIR • INDIA</p>
-   <div class="holo-status">[ IDENTITY VERIFIED ]</div>
-  </div>
- </div>
-</header>
-
-<section id="about">
- <h2 class="section-title reveal">ABOUT <span>ME</span></h2>
- <div class="grid">
-  <article class="panel reveal">
-   <div class="number">01 // IDENTITY</div>
-   <h3>WHO AM I?</h3>
-   <p>I am Dilawar Abbas, an aspiring software engineer interested in computers, programming, AI and modern technology.</p>
-  </article>
-  <article class="panel reveal">
-   <div class="number">02 // EDUCATION</div>
-   <h3>MY EDUCATION</h3>
-   <p>B.Tech Computer Science Engineering student at SSM College of Engineering, Baramulla.</p>
-  </article>
-  <article class="panel reveal">
-   <div class="number">03 // LOCATION</div>
-   <h3>MY LOCATION</h3>
-   <p>Shareefabad HMT, Kashmir, India.</p>
-  </article>
-  <article class="panel reveal">
-   <div class="number">04 // MISSION</div>
-   <h3>MY AMBITION</h3>
-   <p>To become a successful computer science engineer and create useful technology that solves real problems.</p>
-  </article>
- </div>
-</section>
-
-<section id="skills">
- <h2 class="section-title reveal">TECH <span>ARSENAL</span></h2>
- <div class="grid">
-  <article class="panel reveal">
-   <div class="number">PROGRAMMING // 01</div>
-   <h3>DEVELOPMENT SKILLS</h3>
-   <div class="skill">
-    <div class="skill-top"><span>C Programming</span><span>Learning</span></div>
-    <div class="bar"><span data-width="65%"></span></div>
-   </div>
-   <div class="skill">
-    <div class="skill-top"><span>Python</span><span>Learning</span></div>
-    <div class="bar"><span data-width="60%"></span></div>
-   </div>
-   <div class="skill">
-    <div class="skill-top"><span>HTML & CSS</span><span>Learning</span></div>
-    <div class="bar"><span data-width="75%"></span></div>
-   </div>
-   <div class="skill">
-    <div class="skill-top"><span>JavaScript</span><span>Learning</span></div>
-    <div class="bar"><span data-width="45%"></span></div>
-   </div>
-  </article>
-  <article class="panel reveal">
-   <div class="number">INTERESTS // 02</div>
-   <h3>TECHNOLOGY INTERESTS</h3>
-   <p>
-    Artificial Intelligence<br><br>
-    Cybersecurity Education<br><br>
-    Web Development<br><br>
-    Software Engineering<br><br>
-    Automation and Programming
-   </p>
-  </article>
- </div>
-</section>
-
-<section id="projects">
- <h2 class="section-title reveal">FEATURED <span>PROJECTS</span></h2>
- <div class="grid">
-  <article class="panel reveal">
-   <div class="number">PROJECT_001</div>
-   <h3>JARVIS AI</h3>
-   <p>A personal assistant project exploring voice interaction and automation.</p>
-   <span class="project-link">PYTHON • AI CONCEPT</span>
-  </article>
-  <article class="panel reveal">
-   <div class="number">PROJECT_002</div>
-   <h3>AI ASSISTANT</h3>
-   <p>An assistant interface exploring intelligent responses and user interaction.</p>
-   <span class="project-link">PYTHON • AI</span>
-  </article>
-  <article class="panel reveal">
-   <div class="number">PROJECT_003</div>
-   <h3>ATTENDANCE SYSTEM</h3>
-   <p>A web-based attendance management application.</p>
-   <span class="project-link">HTML • CSS • PYTHON</span>
-  </article>
-  <article class="panel reveal">
-   <div class="number">PROJECT_004</div>
-   <h3>PYTHON EXPERIMENTS</h3>
-   <p>Creative programming experiments, applications and learning projects.</p>
-   <span class="project-link">PYTHON • DEVELOPMENT</span>
-  </article>
- </div>
-</section>
-
-<section id="terminal">
- <h2 class="section-title reveal">INTERACTIVE <span>TERMINAL</span></h2>
- <div class="terminal reveal">
-  <div class="terminal-top">
-   <span>DILAWAR@DIGITAL-SYSTEM:~</span>
-   <div class="terminal-dots"><i></i><i></i><i></i></div>
-  </div>
-  <div class="terminal-body">
-   <div class="terminal-output" id="output">Welcome to DILAWAR.exe terminal.
-System initialized successfully.
-Type 'help' to explore available commands.
-
+<div id="terminal">
+> SYSTEM READY<br>
+> WAITING FOR USER...
 </div>
-   <div class="input-line">
-    <span>visitor@dilawar:~$</span>
-    <input id="command" autocomplete="off" placeholder="Type a command...">
-   </div>
-  </div>
- </div>
-</section>
 
-<section id="contact">
- <h2 class="section-title reveal">CONNECT <span>WITH ME</span></h2>
- <div class="grid">
-  <article class="panel reveal">
-   <div class="number">SOCIAL // 01</div>
-   <h3>INSTAGRAM</h3>
-   <p>Follow my journey, learning and programming projects.</p>
-   <a class="contact-item" href="https://www.instagram.com/dilawar__abass/" target="_blank" rel="noopener">@dilawar__abass ↗</a>
-  </article>
-  <article class="panel reveal">
-   <div class="number">DEVELOPMENT // 02</div>
-   <h3>GITHUB</h3>
-   <p>Explore my code, repositories and development journey.</p>
-   <a class="contact-item" href="https://github.com/" target="_blank" rel="noopener">Open GitHub ↗</a>
-  </article>
-  <article class="panel reveal">
-   <div class="number">MISSION // 03</div>
-   <h3>LET'S BUILD</h3>
-   <p>Learning every day. Building new ideas. Exploring the future of technology.</p>
-   <span class="contact-item">DILAWAR.exe // ONLINE</span>
-  </article>
- </div>
-</section>
-
-<footer>
- <div id="clock"></div>
 <br>
- DILAWAR ABBAS © 2026
- <br>DESIGNED WITH CODE • BUILT WITH AMBITION
-</footer>
+<button id="start" onclick="startPrank()">
+START SIMULATION
+</button>
+
+<div id="reveal">
+<h2>😂 YOU GOT PRANKED!</h2>
+<h3>YOUR PHONE IS SAFE!</h3>
+<p>Created by DILAWAR ABASS</p>
+</div>
+
+<p>Harmless visual simulation only.</p>
+</div>
 
 <script>
-// MATRIX RAIN BACKGROUND
-const matrix=document.getElementById("matrix");
-const mctx=matrix.getContext("2d");
-let drops=[];
-const chars="01アイウエオカキクケコABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let fontSize=15,columns=0;
+function startPrank() {
+    const terminal = document.getElementById("terminal");
+    const button = document.getElementById("start");
 
-function resizeMatrix(){
- matrix.width=innerWidth;
- matrix.height=innerHeight;
- columns=Math.ceil(matrix.width/fontSize);
- drops=Array(columns).fill(1);
+    button.disabled = true;
+    button.textContent = "RUNNING...";
+
+    const messages = [
+        "> Initializing visual simulation...",
+        "> Generating fictional security data...",
+        "> Analyzing imaginary network...",
+        "> Preparing final report...",
+        "> SIMULATION COMPLETED!"
+    ];
+
+    let i = 0;
+
+    const timer = setInterval(() => {
+        if(i < messages.length) {
+            const p = document.createElement("p");
+            p.textContent = messages[i++];
+            terminal.appendChild(p);
+        } else {
+            clearInterval(timer);
+            document.getElementById("reveal").style.display = "block";
+            button.textContent = "PRANK COMPLETED!";
+        }
+    }, 1000);
 }
-resizeMatrix();
-window.addEventListener("resize",resizeMatrix);
-
-function drawMatrix(){
- mctx.fillStyle="rgba(3,8,7,0.12)";
- mctx.fillRect(0,0,matrix.width,matrix.height);
- mctx.fillStyle="#00ff9d";
- mctx.font=fontSize+"px monospace";
- for(let i=0;i<drops.length;i++){
-  const char=chars[Math.floor(Math.random()*chars.length)];
-  mctx.fillText(char,i*fontSize,drops[i]*fontSize);
-  if(drops[i]*fontSize>matrix.height&&Math.random()>.975){
-   drops[i]=0;
-  }
-  drops[i]++;
- }
- requestAnimationFrame(drawMatrix);
-}
-drawMatrix();
-
-// 3D PARTICLE UNIVERSE
-const space=document.getElementById("space");
-const ctx=space.getContext("2d");
-let stars=[];
-let mouse={x:innerWidth/2,y:innerHeight/2};
-
-function resizeSpace(){
- space.width=innerWidth;
- space.height=innerHeight;
- stars=Array.from({length:150},()=>({
-  x:Math.random()*space.width,
-  y:Math.random()*space.height,
-  z:Math.random()*1+0.3,
-  r:Math.random()*1.6+.3
- }));
-}
-resizeSpace();
-window.addEventListener("resize",resizeSpace);
-window.addEventListener("mousemove",e=>{
- mouse.x=e.clientX;
- mouse.y=e.clientY;
-});
-
-function drawSpace(){
- ctx.clearRect(0,0,space.width,space.height);
- stars.forEach(s=>{
-  const dx=(mouse.x-innerWidth/2)*.008*s.z;
-  const dy=(mouse.y-innerHeight/2)*.008*s.z;
-  s.y-=.12*s.z;
-  if(s.y<0)s.y=space.height;
-  ctx.beginPath();
-  ctx.arc(s.x+dx,s.y+dy,s.r,0,Math.PI*2);
-  ctx.fillStyle="#00ff9d";
-  ctx.shadowBlur=9;
-  ctx.shadowColor="#00ff9d";
-  ctx.fill();
- });
- requestAnimationFrame(drawSpace);
-}
-drawSpace();
-
-// HOLOGRAPHIC CARD INTERACTION
-const card=document.getElementById("holoCard");
-card.addEventListener("mousemove",e=>{
- const rect=card.getBoundingClientRect();
- const x=(e.clientX-rect.left)/rect.width-.5;
- const y=(e.clientY-rect.top)/rect.height-.5;
- card.style.animation="none";
- card.style.transform=`rotateY(${x*24}deg) rotateX(${-y*24}deg)`;
-});
-card.addEventListener("mouseleave",()=>{
- card.style.transform="";
- card.style.animation="float 5s ease-in-out infinite";
-});
-
-// MOBILE NAVIGATION
-const menuBtn=document.getElementById("menuBtn");
-const navLinks=document.getElementById("navLinks");
-menuBtn.addEventListener("click",()=>{
- navLinks.classList.toggle("open");
-});
-navLinks.querySelectorAll("a").forEach(a=>{
- a.addEventListener("click",()=>navLinks.classList.remove("open"));
-});
-
-// SCROLL REVEAL
-const observer=new IntersectionObserver(entries=>{
- entries.forEach(entry=>{
-  if(entry.isIntersecting){
-   entry.target.classList.add("visible");
-   entry.target.querySelectorAll(".bar span").forEach(bar=>{
-    bar.style.width=bar.dataset.width;
-   });
-  }
- });
-},{threshold:.12});
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
-
-// INTERACTIVE TERMINAL
-const command=document.getElementById("command");
-const output=document.getElementById("output");
-
-const commands={
- help:"AVAILABLE COMMANDS:\nhelp       - Show all commands\nabout      - About Dilawar\nskills     - Programming skills\nprojects   - Project list\neducation  - Education details\nlocation   - Location information\nsocial     - Instagram profile\nclear      - Clear terminal\nwhoami     - Current identity\n",
- about:"I am Dilawar Abbas, a Computer Science Engineering student from Kashmir, passionate about programming and technology.",
- skills:"C PROGRAMMING\nPYTHON\nHTML / CSS\nJAVASCRIPT\nAI AND SOFTWARE DEVELOPMENT INTERESTS",
- projects:"01 - JARVIS AI\n02 - AI ASSISTANT\n03 - ATTENDANCE SYSTEM\n04 - PYTHON EXPERIMENTS",
- education:"B.TECH COMPUTER SCIENCE ENGINEERING\nSSM COLLEGE OF ENGINEERING, BARAMULLA",
- location:"SHAREEFABAD HMT, KASHMIR, INDIA",
- social:"INSTAGRAM: @dilawar__abass\nhttps://www.instagram.com/dilawar__abass/",
- whoami:"VISITOR ACCESS GRANTED.\nYOU ARE EXPLORING DILAWAR'S DIGITAL WORLD."
-};
-
-command.addEventListener("keydown",e=>{
- if(e.key!=="Enter")return;
- const value=command.value.trim().toLowerCase();
- if(!value)return;
- if(value==="clear"){
-  output.textContent="";
- }else{
-  const reply=commands[value]||"COMMAND NOT FOUND. Type 'help' for available commands.";
-  output.textContent+="\nvisitor@dilawar:~$ "+value+"\n"+reply+"\n";
- }
- command.value="";
- output.parentElement.scrollTop=output.parentElement.scrollHeight;
-});
-
-// LIVE CLOCK
-function updateClock(){
- const now=new Date();
- document.getElementById("clock").textContent=
- "LOCAL SYSTEM TIME: "+now.toLocaleTimeString();
-}
-updateClock();
-setInterval(updateClock,1000);
 </script>
 </body>
 </html>
