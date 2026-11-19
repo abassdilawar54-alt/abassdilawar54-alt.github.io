@@ -4,350 +4,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dilawar Abass | Developer</title>
+<meta name="theme-color" content="#070b14">
+<meta name="description" content="Dilawar Abass - Computer Science Engineering student, programmer and developer from Kashmir.">
+<title>Dilawar Abass | CSE Developer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 :root {
-  --bg: #070b14;
-  --card: #101827;
-  --accent: #00e5ff;
-  --purple: #a78bfa;
-  --white: #f4f7ff;
-  --muted: #9aa9bf;
+  --bg:#070b14;
+  --card:#101827;
+  --accent:#00e5ff;
+  --purple:#a78bfa;
+  --white:#f4f7ff;
+  --muted:#9aa9bf;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
 }
 
 body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Inter,sans-serif;
+  overflow-x:hidden;
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
+  content:"";
+  position:fixed;
+  inset:0;
   background-image:
-    linear-gradient(#17263b 1px, transparent 1px),
-    linear-gradient(90deg, #17263b 1px, transparent 1px);
-  background-size: 55px 55px;
-  opacity: .13;
-  pointer-events: none;
-  z-index: -1;
+    linear-gradient(#17263b 1px,transparent 1px),
+    linear-gradient(90deg,#17263b 1px,transparent 1px);
+  background-size:55px 55px;
+  opacity:.13;
+  pointer-events:none;
+  z-index:-1;
 }
 
-a { text-decoration: none; color: inherit; }
+a {
+  text-decoration:none;
+  color:inherit;
+}
 
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 20px 9%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(7,11,20,.88);
-  backdrop-filter: blur(15px);
-  z-index: 100;
-  border-bottom: 1px solid #ffffff10;
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(7,11,20,.92);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid #ffffff12;
+  z-index:100;
 }
 
 .logo {
-  font-size: 23px;
-  font-weight: 900;
-  font-family: 'Space Grotesk';
+  font-family:"Space Grotesk";
+  font-size:23px;
+  font-weight:900;
 }
 
-.logo span { color: var(--accent); }
+.logo span {color:var(--accent)}
 
 .nav-links {
-  display: flex;
-  gap: 28px;
+  display:flex;
+  gap:25px;
 }
 
 .nav-links a {
-  color: var(--muted);
-  font-size: 13px;
-  transition: .3s;
+  color:var(--muted);
+  font-size:13px;
+  transition:.3s;
 }
 
-.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover {color:var(--accent)}
 
 .menu {
-  display: none;
-  background: none;
-  color: white;
-  border: 0;
-  font-size: 26px;
-  cursor: pointer;
+  display:none;
+  background:none;
+  border:0;
+  color:white;
+  font-size:26px;
+  cursor:pointer;
 }
 
 .hero {
-  min-height: 100vh;
-  padding: 150px 9% 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 50px;
+  min-height:100vh;
+  padding:150px 9% 80px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:45px;
 }
 
 .tag {
-  display: inline-block;
-  border: 1px solid #00e5ff55;
-  color: var(--accent);
-  padding: 9px 16px;
-  border-radius: 30px;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 25px;
+  display:inline-block;
+  padding:10px 17px;
+  border:1px solid #00e5ff55;
+  border-radius:30px;
+  color:var(--accent);
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:25px;
 }
 
 .hero h1 {
-  font-family: 'Space Grotesk';
-  font-size: clamp(45px, 7vw, 85px);
-  line-height: 1.05;
-  font-weight: 800;
+  font-family:"Space Grotesk";
+  font-size:clamp(45px,7vw,82px);
+  line-height:1.08;
 }
 
-.hero h1 span {
-  background: linear-gradient(90deg, var(--accent), var(--purple));
-  -webkit-background-clip: text;
-  color: transparent;
+.gradient {
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
 
 .hero h2 {
-  color: var(--muted);
-  margin-top: 22px;
-  font-size: 21px;
-  font-weight: 500;
+  margin-top:22px;
+  font-size:21px;
+  color:var(--muted);
 }
 
-.typing { color: var(--accent); }
+.typing {color:var(--accent)}
 
 .hero p {
-  color: var(--muted);
-  line-height: 1.9;
-  max-width: 550px;
-  margin-top: 22px;
-  font-size: 15px;
+  color:var(--muted);
+  max-width:550px;
+  line-height:1.9;
+  margin-top:22px;
+  font-size:15px;
 }
 
 .buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 35px;
-  flex-wrap: wrap;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:32px;
 }
 
 .btn {
-  padding: 14px 23px;
-  border-radius: 9px;
-  font-weight: 700;
-  font-size: 13px;
-  transition: .3s;
-  display: inline-block;
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:700;
+  transition:.3s;
 }
 
 .primary {
-  background: var(--accent);
-  color: #06111c;
+  background:var(--accent);
+  color:#07111a;
 }
 
 .secondary {
-  border: 1px solid #ffffff35;
+  border:1px solid #ffffff35;
 }
 
 .btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px #00e5ff40;
+  transform:translateY(-5px);
+  box-shadow:0 0 25px #00e5ff35;
 }
 
 .orb {
-  width: 310px;
-  height: 310px;
-  min-width: 240px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle, #17334d, #101827 65%);
-  border: 1px solid #00e5ff55;
-  box-shadow: 0 0 70px #00e5ff20,
-              inset 0 0 40px #a78bfa20;
-  animation: float 4s ease-in-out infinite;
+  width:300px;
+  height:300px;
+  min-width:230px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,#17334d,#101827 70%);
+  border:1px solid #00e5ff70;
+  box-shadow:0 0 80px #00e5ff20,inset 0 0 45px #a78bfa25;
+  animation:float 4s ease-in-out infinite;
 }
 
 .orb strong {
-  font-family: 'Space Grotesk';
-  font-size: 90px;
-  color: var(--accent);
-  text-shadow: 0 0 35px #00e5ff;
+  font-family:"Space Grotesk";
+  font-size:85px;
+  color:var(--accent);
+  text-shadow:0 0 35px var(--accent);
 }
 
 @keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
+  50% {transform:translateY(-18px)}
 }
 
-section {
-  padding: 100px 9%;
-}
+section {padding:95px 9%}
 
 .section-title {
-  text-align: center;
-  font-family: 'Space Grotesk';
-  font-size: 38px;
-  margin-bottom: 15px;
+  font-family:"Space Grotesk";
+  font-size:38px;
+  text-align:center;
 }
 
-.section-title span { color: var(--accent); }
+.section-title span {color:var(--accent)}
 
 .subtitle {
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 50px;
+  color:var(--muted);
+  text-align:center;
+  font-size:14px;
+  margin:14px 0 45px;
 }
 
 .about-box {
-  max-width: 850px;
-  margin: auto;
-  padding: 35px;
-  background: var(--card);
-  border: 1px solid #ffffff12;
-  border-radius: 18px;
-  line-height: 2;
-  color: var(--muted);
-  text-align: center;
+  max-width:850px;
+  margin:auto;
+  padding:35px;
+  background:var(--card);
+  border:1px solid #ffffff15;
+  border-radius:18px;
+  color:var(--muted);
+  text-align:center;
+  line-height:2;
 }
 
-.about-box strong { color: var(--accent); }
+.about-box strong {color:var(--accent)}
 
-.skills-grid, .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.skills-grid,.projects-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
 
-.skill, .project {
-  padding: 28px;
-  border-radius: 15px;
-  background: var(--card);
-  border: 1px solid #ffffff12;
-  transition: .3s;
+.skill,.project {
+  background:var(--card);
+  border:1px solid #ffffff12;
+  padding:28px;
+  border-radius:16px;
+  transition:.3s;
 }
 
-.skill:hover, .project:hover {
-  transform: translateY(-8px);
-  border-color: var(--accent);
-  box-shadow: 0 10px 35px #00e5ff12;
+.skill:hover,.project:hover {
+  transform:translateY(-8px);
+  border-color:var(--accent);
+  box-shadow:0 10px 35px #00e5ff15;
 }
 
-.skill .symbol {
-  font-size: 30px;
-  margin-bottom: 15px;
+.symbol {
+  font-size:32px;
+  margin-bottom:17px;
 }
 
-.skill h3, .project h3 { margin-bottom: 12px; }
+.skill h3,.project h3 {margin-bottom:12px}
 
-.skill p, .project p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
+.skill p,.project p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
 }
 
-.project {
-  min-height: 200px;
+.project-number {
+  color:var(--accent);
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:16px;
 }
 
-.project small {
-  color: var(--accent);
-  display: block;
-  margin-bottom: 15px;
-  letter-spacing: 2px;
+.status {
+  display:inline-block;
+  margin-top:18px;
+  padding:6px 10px;
+  background:#00e5ff12;
+  border:1px solid #00e5ff35;
+  border-radius:20px;
+  color:var(--accent);
+  font-size:10px;
 }
 
-.contact-box {
-  max-width: 650px;
-  margin: auto;
-  text-align: center;
-  padding: 40px 25px;
-  background: linear-gradient(135deg, #101827, #14243b);
-  border: 1px solid #00e5ff40;
-  border-radius: 20px;
+.contact-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  max-width:800px;
+  margin:auto;
 }
 
-.contact-box p {
-  color: var(--muted);
-  line-height: 1.8;
-  margin: 20px 0;
+.contact-card {
+  background:var(--card);
+  padding:25px;
+  border:1px solid #ffffff15;
+  border-radius:14px;
+  transition:.3s;
+}
+
+.contact-card:hover {
+  border-color:var(--accent);
+  transform:translateY(-5px);
+}
+
+.contact-card .symbol {font-size:27px}
+
+.contact-card h3 {
+  margin-bottom:8px;
+  font-size:16px;
+}
+
+.contact-card p {
+  color:var(--muted);
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.contact-card a {color:var(--accent)}
+
+.location-box {
+  max-width:800px;
+  margin:25px auto 0;
+  padding:25px;
+  background:linear-gradient(120deg,#101827,#17243b);
+  border:1px solid #00e5ff40;
+  border-radius:15px;
+  text-align:center;
+}
+
+.location-box p {
+  color:var(--muted);
+  margin-top:10px;
+  font-size:14px;
 }
 
 footer {
-  padding: 30px;
-  text-align: center;
-  border-top: 1px solid #ffffff12;
-  color: var(--muted);
-  font-size: 12px;
+  border-top:1px solid #ffffff15;
+  padding:30px 15px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
 }
 
-footer span { color: var(--accent); }
+footer span {color:var(--accent)}
 
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: .8s;
+  opacity:0;
+  transform:translateY(25px);
+  transition:.8s;
 }
 
 .reveal.show {
-  opacity: 1;
-  transform: translateY(0);
+  opacity:1;
+  transform:translateY(0);
 }
 
-@media(max-width: 800px) {
-  nav { padding: 17px 6%; }
-  .menu { display: block; }
+@media(max-width:850px) {
+  nav {padding:17px 6%}
+  .menu {display:block}
+
   .nav-links {
-    display: none;
-    position: absolute;
-    top: 65px;
-    left: 0;
-    width: 100%;
-    padding: 25px;
-    background: #101827;
-    flex-direction: column;
-    text-align: center;
+    display:none;
+    position:absolute;
+    top:65px;
+    left:0;
+    width:100%;
+    padding:25px;
+    background:#101827;
+    flex-direction:column;
+    text-align:center;
   }
-  .nav-links.active { display: flex; }
+
+  .nav-links.active {display:flex}
+
   .hero {
-    padding: 130px 7% 70px;
-    flex-direction: column-reverse;
-    text-align: center;
+    flex-direction:column-reverse;
+    text-align:center;
+    padding:125px 7% 70px;
   }
-  .hero p { margin-left: auto; margin-right: auto; }
-  .buttons { justify-content: center; }
-  .orb { width: 220px; height: 220px; }
-  .orb strong { font-size: 65px; }
-  section { padding: 75px 7%; }
-  .skills-grid, .projects-grid {
-    grid-template-columns: 1fr;
+
+  .hero p {
+    margin-left:auto;
+    margin-right:auto;
   }
-  .section-title { font-size: 31px; }
+
+  .buttons {justify-content:center}
+  .orb {width:220px;height:220px}
+  .orb strong {font-size:65px}
+  section {padding:75px 7%}
+  .skills-grid,.projects-grid {grid-template-columns:1fr 1fr}
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
+@media(max-width:550px) {
+  .skills-grid,.projects-grid,.contact-grid {
+    grid-template-columns:1fr;
+  }
+
+  .section-title {font-size:31px}
+  .about-box {padding:25px 18px}
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation:none!important;
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
+
+  .reveal {
+    opacity:1;
+    transform:none;
   }
 }
 </style>
@@ -358,7 +420,7 @@ footer span { color: var(--accent); }
 <nav>
   <div class="logo">DILAWAR<span>.</span></div>
 
-  <button class="menu" id="menu" aria-label="Toggle navigation">☰</button>
+  <button class="menu" id="menu" aria-label="Open navigation">☰</button>
 
   <div class="nav-links" id="navLinks">
     <a href="#home">Home</a>
@@ -370,24 +432,27 @@ footer span { color: var(--accent); }
 </nav>
 
 <!-- HOME -->
+
 <div class="hero" id="home">
 
   <div>
     <div class="tag">WELCOME TO MY DIGITAL WORLD</div>
 
-    <h1>Hi, I'm<br><span>Dilawar Abass.</span></h1>
+    <h1>Hi, I'm<br><span class="gradient">Dilawar Abass.</span></h1>
 
     <h2>I'm a <span class="typing" id="typing"></span></h2>
 
     <p>
       A Computer Science Engineering student from Kashmir,
-      passionate about technology, programming and building
-      creative digital experiences. I turn ideas into code
-      and curiosity into innovation.
+      passionate about programming, artificial intelligence
+      and creating innovative digital experiences.
+
+      I believe every great idea starts with curiosity
+      and becomes reality through code.
     </p>
 
     <div class="buttons">
-      <a href="#projects" class="btn primary">Explore My Work ↗</a>
+      <a href="#projects" class="btn primary">Explore My Projects ↗</a>
       <a href="#contact" class="btn secondary">Contact Me</a>
     </div>
   </div>
@@ -399,9 +464,10 @@ footer span { color: var(--accent); }
 </div>
 
 <!-- ABOUT -->
+
 <section id="about">
   <h2 class="section-title">About <span>Me</span></h2>
-  <p class="subtitle">A little introduction about myself</p>
+  <p class="subtitle">Get to know the developer behind the screen</p>
 
   <div class="about-box reveal">
     Hello! I'm <strong>Dilawar Abass</strong>, a first-year
@@ -410,17 +476,22 @@ footer span { color: var(--accent); }
 
     <br><br>
 
-    I'm interested in programming, software development,
-    artificial intelligence and modern technologies.
+    I'm from <strong>Shareefabad, HMT, Kashmir, India</strong>.
 
     <br><br>
 
-    My goal is to become a skilled software engineer,
-    build meaningful projects and never stop learning.
+    My interests include software development, artificial
+    intelligence, Python programming and web technologies.
+
+    <br><br>
+
+    My ambition is to become a successful software engineer
+    and create technology that makes a difference.
   </div>
 </section>
 
 <!-- SKILLS -->
+
 <section id="skills">
   <h2 class="section-title">My <span>Skills</span></h2>
   <p class="subtitle">Technologies I'm learning and exploring</p>
@@ -430,99 +501,190 @@ footer span { color: var(--accent); }
     <div class="skill reveal">
       <div class="symbol">⚙️</div>
       <h3>C Programming</h3>
-      <p>Learning programming logic, algorithms, pointers and memory management.</p>
+      <p>Programming fundamentals, pointers, functions, arrays and problem solving.</p>
     </div>
 
     <div class="skill reveal">
       <div class="symbol">🐍</div>
       <h3>Python</h3>
-      <p>Exploring Python programming and developing useful applications.</p>
+      <p>Python applications, programming logic and software development.</p>
     </div>
 
     <div class="skill reveal">
       <div class="symbol">🌐</div>
       <h3>HTML & CSS</h3>
-      <p>Creating responsive websites with modern layouts and animations.</p>
+      <p>Modern websites, responsive layouts and creative web designs.</p>
     </div>
 
     <div class="skill reveal">
       <div class="symbol">⚡</div>
       <h3>JavaScript</h3>
-      <p>Exploring interactive websites and dynamic web experiences.</p>
+      <p>Interactive websites and dynamic web functionality.</p>
     </div>
 
     <div class="skill reveal">
-      <div class="symbol">💻</div>
+      <div class="symbol">🤖</div>
+      <h3>Artificial Intelligence</h3>
+      <p>Exploring AI assistants and intelligent software applications.</p>
+    </div>
+
+    <div class="skill reveal">
+      <div class="symbol">💡</div>
       <h3>Problem Solving</h3>
       <p>Developing logical thinking and finding solutions through code.</p>
-    </div>
-
-    <div class="skill reveal">
-      <div class="symbol">🚀</div>
-      <h3>Learning Mindset</h3>
-      <p>Always curious, always experimenting and always improving.</p>
     </div>
 
   </div>
 </section>
 
 <!-- PROJECTS -->
+
 <section id="projects">
   <h2 class="section-title">My <span>Projects</span></h2>
-  <p class="subtitle">Things I'm building and experimenting with</p>
+  <p class="subtitle">My programming journey and creations</p>
 
   <div class="projects-grid">
 
     <div class="project reveal">
-      <small>PROJECT 01</small>
-      <h3>Personal Portfolio</h3>
-      <p>A responsive personal website showcasing my journey as a CSE student.</p>
+      <div class="project-number">PROJECT 01 / AI</div>
+      <div class="symbol">🧠</div>
+      <h3>Personal AI Assistant</h3>
+      <p>
+        My own AI assistant concept designed to explore
+        intelligent conversations, useful commands and
+        personal productivity.
+      </p>
+      <span class="status">In Development</span>
     </div>
 
     <div class="project reveal">
-      <small>PROJECT 02</small>
-      <h3>Attendance System</h3>
-      <p>A student attendance website developed using Python and Flask.</p>
+      <div class="project-number">PROJECT 02 / VOICE AI</div>
+      <div class="symbol">🤖</div>
+      <h3>JARVIS Assistant</h3>
+      <p>
+        A voice-controlled desktop assistant project inspired
+        by JARVIS, exploring voice commands and automation.
+      </p>
+      <span class="status">In Development</span>
     </div>
 
     <div class="project reveal">
-      <small>PROJECT 03</small>
-      <h3>Python Experiments</h3>
-      <p>Small Python applications created to improve my programming skills.</p>
+      <div class="project-number">PROJECT 03 / WEB</div>
+      <div class="symbol">📊</div>
+      <h3>Attendance Management System</h3>
+      <p>
+        A student attendance website developed with
+        Python and Flask for managing attendance records.
+      </p>
+      <span class="status">Built / Learning</span>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-number">PROJECT 04 / PYTHON</div>
+      <div class="symbol">🐍</div>
+      <h3>Python Applications</h3>
+      <p>
+        A collection of Python experiments and small
+        applications created to improve programming skills.
+      </p>
+      <span class="status">Ongoing</span>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-number">PROJECT 05 / WEB DESIGN</div>
+      <div class="symbol">💻</div>
+      <h3>Developer Portfolio</h3>
+      <p>
+        My personal website showcasing my skills,
+        programming journey and development projects.
+      </p>
+      <span class="status">Live Website</span>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-number">PROJECT 06 / FUTURE</div>
+      <div class="symbol">🚀</div>
+      <h3>Future Innovations</h3>
+      <p>
+        Exploring new ideas in software engineering,
+        AI, automation and modern technologies.
+      </p>
+      <span class="status">Coming Soon</span>
     </div>
 
   </div>
 </section>
 
 <!-- CONTACT -->
+
 <section id="contact">
   <h2 class="section-title">Let's <span>Connect</span></h2>
-  <p class="subtitle">Have an idea? Let's build something amazing.</p>
+  <p class="subtitle">Find me across the digital world</p>
 
-  <div class="contact-box reveal">
-    <h2>Let's create something together.</h2>
-    <p>
-      I'm always interested in learning, collaborating
-      and exploring new technology.
-    </p>
+  <div class="contact-grid">
 
-    <a href="https://github.com/abassdilawar54-alt"
-       target="_blank" rel="noopener noreferrer"
-       class="btn primary">Visit My GitHub ↗</a>
+    <div class="contact-card">
+      <div class="symbol">📸</div>
+      <h3>Instagram</h3>
+      <p>
+        <a href="https://www.instagram.com/dilawar__abass/"
+           target="_blank" rel="noopener noreferrer">
+          @dilawar__abass ↗
+        </a>
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <div class="symbol">💻</div>
+      <h3>GitHub</h3>
+      <p>
+        <a href="https://github.com/abassdilawar54-alt"
+           target="_blank" rel="noopener noreferrer">
+          Visit My GitHub ↗
+        </a>
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <div class="symbol">📍</div>
+      <h3>Location</h3>
+      <p>Shareefabad, HMT, Kashmir, India</p>
+    </div>
+
+    <div class="contact-card">
+      <div class="symbol">🎓</div>
+      <h3>Education</h3>
+      <p>Computer Science Engineering<br>SSM College of Engineering, Baramulla</p>
+    </div>
+
   </div>
+
+  <div class="location-box">
+    <div class="symbol">🌍</div>
+    <h3>Based in Kashmir, India</h3>
+    <p>Shareefabad, HMT · Kashmir</p>
+  </div>
+
 </section>
 
 <footer>
-  Designed & Developed by <span>Dilawar Abass</span> |
+  Designed & Developed by <span>Dilawar Abass</span>
+  <br><br>
   © <span id="year"></span> All Rights Reserved.
+  <br>
+  Built with passion and code.
 </footer>
 
 <script>
+
+// Animated typing effect
+
 const words = [
   "CSE Student",
   "Programmer",
-  "Web Developer",
-  "Future Engineer"
+  "Python Developer",
+  "AI Enthusiast",
+  "Future Software Engineer"
 ];
 
 let wordIndex = 0;
@@ -534,17 +696,19 @@ const typing = document.getElementById("typing");
 function typeEffect() {
   const current = words[wordIndex];
 
-  typing.textContent = current.substring(0, charIndex);
+  typing.textContent = current.substring(0,charIndex);
 
   if (!deleting) {
     charIndex++;
+
     if (charIndex > current.length) {
       deleting = true;
-      setTimeout(typeEffect, 1100);
+      setTimeout(typeEffect,1100);
       return;
     }
   } else {
     charIndex--;
+
     if (charIndex < 0) {
       deleting = false;
       wordIndex = (wordIndex + 1) % words.length;
@@ -552,38 +716,48 @@ function typeEffect() {
     }
   }
 
-  setTimeout(typeEffect, deleting ? 45 : 100);
+  setTimeout(typeEffect,deleting ? 45 : 100);
 }
 
 typeEffect();
 
+// Mobile navigation
+
 const menu = document.getElementById("menu");
 const navLinks = document.getElementById("navLinks");
 
-menu.addEventListener("click", () => {
+menu.addEventListener("click",() => {
   navLinks.classList.toggle("active");
+  menu.textContent = navLinks.classList.contains("active") ? "✕" : "☰";
 });
 
 document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
+  link.addEventListener("click",() => {
     navLinks.classList.remove("active");
+    menu.textContent = "☰";
   });
 });
+
+// Scroll reveal animation
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("show");
+      observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+},{threshold:0.12});
 
 document.querySelectorAll(".reveal").forEach(element => {
   observer.observe(element);
 });
 
+// Automatic copyright year
+
 document.getElementById("year").textContent =
   new Date().getFullYear();
+
 </script>
 
 </body>
