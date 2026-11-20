@@ -4,872 +4,444 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050713">
-<title>DILAWAR.exe | Digital Mind</title>
+<title>DILAWAR.exe | Developer Portfolio</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  --bg:#050713;
-  --panel:rgba(14,22,43,.82);
-  --blue:#00d9ff;
-  --purple:#a855f7;
-  --white:#f1f5ff;
-  --muted:#9baac6;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-* {margin:0;padding:0;box-sizing:border-box}
-html {scroll-behavior:smooth}
 body {
-  background:var(--bg);
-  color:var(--white);
-  font-family:Inter,sans-serif;
-  overflow-x:hidden;
+    background: #05070d;
+    color: #e8faff;
+    font-family: Consolas, monospace;
+    overflow-x: hidden;
 }
-body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-  radial-gradient(ellipse at 15% 20%,#10264b 0,transparent 40%),
-  radial-gradient(ellipse at 85% 65%,#24103f 0,transparent 38%),
-  #050713;
-}
-#particles {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-}
-a {color:inherit;text-decoration:none}
-button {font:inherit;cursor:pointer}
 
-nav {
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:19px 7%;
-  background:rgba(5,7,19,.78);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid #ffffff12;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+    linear-gradient(#00eaff0b 1px, transparent 1px),
+    linear-gradient(90deg,#00eaff0b 1px,transparent 1px);
+    background-size: 35px 35px;
+    pointer-events: none;
+    z-index: -1;
 }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 8%;
+    border-bottom: 1px solid #00eaff33;
+}
+
 .logo {
-  font-family:Orbitron;
-  color:var(--blue);
-  font-size:19px;
-  font-weight:800;
-  letter-spacing:2px;
+    color: #00f0ff;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 0 15px #00eaff;
 }
-nav .links {
-  display:flex;
-  gap:25px;
-  font-size:13px;
-  color:#bdc9df;
+
+nav a {
+    color: #b9dce5;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 13px;
 }
-nav .links a:hover {color:var(--blue)}
-.menu {display:none;background:none;border:0;color:white;font-size:25px}
+
+nav a:hover {
+    color: #00f0ff;
+}
 
 .hero {
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:50px;
-  padding:130px 10% 70px;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 70px 10%;
 }
-.hero-content {max-width:650px}
-.eyebrow {
-  color:var(--blue);
-  letter-spacing:4px;
-  font:12px Orbitron;
-  margin-bottom:25px;
+
+.tag {
+    color: #00eaff;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
 }
-.hero h1 {
-  font-size:clamp(42px,7vw,83px);
-  line-height:1.08;
-  font-weight:800;
+
+h1 {
+    font-size: clamp(42px, 8vw, 90px);
+    line-height: 1.1;
+    color: white;
 }
-.hero h1 span {
-  background:linear-gradient(90deg,var(--blue),#a78bfa,#ec8aff);
-  background-clip:text;
-  -webkit-background-clip:text;
-  color:transparent;
+
+h1 span {
+    color: #00eaff;
+    text-shadow: 0 0 25px #00eaff77;
 }
-.hero h2 {
-  font-size:22px;
-  margin:23px 0;
-  color:#c3d1eb;
+
+.typing {
+    color: #00eaff;
+    font-size: 20px;
+    margin-top: 25px;
+    min-height: 30px;
 }
-.hero p {
-  color:var(--muted);
-  line-height:1.9;
-  max-width:560px;
+
+.description {
+    max-width: 600px;
+    color: #9ab5c1;
+    line-height: 1.9;
+    margin-top: 20px;
 }
-.buttons {display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+
 .btn {
-  padding:14px 22px;
-  border-radius:9px;
-  border:1px solid var(--blue);
-  background:linear-gradient(110deg,#00d9ff20,#a855f720);
-  color:white;
-  font-weight:600;
-  transition:.3s;
+    display: inline-block;
+    padding: 14px 25px;
+    border: 1px solid #00eaff;
+    color: #00eaff;
+    text-decoration: none;
+    margin-top: 30px;
+    width: fit-content;
+    transition: .3s;
 }
+
 .btn:hover {
-  background:var(--blue);
-  color:#020714;
-  transform:translateY(-4px);
-  box-shadow:0 0 30px #00d9ff55;
-}
-.btn.secondary {border-color:#a855f7}
-
-.photo-scene {
-  width:330px;
-  height:400px;
-  perspective:1000px;
-  flex-shrink:0;
-}
-.photo-card {
-  height:100%;
-  border:1px solid #00d9ff70;
-  border-radius:25px;
-  background:linear-gradient(145deg,#132447,#130d29);
-  padding:12px;
-  transform:rotateY(-9deg) rotateX(4deg);
-  box-shadow:0 0 55px #00d9ff22,0 0 100px #a855f722;
-  animation:float 5s ease-in-out infinite;
-}
-.photo-card img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  border-radius:17px;
-}
-@keyframes float {
-  50% {transform:translateY(-14px) rotateY(5deg) rotateX(-3deg)}
+    background: #00eaff;
+    color: black;
+    box-shadow: 0 0 25px #00eaff;
 }
 
-.status {
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  color:#7df7b1;
-  font-size:12px;
-  margin-top:25px;
-}
-.dot {
-  width:8px;height:8px;
-  border-radius:50%;
-  background:#42f5a5;
-  box-shadow:0 0 12px #42f5a5;
+section {
+    padding: 70px 10%;
 }
 
-section {padding:95px 10%}
-.section-title {
-  font:800 clamp(25px,4vw,38px) Orbitron;
-  text-align:center;
-  margin-bottom:15px;
+h2 {
+    color: #00eaff;
+    font-size: 30px;
+    margin-bottom: 30px;
 }
-.section-title span {color:var(--blue)}
-.section-desc {
-  color:var(--muted);
-  text-align:center;
-  margin:0 auto 45px;
-  line-height:1.8;
-  max-width:650px;
-}
-
-.glass {
-  background:var(--panel);
-  border:1px solid #ffffff15;
-  border-radius:18px;
-  padding:27px;
-  backdrop-filter:blur(14px);
-  transition:.35s;
-}
-.glass:hover {
-  border-color:#00d9ff75;
-  transform:translateY(-6px);
-  box-shadow:0 15px 45px #00d9ff12;
-}
-.about-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.glass h3 {color:var(--blue);margin-bottom:16px}
-.glass p {color:var(--muted);line-height:1.85}
-
-.stats {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-top:22px;
-}
-.stat {text-align:center}
-.stat strong {
-  display:block;
-  font:25px Orbitron;
-  color:var(--blue);
-  margin-bottom:8px;
-}
-.stat small {color:var(--muted)}
 
 .grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-.icon {font-size:30px;margin-bottom:18px}
-.tag {
-  display:inline-block;
-  background:#00d9ff12;
-  color:var(--blue);
-  border:1px solid #00d9ff30;
-  padding:6px 10px;
-  border-radius:20px;
-  font-size:11px;
-  margin:15px 4px 0 0;
-}
-.project-link {
-  display:inline-block;
-  color:var(--blue);
-  margin-top:18px;
-  font-size:13px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
 }
 
-.timeline {
-  max-width:750px;
-  margin:auto;
-  border-left:2px solid #00d9ff60;
-  padding-left:30px;
+.card {
+    background: #0b1420;
+    border: 1px solid #00eaff33;
+    padding: 25px;
+    border-radius: 12px;
+    transition: .3s;
 }
-.timeline-item {
-  position:relative;
-  margin-bottom:30px;
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: #00eaff;
+    box-shadow: 0 0 20px #00eaff22;
 }
-.timeline-item::before {
-  content:"";
-  position:absolute;
-  left:-38px;top:8px;
-  width:13px;height:13px;
-  border-radius:50%;
-  background:var(--blue);
-  box-shadow:0 0 15px var(--blue);
+
+.card h3 {
+    color: #00eaff;
+    margin-bottom: 15px;
 }
-.timeline-item h3 {color:var(--blue);margin-bottom:9px}
-.timeline-item p {color:var(--muted);line-height:1.8}
-.year {font-size:11px;color:#a78bfa;letter-spacing:2px}
+
+.card p {
+    color: #a9c0ca;
+    line-height: 1.7;
+    font-size: 14px;
+}
 
 .skills {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:15px;
-}
-.skill {
-  padding:18px 25px;
-  border:1px solid #00d9ff35;
-  border-radius:12px;
-  background:#101a30;
-  transition:.3s;
-}
-.skill:hover {
-  color:var(--blue);
-  transform:scale(1.08);
-  box-shadow:0 0 25px #00d9ff20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.contact-box {text-align:center}
-.contact-box p {
-  color:var(--muted);
-  line-height:1.9;
-  margin:20px auto;
+.skills span {
+    padding: 12px 20px;
+    border: 1px solid #00eaff66;
+    color: #00eaff;
+    border-radius: 5px;
 }
+
 footer {
-  text-align:center;
-  padding:30px;
-  border-top:1px solid #ffffff15;
-  color:var(--muted);
-  font-size:12px;
-}
-footer span {color:var(--blue)}
-
-/* AI CHAT */
-.chat-toggle {
-  position:fixed;
-  bottom:25px;right:25px;
-  width:65px;height:65px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#00d9ff,#8b5cf6);
-  border:0;
-  color:white;
-  font-size:27px;
-  box-shadow:0 0 30px #00d9ff70;
-  z-index:200;
-}
-.chat-window {
-  position:fixed;
-  bottom:105px;right:25px;
-  width:min(365px,calc(100vw - 35px));
-  height:490px;
-  background:#0a1020;
-  border:1px solid #00d9ff65;
-  border-radius:17px;
-  z-index:200;
-  display:none;
-  flex-direction:column;
-  overflow:hidden;
-  box-shadow:0 0 50px #00d9ff25;
-}
-.chat-window.active {display:flex}
-.chat-head {
-  background:linear-gradient(100deg,#092b48,#251342);
-  padding:18px;
-  display:flex;
-  justify-content:space-between;
-}
-.chat-head strong {font-family:Orbitron;font-size:13px}
-.chat-head small {display:block;color:#9db8d9;margin-top:5px}
-.chat-head button {background:none;border:0;color:white;font-size:20px}
-.messages {
-  flex:1;
-  padding:15px;
-  overflow-y:auto;
-}
-.message {
-  padding:12px 14px;
-  margin-bottom:12px;
-  border-radius:12px;
-  font-size:13px;
-  line-height:1.65;
-  max-width:90%;
-  white-space:pre-wrap;
-}
-.bot {background:#14233d;color:#d7e9ff}
-.user {
-  background:#123e59;
-  margin-left:auto;
-  color:white;
-}
-.quick {
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  padding:5px 12px;
-}
-.quick button {
-  background:#121f37;
-  border:1px solid #00d9ff40;
-  color:var(--blue);
-  padding:7px 9px;
-  border-radius:15px;
-  font-size:10px;
-}
-.chat-input {
-  display:flex;
-  gap:7px;
-  padding:12px;
-  border-top:1px solid #ffffff15;
-}
-.chat-input input {
-  min-width:0;
-  flex:1;
-  padding:12px;
-  background:#111b30;
-  border:1px solid #ffffff20;
-  border-radius:8px;
-  color:white;
-  outline:none;
-}
-.chat-input button {
-  background:var(--blue);
-  border:0;
-  padding:0 14px;
-  border-radius:8px;
-  font-weight:800;
+    text-align: center;
+    padding: 30px;
+    color: #66818b;
+    border-top: 1px solid #00eaff33;
 }
 
-@media(max-width:850px) {
-  .hero {flex-direction:column;text-align:center;padding-top:130px}
-  .hero-content {display:flex;flex-direction:column;align-items:center}
-  .photo-scene {width:min(300px,85vw);height:340px}
-  .grid {grid-template-columns:repeat(2,1fr)}
-  .about-grid {grid-template-columns:1fr}
-  nav .links {
-    display:none;
-    position:absolute;
-    top:65px;left:0;
-    width:100%;
-    background:#080d1b;
-    padding:25px;
-    flex-direction:column;
-  }
-  nav .links.open {display:flex}
-  .menu {display:block}
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 20px;
+    background: #00eaff;
+    animation: blink .7s infinite;
 }
-@media(max-width:520px) {
-  section {padding:75px 6%}
-  .grid {grid-template-columns:1fr}
-  .stats {grid-template-columns:1fr}
-  .hero {padding-left:6%;padding-right:6%}
+
+@keyframes blink {
+    50% {opacity: 0;}
+}
+
+#assistant {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #00eaff;
+    color: #001014;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 25px #00eaff88;
+}
+
+#chat {
+    display: none;
+    position: fixed;
+    bottom: 105px;
+    right: 25px;
+    width: min(330px, calc(100vw - 40px));
+    background: #0b1420;
+    border: 1px solid #00eaff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+#chat p {
+    color: #b6d0dc;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 12px 0;
+}
+
+#chat input {
+    width: 100%;
+    padding: 12px;
+    background: #05070d;
+    color: white;
+    border: 1px solid #00eaff;
+}
+
+#chat button {
+    padding: 10px;
+    margin-top: 10px;
+    background: #00eaff;
+    border: none;
+    cursor: pointer;
+}
+
+@media(max-width:600px) {
+    header {padding: 20px;}
+    nav {display: none;}
+    .hero {padding: 60px 7%;}
+    section {padding: 55px 7%;}
 }
 </style>
 </head>
 
 <body>
-<canvas id="particles"></canvas>
 
-<nav>
-  <a class="logo" href="#">DILAWAR.exe</a>
-  <div class="links" id="navLinks">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#education">Education</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <button class="menu" onclick="toggleMenu()">☰</button>
-</nav>
+<header>
+    <div class="logo">DILAWAR.exe</div>
+    <nav>
+        <a href="#about">ABOUT</a>
+        <a href="#education">EDUCATION</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#contact">CONTACT</a>
+    </nav>
+</header>
 
-<!-- HERO -->
-<div class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow">WELCOME TO MY DIGITAL WORLD</div>
-    <h1>DILAWAR<br><span>ABBAS.</span></h1>
-    <h2>Computer Science Student | Future Software Engineer</h2>
-    <p>
-      Curious mind. Creative thinker. Technology enthusiast.
-      I am Dilawar Abbas, a Computer Science Engineering student
-      exploring programming, artificial intelligence and the future
-      of technology. Every line of code is another opportunity to learn.
+<div class="hero">
+    <div class="tag">SYSTEM ONLINE // DEVELOPER PORTFOLIO</div>
+
+    <h1>HELLO, I'M<br><span>DILAWAR</span></h1>
+
+    <div class="typing">
+        <span id="typed"></span><span class="cursor"></span>
+    </div>
+
+    <p class="description">
+        Computer Science Engineering student from Kashmir.
+        Exploring programming, technology and the future of software.
+        Building ideas into digital experiences.
     </p>
-    <div class="buttons">
-      <a class="btn" href="#projects">EXPLORE MY WORK ↗</a>
-      <a class="btn secondary" href="#about">DISCOVER ME</a>
-    </div>
-    <div class="status"><span class="dot"></span> LEARNING • BUILDING • EVOLVING</div>
-  </div>
 
-  <div class="photo-scene">
-    <div class="photo-card">
-      <img src="IMG_5291.PNG" alt="Dilawar Abbas profile photo">
-    </div>
-  </div>
+    <a href="#about" class="btn">EXPLORE MY WORLD →</a>
 </div>
 
-<!-- ABOUT -->
 <section id="about">
-  <h2 class="section-title">THE MIND <span>BEHIND THE CODE</span></h2>
-  <p class="section-desc">A little introduction to the person behind DILAWAR.exe.</p>
-
-  <div class="about-grid">
-    <div class="glass">
-      <h3>01 / WHO AM I?</h3>
-      <p>
-        My name is Dilawar Abbas. I come from Kashmir, India,
-        and I am pursuing B.Tech in Computer Science Engineering
-        at SSM College of Engineering, Baramulla.
-        I have a strong interest in computers, programming,
-        artificial intelligence and emerging technologies.
-        My journey is about turning curiosity into real skills
-        and ideas into working projects.
-      </p>
+    <h2>// ABOUT ME</h2>
+    <div class="card">
+        <h3>Who is Dilawar?</h3>
+        <p>
+            I am Dilawar Abbas, a B.Tech Computer Science Engineering
+            student at SSM College of Engineering, Baramulla.
+            I enjoy exploring computers, programming and technology.
+            My goal is to become a successful software engineer
+            and create useful digital products.
+        </p>
+        <br>
+        <p>LOCATION: Kashmir, Jammu & Kashmir, India</p>
     </div>
-    <div class="glass">
-      <h3>02 / MY MINDSET</h3>
-      <p>
-        I believe that a great developer is not someone who
-        already knows everything, but someone who never stops
-        learning. I enjoy experimenting, solving problems,
-        exploring new technologies and improving my work
-        step by step. My goal is to become a skilled and
-        responsible computer science engineer.
-      </p>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="glass stat"><strong>01</strong><small>Curious Mind</small></div>
-    <div class="glass stat"><strong>∞</strong><small>Ideas to Explore</small></div>
-    <div class="glass stat"><strong>24/7</strong><small>Learning Mindset</small></div>
-  </div>
 </section>
 
-<!-- EDUCATION -->
 <section id="education">
-  <h2 class="section-title">MY <span>EDUCATION</span></h2>
-  <p class="section-desc">The journey that is building my foundation.</p>
+    <h2>// EDUCATION</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>10th Standard</h3>
+            <p>Mehdi Public School, Durbal</p>
+            <p>Completed secondary education.</p>
+        </div>
 
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="year">MATRICULATION</div>
-      <h3>Mehdi Public School, Durbal</h3>
-      <p>Completed Class 10th with 80%.</p>
+        <div class="card">
+            <h3>12th Standard</h3>
+            <p>Government Higher Secondary School</p>
+            <p>Completed higher secondary education.</p>
+        </div>
+
+        <div class="card">
+            <h3>B.Tech CSE</h3>
+            <p>SSM College of Engineering, Baramulla</p>
+            <p>Currently pursuing Computer Science Engineering.</p>
+        </div>
     </div>
-    <div class="timeline-item">
-      <div class="year">HIGHER SECONDARY</div>
-      <h3>Government Higher Secondary School, Budgam</h3>
-      <p>Completed Class 12th with 64%.</p>
-    </div>
-    <div class="timeline-item">
-      <div class="year">CURRENT JOURNEY</div>
-      <h3>SSM College of Engineering, Baramulla</h3>
-      <p>Bachelor of Technology — Computer Science Engineering.</p>
-    </div>
-  </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <h2 class="section-title">MY <span>PROJECTS</span></h2>
-  <p class="section-desc">
-    Ideas, experiments and projects through which I am
-    developing my programming and engineering abilities.
-  </p>
-
-  <div class="grid">
-    <div class="glass">
-      <div class="icon">🤖</div>
-      <h3>JARVIS AI</h3>
-      <p>A personal assistant project exploring voice interaction,
-      automation and smart computer assistance.</p>
-      <span class="tag">Python</span><span class="tag">AI</span>
-    </div>
-
-    <div class="glass">
-      <div class="icon">🧠</div>
-      <h3>AI Assistant</h3>
-      <p>An experimental assistant project focused on
-      intelligent conversations and helpful digital interactions.</p>
-      <span class="tag">Python</span><span class="tag">AI</span>
-    </div>
-
-    <div class="glass">
-      <div class="icon">📊</div>
-      <h3>Attendance System</h3>
-      <p>A project concept exploring digital attendance
-      management and organized student records.</p>
-      <span class="tag">Programming</span>
-      <span class="tag">Automation</span>
-    </div>
-
-    <div class="glass">
-      <div class="icon">💻</div>
-      <h3>Python Experiments</h3>
-      <p>Small programming experiments created to
-      practise logic, coding and problem-solving.</p>
-      <span class="tag">Python</span>
-    </div>
-
-    <div class="glass">
-      <div class="icon">🌐</div>
-      <h3>Personal Portfolio</h3>
-      <p>This digital portfolio, designed to showcase
-      my educational journey, projects and skills.</p>
-      <span class="tag">HTML</span><span class="tag">CSS</span>
-    </div>
-
-    <div class="glass">
-      <div class="icon">🔐</div>
-      <h3>Cybersecurity Learning</h3>
-      <p>Exploring ethical cybersecurity concepts,
-      responsible digital security and programming.</p>
-      <span class="tag">Learning</span>
-      <span class="tag">Security</span>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
 <section id="skills">
-  <h2 class="section-title">MY <span>TECH ARSENAL</span></h2>
-  <p class="section-desc">Technologies I am learning, practising and exploring.</p>
-
-  <div class="skills">
-    <div class="skill">C Programming</div>
-    <div class="skill">Python</div>
-    <div class="skill">HTML5</div>
-    <div class="skill">CSS3</div>
-    <div class="skill">JavaScript</div>
-    <div class="skill">Artificial Intelligence</div>
-    <div class="skill">Web Development</div>
-    <div class="skill">Cybersecurity</div>
-    <div class="skill">Problem Solving</div>
-    <div class="skill">Automation</div>
-  </div>
-</section>
-
-<!-- GOALS -->
-<section>
-  <h2 class="section-title">BEYOND <span>THE HORIZON</span></h2>
-  <div class="glass" style="max-width:800px;margin:auto;text-align:center">
-    <div class="icon">🚀</div>
-    <h3>My Vision</h3>
-    <p>
-      My ambition is to become a successful Computer Science Engineer,
-      develop meaningful software, understand artificial intelligence
-      and build technology that can make a positive difference.
-      I am at the beginning of my journey, and I am determined
-      to keep learning, experimenting and improving.
-    </p>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2 class="section-title">CONNECT <span>WITH ME</span></h2>
-  <div class="glass contact-box">
-    <h3>LET'S CONNECT WITH THE DIGITAL WORLD</h3>
-    <p>
-      Based in Shareefabad HMT, Kashmir, India.<br>
-      Interested in technology, programming and creative ideas.
-    </p>
-    <div class="buttons" style="justify-content:center">
-      <a class="btn" href="https://www.instagram.com/dilawar__abass/"
-      target="_blank" rel="noopener">INSTAGRAM ↗</a>
-      <a class="btn secondary"
-      href="https://github.com/abassdilawar54-alt"
-      target="_blank" rel="noopener">GITHUB ↗</a>
+    <h2>// MY SKILLS</h2>
+    <div class="skills">
+        <span>C Programming</span>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Problem Solving</span>
+        <span>GitHub</span>
+        <span>Web Development</span>
     </div>
-  </div>
+</section>
+
+<section id="projects">
+    <h2>// MY PROJECTS</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>DILAWAR.exe</h3>
+            <p>My personal futuristic developer portfolio.</p>
+        </div>
+        <div class="card">
+            <h3>Web Experiments</h3>
+            <p>Creative experiments with HTML, CSS and JavaScript.</p>
+        </div>
+        <div class="card">
+            <h3>C Programming</h3>
+            <p>Learning and building programming projects.</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>// CONNECT WITH ME</h2>
+    <div class="card">
+        <h3>Have an idea?</h3>
+        <p>
+            Want a website, application or a creative digital project?
+            Contact me on Instagram.
+        </p>
+        <a class="btn"
+           href="https://www.instagram.com/"
+           target="_blank"
+           rel="noopener noreferrer">
+           CONTACT ON INSTAGRAM →
+        </a>
+    </div>
 </section>
 
 <footer>
-  <p>DESIGNED & DEVELOPED BY <span>DILAWAR ABBAS</span></p>
-  <p style="margin-top:9px">DILAWAR.exe © 2026 | KEEP LEARNING. KEEP BUILDING.</p>
+    © 2026 DILAWAR.exe | BUILT WITH CURIOSITY AND CODE
 </footer>
 
-<!-- AI CHAT -->
-<div class="chat-window" id="chatWindow">
-  <div class="chat-head">
-    <div>
-      <strong>✦ DILAWAR AI</strong>
-      <small>Portfolio Intelligence Assistant</small>
-    </div>
-    <button onclick="toggleChat()">×</button>
-  </div>
+<button id="assistant" onclick="toggleChat()">✦</button>
 
-  <div class="messages" id="messages">
-    <div class="message bot">
-      Hello! I am DILAWAR AI.
-
-      I can introduce Dilawar Abbas, explain his projects,
-      education, interests and ambitions.
-
-      What would you like to discover?
-    </div>
-  </div>
-
-  <div class="quick">
-    <button onclick="quickAsk('Who is Dilawar?')">Who is Dilawar?</button>
-    <button onclick="quickAsk('Tell me about his projects')">Projects</button>
-    <button onclick="quickAsk('What are his skills?')">Skills</button>
-    <button onclick="quickAsk('What makes him special?')">His strengths</button>
-  </div>
-
-  <div class="chat-input">
-    <input id="chatInput" placeholder="Ask about Dilawar..."
-    onkeydown="if(event.key==='Enter')sendMessage()">
-    <button onclick="sendMessage()">➤</button>
-  </div>
+<div id="chat">
+    <h3 style="color:#00eaff">DILAWAR AI // ASSISTANT</h3>
+    <p id="reply">
+        Hello! I am the portfolio assistant.
+        Ask me about Dilawar, his education, skills or projects.
+    </p>
+    <input id="question" placeholder="Ask something...">
+    <button onclick="ask()">SEND</button>
 </div>
 
-<button class="chat-toggle" onclick="toggleChat()" title="Talk to Dilawar AI">✦</button>
-
 <script>
-// MOBILE NAVIGATION
-function toggleMenu(){
- document.getElementById('navLinks').classList.toggle('open');
-}
-document.querySelectorAll('#navLinks a').forEach(a=>{
- a.addEventListener('click',()=>{
-  document.getElementById('navLinks').classList.remove('open');
- });
-});
-
-// CHAT WINDOW
-function toggleChat(){
- document.getElementById('chatWindow').classList.toggle('active');
-}
-
-// CHATBOT KNOWLEDGE BASE
-const answers = [
-{
- keys:['who is dilawar','about dilawar','introduce','who are you'],
- answer:`Dilawar Abbas is a Computer Science Engineering student at SSM College of Engineering, Baramulla, Kashmir.
-
-He is a curious, ambitious and technology-oriented learner who is exploring programming, AI and software development.
-
-His story is about turning curiosity into knowledge and knowledge into meaningful projects.`
-},
-{
- keys:['project','built','created','work'],
- answer:`Dilawar's project portfolio includes:
-
-🤖 JARVIS AI — personal assistant experiment.
-🧠 AI Assistant — intelligent interaction project.
-📊 Attendance System — digital attendance project.
-💻 Python Experiments — programming practice.
-🌐 DILAWAR.exe — his personal developer portfolio.
-
-He is continuously exploring new ideas and improving his projects.`
-},
-{
- keys:['skill','programming','language','technology'],
- answer:`Dilawar is developing skills in:
-
-• C Programming
-• Python
-• HTML and CSS
-• JavaScript
-• AI concepts
-• Web Development
-• Cybersecurity fundamentals
-• Problem Solving
-
-He believes consistent practice is the foundation of becoming a great engineer.`
-},
-{
- keys:['education','college','school','degree','marks','percentage'],
- answer:`Dilawar's educational journey:
-
-10th — Mehdi Public School, Durbal: 80%.
-12th — Government Higher Secondary School, Budgam: 64%.
-Currently — B.Tech Computer Science Engineering at SSM College of Engineering, Baramulla.`
-},
-{
- keys:['special','brilliant','talent','strength','different','good'],
- answer:`What makes Dilawar interesting is his curiosity and willingness to explore.
-
-He is building his knowledge from the foundations of programming while experimenting with ambitious ideas in AI, automation and software development.
-
-His strongest qualities are his ambition, creativity, curiosity and determination to improve.
-
-A brilliant engineer is not defined by knowing everything today, but by continuing to learn and create.`
-},
-{
- keys:['goal','future','dream','ambition'],
- answer:`Dilawar's ambition is to become a successful Computer Science Engineer.
-
-He wants to explore AI, create useful software, develop intelligent assistants and build technology that solves real problems.
-
-His journey is still unfolding. The goal is not just to use technology, but to create it.`
-},
-{
- keys:['location','where','kashmir','address','live'],
- answer:`Dilawar is from Shareefabad HMT, Kashmir, India. His engineering journey is currently taking place at SSM College of Engineering, Baramulla.`
-},
-{
- keys:['instagram','social','contact','github'],
- answer:`You can explore Dilawar's work and connect with him here:
-
-Instagram: instagram.com/dilawar__abass
-GitHub: github.com/abassdilawar54-alt`
-},
-{
- keys:['hello','hi','hey','assalam','salam'],
- answer:`Hello! Welcome to DILAWAR.exe.
-
-I am Dilawar's portfolio assistant. Ask me about his education, projects, programming skills or future ambitions.`
-},
-{
- keys:['thank'],
- answer:`You're welcome! Keep exploring. Every great digital journey starts with curiosity. ✦`
-}
+const words = [
+    "Computer Science Student",
+    "Future Software Engineer",
+    "Technology Explorer",
+    "Learning. Building. Growing."
 ];
 
-function getAnswer(question){
- const q=question.toLowerCase();
- for(const item of answers){
-  if(item.keys.some(k=>q.includes(k))){
-   return item.answer;
-  }
- }
- return `That's an interesting question!
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
 
-I am currently designed to explain Dilawar Abbas's background, education, projects, skills and goals.
+function typeEffect() {
+    const current = words[wordIndex];
+    document.getElementById("typed").textContent =
+        current.substring(0, charIndex);
 
-Try asking:
-• Who is Dilawar?
-• What projects has he made?
-• What are his skills?
-• What makes him different?
-• What are his future ambitions?`;
+    if (!deleting && charIndex < current.length) {
+        charIndex++;
+        setTimeout(typeEffect, 90);
+    } else if (!deleting) {
+        deleting = true;
+        setTimeout(typeEffect, 1200);
+    } else if (charIndex > 0) {
+        charIndex--;
+        setTimeout(typeEffect, 45);
+    } else {
+        deleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeEffect, 300);
+    }
 }
 
-function addMessage(text,type){
- const box=document.getElementById('messages');
- const div=document.createElement('div');
- div.className='message '+type;
- div.textContent=text;
- box.appendChild(div);
- box.scrollTop=box.scrollHeight;
+typeEffect();
+
+function toggleChat() {
+    const chat = document.getElementById("chat");
+    chat.style.display =
+        chat.style.display === "block" ? "none" : "block";
 }
 
-function sendMessage(){
- const input=document.getElementById('chatInput');
- const question=input.value.trim();
- if(!question)return;
- addMessage(question,'user');
- input.value='';
- setTimeout(()=>{
-  addMessage(getAnswer(question),'bot');
- },350);
-}
+function ask() {
+    const q = document.getElementById("question").value
+        .toLowerCase().trim();
 
-function quickAsk(question){
- document.getElementById('chatInput').value=question;
- sendMessage();
-}
+    let answer = "I can tell you about Dilawar's education, skills, projects and goals.";
 
-// ANIMATED BACKGROUND
-const canvas=document.getElementById('particles');
-const ctx=canvas.getContext('2d');
-let particles=[];
+    if (q.includes("who") || q.includes("about")) {
+        answer = "Dilawar Abbas is a Kashmir-based B.Tech CSE student at SSM College of Engineering, Baramulla, interested in technology and programming.";
+    } else if (q.includes("education") || q.includes("college")) {
+        answer = "Dilawar studied at Mehdi Public School and Government Higher Secondary School. He is currently pursuing B.Tech CSE at SSM College.";
+    } else if (q.includes("skill")) {
+        answer = "His learning areas include C programming, HTML, CSS, JavaScript, GitHub and problem solving.";
+    } else if (q.includes("project")) {
+        answer = "His portfolio and web development experiments are part of his growing project collection.";
+    } else if (q.includes("goal")) {
+        answer = "His goal is to become a successful Computer Science Engineer and build useful digital products.";
+    } else if (q.includes("contact")) {
+        answer = "You can reach Dilawar through his Instagram profile.";
+    }
 
-function resize(){
- canvas.width=window.innerWidth;
- canvas.height=window.innerHeight;
+    document.getElementById("reply").textContent = answer;
 }
-window.addEventListener('resize',resize);
-resize();
-
-for(let i=0;i<75;i++){
- particles.push({
-  x:Math.random()*window.innerWidth,
-  y:Math.random()*window.innerHeight,
-  r:Math.random()*1.7+.5,
-  speed:Math.random()*.5+.15
- });
-}
-
-function animate(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- particles.forEach(p=>{
-  p.y-=p.speed;
-  if(p.y<0){
-   p.y=canvas.height;
-   p.x=Math.random()*canvas.width;
-  }
-  ctx.beginPath();
-  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-  ctx.fillStyle='#45cfff';
-  ctx.globalAlpha=.6;
-  ctx.fill();
- });
- ctx.globalAlpha=1;
- requestAnimationFrame(animate);
-}
-animate();
 </script>
 
 </body>
