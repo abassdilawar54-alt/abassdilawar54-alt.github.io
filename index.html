@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dilawar Abass — CSE Engineering & AI Portfolio</title>
+  <title>Dilawar Abass — CSE & AI Systems Portfolio</title>
 
-  <!-- Google Fonts: Space Grotesk, Inter, and JetBrains Mono -->
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono, and Caveat (handwritten "Hello, I'm") -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap"
     rel="stylesheet"
   />
 
@@ -24,14 +24,16 @@
             sans: ['Inter', 'system-ui', 'sans-serif'],
             display: ['Space Grotesk', 'Inter', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
+            script: ['Caveat', 'cursive'],
           },
           colors: {
+            void: '#060607',
             obsidian: '#070708',
-            card: '#0E0F12',
-            cardAlt: '#13151A',
+            surface: '#0D0D10',
+            surfaceAlt: '#121216',
             crimson: '#DC2626',
             crimsonBright: '#EF4444',
-            figmaCyan: '#38BDF8',
+            figmaBlue: '#38BDF8',
           },
         },
       },
@@ -50,618 +52,611 @@
       overflow-x: hidden;
     }
 
-    /* Subtle dot-grid engineering canvas background */
+    /* Subtle dark engineering dot-grid canvas */
     body {
       background-image:
-        radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
       background-size: 28px 28px, 84px 84px, 84px 84px;
     }
 
-    /* Giant crimson-stroked display backdrop word "PORTFOLIO" */
-    .portfolio-backdrop-word {
+    /* Giant full-width outlined crimson-red PORTFOLIO display wordmark */
+    .portfolio-outline-word {
       color: transparent;
-      -webkit-text-stroke: 2px #DC2626;
-      letter-spacing: -0.035em;
+      -webkit-text-stroke: 1.5px rgba(220, 38, 38, 0.58);
+      font-size: clamp(4.6rem, 14.8vw, 13.5rem);
+      line-height: 0.86;
+      letter-spacing: -0.04em;
       user-select: none;
     }
 
     @media (min-width: 768px) {
-      .portfolio-backdrop-word {
-        -webkit-text-stroke: 2.5px #EF4444;
+      .portfolio-outline-word {
+        -webkit-text-stroke: 2px rgba(239, 68, 68, 0.62);
       }
     }
 
     /* =========================================================================
-       TACTICAL HELICOPTER AIR-DROP & CARGO DEPLOYMENT SYSTEM
+       FIGMA MULTI-CURSOR LIVE-ASSEMBLY STATES
        ========================================================================= */
     [data-build-node] {
       position: relative;
       transition:
-        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.55s ease;
+        opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    [data-build-node].node-hidden {
+    [data-build-node].build-pending {
       opacity: 0;
-      visibility: hidden;
-      transform: translateY(-28px) scale(0.96);
-      filter: brightness(0.65) contrast(1.1);
+      transform: translateY(8px) scale(0.985);
     }
 
-    [data-build-node].node-constructing {
-      opacity: 0.45;
-      visibility: visible;
-      transform: translateY(-10px) scale(0.985);
-      filter: brightness(0.88);
+    [data-build-node].build-drafting {
+      opacity: 0.42;
+      transform: translateY(2px) scale(0.995);
     }
 
-    [data-build-node].node-snapped {
+    [data-build-node].build-ready {
       opacity: 1;
-      visibility: visible;
-      transform: translateY(3px) scale(1.01);
-      filter: brightness(1.12);
-    }
-
-    [data-build-node].node-ready {
-      opacity: 1;
-      visibility: visible;
       transform: translateY(0) scale(1);
-      filter: brightness(1);
     }
 
-    /* Tactical HUD target lock frame drawn around a section when deployed */
-    .figma-frame-box {
+    /* Crisp #38BDF8 sky-blue Figma selection bounding box */
+    .figma-selection-box {
       position: absolute;
-      inset: -4px;
+      inset: -3px;
       border: 1.5px solid #38BDF8;
-      background: rgba(56, 189, 248, 0.045);
-      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.055);
+      border-radius: 4px;
       pointer-events: none;
-      z-index: 25;
-      box-shadow: 0 0 22px rgba(56, 189, 248, 0.22);
-      transition: opacity 0.4s ease;
+      z-index: 35;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.22);
+      transition: opacity 0.32s ease;
     }
 
-    .figma-frame-box.frame-red {
-      border-color: #EF4444;
-      background: rgba(239, 68, 68, 0.06);
-      box-shadow: 0 0 26px rgba(239, 68, 68, 0.28);
-    }
-
-    .figma-corner-handle {
+    /* 4 tiny white-filled / blue-bordered corner resize handles */
+    .figma-handle {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: transparent;
-      border-color: #38BDF8;
+      width: 7px;
+      height: 7px;
+      background: #FFFFFF;
+      border: 1.5px solid #38BDF8;
+      border-radius: 1px;
     }
-    .figma-frame-box.frame-red .figma-corner-handle {
-      border-color: #EF4444;
-    }
-    .figma-corner-handle.tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
-    .figma-corner-handle.tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
-    .figma-corner-handle.bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
-    .figma-corner-handle.br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+    .figma-handle.tl { top: -4px; left: -4px; }
+    .figma-handle.tr { top: -4px; right: -4px; }
+    .figma-handle.bl { bottom: -4px; left: -4px; }
+    .figma-handle.br { bottom: -4px; right: -4px; }
 
-    .figma-dimension-badge {
+    /* Sky-blue dimension tag (e.g., 312×64, 420×510) */
+    .figma-dim-tag {
       position: absolute;
-      top: -20px;
-      left: -1px;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
       background: #38BDF8;
-      color: #070708;
+      color: #060607;
       font-family: 'JetBrains Mono', monospace;
       font-size: 9px;
       font-weight: 700;
       line-height: 1;
-      padding: 3px 7px;
+      padding: 3px 6px;
       border-radius: 3px;
       white-space: nowrap;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
     }
 
-    .figma-frame-box.frame-red .figma-dimension-badge {
-      background: #EF4444;
-      color: #FFFFFF;
+    /* Crimson rim backlight behind portrait card matching frame 00:04 */
+    .portrait-crimson-glow {
+      box-shadow:
+        0 0 48px rgba(220, 38, 38, 0.28),
+        inset 0 0 36px rgba(220, 38, 38, 0.22);
     }
 
-    /* Laser scan bar across ./IMG_5291.PNG portrait during construction */
-    @keyframes scanPortrait {
-      0% { top: 0%; opacity: 0.95; }
-      100% { top: 100%; opacity: 0; }
-    }
-    .portrait-scan-beam {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #38BDF8, #EF4444, transparent);
-      box-shadow: 0 0 14px #38BDF8;
-      z-index: 20;
-      pointer-events: none;
-      animation: scanPortrait 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    @keyframes pulseRing {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35), 0 0 28px rgba(239, 68, 68, 0.25);
-      }
-      50% {
-        box-shadow: 0 0 0 12px rgba(56, 189, 248, 0), 0 0 40px rgba(239, 68, 68, 0.42);
-      }
-    }
-    .build-center-node {
-      animation: pulseRing 1.3s infinite ease-in-out;
-    }
-
-    @keyframes blinkDot {
+    /* Blinking status dot */
+    @keyframes pulseDot {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.35; transform: scale(0.8); }
     }
-    .status-dot {
-      animation: blinkDot 1.7s infinite ease-in-out;
+    .live-dot {
+      animation: pulseDot 1.6s infinite ease-in-out;
     }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 7px; }
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #070708; }
-    ::-webkit-scrollbar-thumb { background: #1f232e; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #EF4444; }
-
-    /* Custom tactical HUD cursor on desktop pointers */
-    @media (hover: hover) and (pointer: fine) {
-      body, a, button, label, input {
-        cursor: none !important;
-      }
-    }
+    ::-webkit-scrollbar-thumb { background: #1E1E24; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #DC2626; }
   </style>
 </head>
 
-<body class="bg-[#070708] text-[#F4F4F6] font-sans antialiased selection:bg-crimsonBright selection:text-white">
-  <!-- Full-viewport 60fps Realistic Tactical Helicopter & Air-Drop Canvas -->
-  <canvas
-    id="cursorSwarmCanvas"
-    aria-hidden="true"
-    class="pointer-events-none fixed inset-0 z-50 h-screen w-screen"
-  ></canvas>
-
-  <!-- Opening Tactical Airspace Dispatch HUD (0:00 - 0:01.3) -->
+<body class="bg-obsidian text-[#F4F4F6] font-sans antialiased selection:bg-crimsonBright selection:text-white">
+  <!-- =====================================================================
+       OPENING PRELOADER OVERLAY (00:00 - 00:02: Jet-Black Void + [ BUILD ] Hub)
+       ===================================================================== -->
   <div
-    id="openingBuildOverlay"
-    aria-hidden="true"
-    class="pointer-events-none fixed inset-x-0 top-16 z-40 flex flex-col items-center justify-center gap-2.5 transition-opacity duration-300"
+    id="preloaderVoid"
+    class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-void transition-opacity duration-500"
   >
-    <div class="flex items-center gap-2.5 rounded-full border border-crimsonBright/40 bg-[#070708]/90 px-4 py-1.5 font-mono text-[11px] text-slate-200 shadow-2xl backdrop-blur-md">
-      <span class="h-2 w-2 rounded-full bg-crimsonBright status-dot"></span>
-      <span class="font-bold text-crimsonBright">[ AIR-DROP // CHOPPER-01 ]</span>
-      <span id="buildStatusLabel">Inbound to Kashmir Sector...</span>
+    <!-- Center [ BUILD ] Badge orbited by the 12 colorful Figma cursors on the canvas -->
+    <div
+      id="buildHubBadge"
+      class="relative flex items-center justify-center rounded-md border border-white/20 bg-[#0E0E12] px-3.5 py-1.5 font-mono text-[11px] font-bold tracking-widest text-white shadow-2xl"
+    >
+      <span class="mr-1.5 text-figmaBlue">[</span>
+      <span>BUILD</span>
+      <span class="ml-1.5 text-figmaBlue">]</span>
+    </div>
+
+    <!-- Bottom Center Sleek Dark Pill Progress Bar -->
+    <div class="fixed bottom-12 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/15 bg-[#0D0D11]/95 px-4 py-1.5 shadow-2xl backdrop-blur-md">
+      <span id="preloaderStatusText" class="font-mono text-[10px] tracking-wide text-slate-300">
+        Constructing portfolio...
+      </span>
+      <div class="h-1 w-24 overflow-hidden rounded-full bg-white/10">
+        <div id="preloaderProgressLine" class="h-full w-0 rounded-full bg-white transition-all duration-150"></div>
+      </div>
     </div>
   </div>
 
-  <!-- Top Navigation Bar -->
-  <header id="topNav" class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#070708]/90 backdrop-blur-md">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-      <!-- Left Brand: Small Red Square Logo + Dilawar -->
+  <!-- =====================================================================
+       FULL-SCREEN MULTI-CURSOR VECTOR CANVAS LAYER
+       ===================================================================== -->
+  <canvas
+    id="multiCursorCanvas"
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-50 h-full w-full"
+  ></canvas>
+
+  <!-- =====================================================================
+       TOP NAVBAR (48px height)
+       ===================================================================== -->
+  <header class="sticky top-0 z-30 h-12 border-b border-white/[0.08] bg-obsidian/90 backdrop-blur-md">
+    <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <!-- Left: Red Square Emblem [D] + DILAWAR.DEV -->
       <a
         href="#hero"
-        data-build-node="nav-logo"
-        data-node-title="NAV_LOGO // DILAWAR"
-        data-frame-color="red"
-        data-wave="0"
+        data-build-node="nav-brand"
         class="flex items-center gap-2.5 focus:outline-none"
       >
-        <span class="flex h-7 w-7 items-center justify-center rounded bg-crimsonBright font-mono text-xs font-bold text-white shadow-md shadow-crimsonBright/30">
+        <span class="flex h-6 w-6 items-center justify-center rounded bg-crimson font-mono text-[11px] font-bold text-white shadow-sm shadow-crimson/40">
           D
         </span>
-        <span class="font-display text-base font-bold tracking-tight text-white">
-          Dilawar<span class="text-crimsonBright">.</span>
+        <span class="font-mono text-xs font-bold tracking-wider text-white">
+          DILAWAR<span class="text-crimsonBright">.DEV</span>
         </span>
       </a>
 
-      <!-- Center-Left Nav Links -->
+      <!-- Center Links -->
       <nav
-        aria-label="Main Navigation"
+        aria-label="Primary Navigation"
         data-build-node="nav-links"
-        data-node-title="NAV_LINKS"
-        data-wave="0"
-        class="hidden md:flex items-center gap-1 font-mono text-xs"
+        class="hidden md:flex items-center gap-1 font-mono text-[11px]"
       >
-        <a href="#hero" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">About</a>
-        <a href="#education" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Education</a>
-        <a href="#projects" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Projects</a>
-        <a href="#skills" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Skills</a>
-        <a href="#contact" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Contact</a>
+        <a href="#hero" class="rounded px-2.5 py-1 text-slate-300 transition hover:bg-white/5 hover:text-white">Hero</a>
+        <a href="#background" class="rounded px-2.5 py-1 text-slate-300 transition hover:bg-white/5 hover:text-white">Background</a>
+        <a href="#deployments" class="rounded px-2.5 py-1 text-slate-300 transition hover:bg-white/5 hover:text-white">Deployments</a>
+        <a href="#matrix" class="rounded px-2.5 py-1 text-slate-300 transition hover:bg-white/5 hover:text-white">Matrix</a>
+        <a href="#contact" class="rounded px-2.5 py-1 text-slate-300 transition hover:bg-white/5 hover:text-white">Contact</a>
       </nav>
 
-      <!-- Right Status & Replay Build Trigger -->
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-card px-3 py-1 font-mono text-[10px] text-slate-300">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 status-dot"></span>
-          <span id="topLiveStatus">BUILDING</span>
+      <!-- Right: Shareefabad, Kashmir Status Pill + Instagram / GitHub Links -->
+      <div
+        data-build-node="nav-status"
+        class="flex items-center gap-2.5 font-mono text-[11px]"
+      >
+        <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-surface px-2.5 py-0.5 text-[10px] text-slate-300">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 live-dot"></span>
+          <span>Shareefabad, Kashmir</span>
         </span>
 
-        <button
-          type="button"
-          id="audioToggleBtn"
-          aria-label="Toggle helicopter audio"
-          class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-2.5 py-1.5 font-mono text-xs font-semibold text-figmaCyan transition hover:border-figmaCyan hover:text-white"
+        <a
+          href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded border border-white/[0.1] bg-surface px-2.5 py-1 text-[10px] font-semibold text-slate-200 transition hover:border-crimsonBright hover:text-white"
         >
-          <span id="audioToggleIcon">🔊</span>
-          <span id="audioToggleLabel" class="hidden sm:inline">SFX ON</span>
-        </button>
+          Instagram &#8599;
+        </a>
 
-        <button
-          type="button"
-          id="replayBuildBtn"
-          class="inline-flex items-center gap-1.5 rounded-lg border border-crimsonBright/50 bg-crimsonBright/15 px-3 py-1.5 font-mono text-xs font-bold text-crimsonBright transition hover:bg-crimsonBright hover:text-white"
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hidden sm:inline-flex rounded border border-white/[0.1] bg-surface px-2.5 py-1 text-[10px] font-semibold text-slate-200 transition hover:border-figmaBlue hover:text-figmaBlue"
         >
-          <span>🚁 Replay Air-Drop</span>
-        </button>
+          GitHub
+        </a>
 
+        <!-- Mobile Menu Button -->
         <button
           type="button"
-          id="mobileNavToggle"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-card text-slate-200 md:hidden"
+          id="mobileMenuBtn"
+          aria-label="Toggle Menu"
+          class="inline-flex h-7 w-7 items-center justify-center rounded border border-white/10 bg-surface text-slate-200 md:hidden"
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Drawer -->
-    <div id="mobileNavMenu" class="hidden border-t border-white/[0.08] bg-card px-4 py-3 md:hidden">
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenuDrawer" class="hidden border-b border-white/[0.08] bg-surface px-4 py-2.5 md:hidden">
       <div class="flex flex-col gap-1 font-mono text-xs">
-        <a href="#hero" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">About</a>
-        <a href="#education" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Education</a>
-        <a href="#projects" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Projects</a>
-        <a href="#skills" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Skills</a>
-        <a href="#contact" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Contact</a>
+        <a href="#hero" class="mobile-nav-item rounded px-2.5 py-1.5 text-slate-300 hover:bg-white/5 hover:text-white">Hero</a>
+        <a href="#background" class="mobile-nav-item rounded px-2.5 py-1.5 text-slate-300 hover:bg-white/5 hover:text-white">Background</a>
+        <a href="#deployments" class="mobile-nav-item rounded px-2.5 py-1.5 text-slate-300 hover:bg-white/5 hover:text-white">Deployments</a>
+        <a href="#matrix" class="mobile-nav-item rounded px-2.5 py-1.5 text-slate-300 hover:bg-white/5 hover:text-white">Matrix</a>
+        <a href="#contact" class="mobile-nav-item rounded px-2.5 py-1.5 text-slate-300 hover:bg-white/5 hover:text-white">Contact</a>
       </div>
     </div>
   </header>
 
   <main>
     <!-- =====================================================================
-         HERO SECTION (2-Column Split + Giant "PORTFOLIO" Backdrop)
+         SECTION 1: HERO (00:02 - 00:08)
+         Giant Outlined PORTFOLIO Wordmark + 3-Column Editorial Grid
          ===================================================================== -->
-    <section id="hero" class="relative overflow-hidden border-b border-white/[0.08] pt-6 pb-16 sm:pt-10 sm:pb-20">
+    <section id="hero" class="relative overflow-hidden border-b border-white/[0.08] pt-4 pb-16 sm:pt-6 sm:pb-20">
+      <!-- Subtle crimson ambient glow -->
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute top-14 left-1/2 h-[380px] w-[640px] -translate-x-1/2 rounded-full bg-crimsonBright/10 blur-[130px]"
+        class="pointer-events-none absolute top-16 left-1/2 h-[360px] w-[620px] -translate-x-1/2 rounded-full bg-crimson/10 blur-[140px]"
       ></div>
 
       <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <!-- Giant Crimson-Stroked PORTFOLIO Backdrop -->
+        <!-- Giant Outlined Crimson PORTFOLIO Wordmark Spanning Upper Background -->
         <div
-          data-build-node="hero-portfolio-word"
-          data-node-title="BACKDROP // PORTFOLIO"
-          data-frame-color="red"
-          data-wave="0"
-          class="mb-4 overflow-hidden text-center"
+          data-build-node="hero-wordmark"
+          class="mb-2 overflow-hidden text-center"
         >
-          <div class="portfolio-backdrop-word font-display text-[15vw] font-bold uppercase leading-[0.86] sm:text-[13vw] xl:text-[168px]">
+          <div class="portfolio-outline-word font-display font-extrabold uppercase">
             PORTFOLIO
           </div>
         </div>
 
-        <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-8">
-          <!-- Left Column (7 cols): Greeting, Name, Tagline, Bio, CTAs, Metrics -->
-          <div class="lg:col-span-7">
-            <div
-              data-build-node="hero-greeting"
-              data-node-title="HERO_TITLE // DILAWAR."
-              data-frame-color="red"
-              data-wave="1"
-            >
-              <p class="font-display text-lg font-medium italic text-slate-300 sm:text-xl">
+        <!-- 3-Column Hero Grid: Left (Identity & CTAs) | Center (Crimson-Lit Portrait) | Right (Live Modules) -->
+        <div class="relative z-10 -mt-2 grid grid-cols-1 items-start gap-7 sm:-mt-5 lg:grid-cols-12 lg:gap-6">
+          <!-- LEFT COLUMN (5 cols): Script "Hello, I'm", Bold "DILAWAR.", Red Pill Badge, Bio, CTAs, Hero Metrics -->
+          <div class="space-y-5 lg:col-span-5">
+            <div data-build-node="hero-title-block" class="space-y-2">
+              <div class="font-script text-3xl font-bold leading-none text-crimsonBright sm:text-4xl">
                 Hello, I&apos;m
-              </p>
-              <h1 class="mt-0.5 font-display text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl xl:text-7xl">
+              </div>
+              <h1 class="font-display text-5xl font-extrabold tracking-tight text-white sm:text-6xl xl:text-[64px] xl:leading-[0.95]">
                 DILAWAR<span class="text-crimsonBright">.</span>
               </h1>
             </div>
 
-            <div
-              data-build-node="hero-status-line"
-              data-node-title="ROLE_TAG"
-              data-frame-color="red"
-              data-wave="1"
-              class="mt-3 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-crimsonBright"
-            >
-              <span class="h-2 w-2 rounded-full bg-crimsonBright status-dot"></span>
-              <span>CSE ENGINEERING &bull; AI &amp; SYSTEMS BUILDER</span>
+            <!-- Red Pill Badge -->
+            <div data-build-node="hero-role-badge">
+              <span class="inline-flex items-center gap-2 rounded-full border border-crimsonBright/40 bg-crimson/15 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-crimsonBright">
+                <span class="h-1.5 w-1.5 rounded-full bg-crimsonBright live-dot"></span>
+                <span>CSE STUDENT &bull; SOFTWARE &amp; AI BUILDER</span>
+              </span>
             </div>
 
+            <!-- Engineering Bio Paragraph -->
             <p
-              data-build-node="hero-summary"
-              data-node-title="BIO_SUMMARY"
-              data-wave="2"
-              class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base"
+              data-build-node="hero-bio"
+              class="text-sm leading-relaxed text-slate-300 sm:text-[15px]"
             >
-              <strong class="font-semibold text-white">Dilawar Abass</strong> — CSE engineering student at
-              <strong class="font-semibold text-white">SSM College of Engineering</strong>, completed 10th at
-              <strong class="font-semibold text-white">Mehdi Public School Durbal</strong> and 12th at
-              <strong class="font-semibold text-white">Budgam Higher Secondary School</strong>, building from
-              <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>.
+              Building intelligent voice assistants, automated campus systems, and clean software solutions from
+              <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>. Pursuing Computer Science &amp; Engineering at
+              <strong class="font-semibold text-white">SSM College of Engineering</strong>.
             </p>
 
-            <!-- Action Buttons + Social Links -->
+            <!-- Two Sleek Dark Rectangular CTA Buttons -->
             <div
-              data-build-node="hero-actions"
-              data-node-title="HERO_CTAS"
-              data-wave="3"
-              class="mt-6 flex flex-wrap items-center gap-3"
+              data-build-node="hero-cta-row"
+              class="flex flex-wrap items-center gap-3 pt-1"
             >
               <a
-                href="#projects"
-                class="inline-flex items-center gap-2 rounded-lg bg-crimsonBright px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimsonBright/25 transition hover:bg-crimson"
+                href="#deployments"
+                class="inline-flex items-center gap-2 rounded-md border border-crimsonBright/60 bg-crimson/20 px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider text-white transition hover:bg-crimson hover:text-white"
               >
-                <span>VIEW PROJECTS</span>
-                <span>&rarr;</span>
-              </a>
-
-              <a
-                href="#education"
-                class="inline-flex items-center gap-2 rounded-lg border border-white/[0.12] bg-card px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-200 transition hover:border-figmaCyan hover:text-white"
-              >
-                <span>EXPLORE BACKGROUND</span>
+                <span>EXPLORE PROJECTS</span>
+                <span>&darr;</span>
               </a>
 
               <a
                 href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-3.5 py-2.5 font-mono text-xs text-slate-300 transition hover:border-crimsonBright hover:text-white"
+                class="inline-flex items-center gap-2 rounded-md border border-white/[0.14] bg-surface px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider text-slate-200 transition hover:border-figmaBlue hover:text-white"
               >
-                <span>Instagram</span>
-                <span>&#8599;</span>
-              </a>
-
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-3.5 py-2.5 font-mono text-xs text-slate-300 transition hover:border-figmaCyan hover:text-white"
-              >
-                <span>GitHub</span>
+                <span>INSTAGRAM PROFILE</span>
                 <span>&#8599;</span>
               </a>
             </div>
 
-            <!-- Bottom-Left Metric Strip & Caption -->
+            <!-- Bottom Hero Metrics Strip (00:04) -->
             <div
-              data-build-node="hero-metrics"
-              data-node-title="METRICS_ROW"
-              data-wave="3"
-              class="mt-7"
+              data-build-node="hero-metrics-strip"
+              class="grid grid-cols-3 gap-3 border-t border-white/[0.08] pt-4"
             >
-              <div class="grid grid-cols-3 gap-2.5 sm:max-w-lg">
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-white sm:text-base">CSE @ SSM</div>
-                  <div class="font-mono text-[10px] text-slate-400">Engineering</div>
+              <div>
+                <div class="font-display text-xl font-bold text-white sm:text-2xl">
+                  03<span class="text-crimsonBright">+</span>
                 </div>
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-crimsonBright sm:text-base">AI &amp; Code</div>
-                  <div class="font-mono text-[10px] text-slate-400">Python &amp; C</div>
-                </div>
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-figmaCyan sm:text-base">HMT, KMR</div>
-                  <div class="font-mono text-[10px] text-slate-400">Shareefabad</div>
-                </div>
+                <div class="font-mono text-[10px] uppercase tracking-wider text-slate-400">Core Systems</div>
               </div>
-              <div class="mt-2.5 font-mono text-[10px] uppercase tracking-widest text-slate-500">
-                SYSTEMS &amp; CODE &bull; BUILT IN KASHMIR
+
+              <div>
+                <div class="font-display text-xl font-bold text-white sm:text-2xl">
+                  Python &amp; C
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-wider text-slate-400">Core Stack</div>
+              </div>
+
+              <div>
+                <div class="font-display text-xl font-bold text-white sm:text-2xl">
+                  SSM CSE
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-wider text-slate-400">Engineering</div>
               </div>
             </div>
           </div>
 
-          <!-- Right Column (5 cols): Portrait Frame (./IMG_5291.PNG) + Featured AI Callouts -->
-          <div class="space-y-4 lg:col-span-5">
+          <!-- CENTER COLUMN (4 cols): Crimson-Backlit Portrait Card (./IMG_5291.PNG) -->
+          <div class="lg:col-span-4">
             <div
-              id="portraitCardContainer"
-              data-build-node="hero-portrait"
-              data-node-title="PORTRAIT // IMG_5291.PNG"
-              data-frame-color="red"
-              data-wave="2"
-              class="mx-auto max-w-[360px] rounded-xl border border-white/[0.12] bg-card p-2.5 shadow-2xl"
+              data-build-node="hero-portrait-card"
+              class="group mx-auto max-w-[330px] rounded-xl border border-crimsonBright/35 bg-surface p-2 portrait-crimson-glow"
             >
-              <div class="mb-2 flex items-center justify-between px-1 font-mono text-[10px] text-slate-400">
-                <span class="flex items-center gap-1.5">
-                  <span class="h-2 w-2 rounded-full bg-crimsonBright"></span>
-                  <span>IMG_5291.PNG</span>
-                </span>
-                <label
-                  for="portraitFileInput"
-                  class="cursor-pointer rounded border border-white/10 bg-obsidian px-2 py-0.5 text-[9px] text-figmaCyan transition hover:border-figmaCyan"
-                  title="Preview a local photo if testing offline"
-                >
-                  Preview Photo
-                </label>
-                <input type="file" id="portraitFileInput" accept="image/*" class="hidden" />
-              </div>
+              <!-- Portrait Frame (aspect-ratio: 3/4) with Crimson Rim Glow -->
+              <div class="relative aspect-[3/4] w-full overflow-hidden rounded-lg bg-gradient-to-b from-[#2A0909] via-[#120709] to-[#070708]">
+                <!-- Subtle radial red backlight behind subject -->
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(239,68,68,0.34),transparent_68%)]"
+                ></div>
 
-              <div id="portraitFrameBox" class="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-[#070708]">
                 <img
-                  id="githubPortraitImg"
+                  id="dilawarPortraitImg"
                   src="./IMG_5291.PNG"
                   alt="Dilawar Abass — IMG_5291.PNG"
-                  class="h-full w-full object-cover object-center"
-                  onerror="showPortraitFallback()"
+                  class="relative z-10 h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+                  onerror="handlePortraitFallback()"
                 />
 
-                <!-- Fallback Portrait when ./IMG_5291.PNG is not present in current folder -->
-                <div
-                  id="portraitFallbackView"
-                  class="hidden h-full w-full flex-col items-center justify-between bg-gradient-to-b from-[#161822] via-[#0B0C10] to-[#070708] p-5 text-center"
+                <!-- Discreet Hover "Preview Local Photo" Button -->
+                <label
+                  for="localPhotoInput"
+                  class="absolute top-2.5 right-2.5 z-20 cursor-pointer rounded border border-white/15 bg-void/85 px-2.5 py-1 font-mono text-[9px] font-semibold text-figmaBlue opacity-0 backdrop-blur-sm transition group-hover:opacity-100 hover:border-figmaBlue"
                 >
-                  <div class="flex w-full justify-between font-mono text-[9px] text-slate-400">
-                    <span>DILAWAR ABASS</span>
-                    <span class="text-crimsonBright">SSM CSE</span>
+                  Preview Local Photo
+                </label>
+                <input type="file" id="localPhotoInput" accept="image/*" class="hidden" />
+
+                <!-- Fallback Silhouette SVG if ./IMG_5291.PNG isn't in local folder yet -->
+                <div
+                  id="portraitFallbackBox"
+                  class="relative z-10 hidden h-full w-full flex-col items-center justify-between p-5 text-center"
+                >
+                  <div class="flex w-full items-center justify-between font-mono text-[9px] text-slate-400">
+                    <span>IMG_5291.PNG</span>
+                    <span class="text-crimsonBright">GITHUB ASSET</span>
                   </div>
 
                   <div class="my-auto flex flex-col items-center">
-                    <div class="flex h-32 w-32 items-center justify-center rounded-full border border-crimsonBright/40 bg-crimsonBright/5">
+                    <div class="flex h-32 w-32 items-center justify-center rounded-full border border-crimsonBright/45 bg-crimson/10 shadow-lg shadow-crimson/20">
                       <svg class="h-24 w-24" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="60" cy="40" r="17" fill="#1C202B" stroke="#EF4444" stroke-width="2" />
+                        <circle cx="60" cy="40" r="17" fill="#1A1518" stroke="#EF4444" stroke-width="2" />
                         <path
-                          d="M24 105C24 81 39 65 60 65C81 65 96 81 96 105"
-                          fill="#141720"
+                          d="M24 106C24 81 39 65 60 65C81 65 96 81 96 106"
+                          fill="#120E10"
                           stroke="#EF4444"
                           stroke-width="2"
                         />
                         <path d="M50 66L60 84L70 66" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" />
                       </svg>
                     </div>
-                    <p class="mt-3 rounded border border-white/10 bg-obsidian px-2.5 py-1 font-mono text-[10px] text-slate-300">
-                      GitHub Photo: <strong class="text-white">IMG_5291.PNG</strong>
+                    <p class="mt-3 rounded border border-white/10 bg-void/90 px-2.5 py-1 font-mono text-[10px] text-slate-300">
+                      Place <strong class="text-white">IMG_5291.PNG</strong> in repo root
                     </p>
                   </div>
 
-                  <div class="font-mono text-[9px] text-slate-500">
-                    Shareefabad, HMT, Kashmir
+                  <div class="font-mono text-[9px] text-slate-400">
+                    DILAWAR ABASS &bull; SSM CSE
                   </div>
                 </div>
+              </div>
 
-                <div class="absolute inset-x-2.5 bottom-2.5 rounded border border-white/10 bg-[#070708]/90 px-2.5 py-1.5 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
-                  DILAWAR ABASS <span class="text-crimsonBright">//</span> IMG_5291.PNG
-                </div>
+              <!-- Caption Bar Right Beneath Portrait Card -->
+              <div class="mt-2 flex items-center justify-center gap-2 rounded-md border border-white/[0.06] bg-void/90 px-2.5 py-1.5 font-mono text-[10px] font-bold tracking-wider text-white">
+                <span class="h-1.5 w-1.5 rounded-full bg-crimsonBright live-dot"></span>
+                <span>DILAWAR ABASS &mdash; SHAREEFABAD, KASHMIR</span>
               </div>
             </div>
+          </div>
 
-            <!-- Featured AI Assistant Callouts -->
-            <div class="mx-auto grid max-w-[360px] grid-cols-2 gap-3">
-              <div
-                data-build-node="hero-ai-jarvis"
-                data-node-title="AI_JARVIS"
-                data-frame-color="red"
-                data-wave="3"
-                class="rounded-xl border-l-2 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-3.5"
-              >
-                <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">AI Assistant</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">AI Jarvis</div>
-                <p class="mt-1 text-[11px] leading-snug text-slate-400">Python command &amp; desktop assistant.</p>
-              </div>
-
-              <div
-                data-build-node="hero-ai-dilawar"
-                data-node-title="AI_DILAWAR"
-                data-wave="3"
-                class="rounded-xl border-l-2 border-l-figmaCyan border-y border-r border-white/[0.08] bg-card p-3.5"
-              >
-                <div class="font-mono text-[10px] font-bold uppercase text-figmaCyan">Custom Persona</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">AI Dilawar</div>
-                <p class="mt-1 text-[11px] leading-snug text-slate-400">Personal CSE &amp; workflow AI.</p>
-              </div>
+          <!-- RIGHT COLUMN (3 cols): Stacked Vertical "LIVE MODULES" Spotlight Cards (00:02 - 00:08) -->
+          <div class="space-y-3 lg:col-span-3">
+            <div class="flex items-center justify-between px-0.5 font-mono text-[10px] uppercase tracking-widest text-slate-400">
+              <span>LIVE MODULES</span>
+              <span class="text-crimsonBright">03 ACTIVE</span>
             </div>
+
+            <!-- Module 1: AI Jarvis -->
+            <a
+              href="#deployments"
+              data-build-node="hero-module-1"
+              class="block rounded-lg border border-white/[0.08] bg-surface p-3.5 transition hover:border-crimsonBright/60 hover:bg-surfaceAlt"
+            >
+              <div class="flex items-center justify-between font-mono text-[10px]">
+                <span class="font-bold text-crimsonBright">01 // ASSISTANT</span>
+                <span class="rounded bg-crimson/15 px-1.5 py-0.5 text-[9px] text-crimsonBright">PYTHON</span>
+              </div>
+              <div class="mt-1.5 font-display text-sm font-bold text-white">AI Jarvis</div>
+              <p class="mt-1 text-xs leading-snug text-slate-400">
+                Voice-activated desktop assistant in Python
+              </p>
+            </a>
+
+            <!-- Module 2: AI Dilawar -->
+            <a
+              href="#deployments"
+              data-build-node="hero-module-2"
+              class="block rounded-lg border border-white/[0.08] bg-surface p-3.5 transition hover:border-figmaBlue/60 hover:bg-surfaceAlt"
+            >
+              <div class="flex items-center justify-between font-mono text-[10px]">
+                <span class="font-bold text-figmaBlue">02 // PERSONA AI</span>
+                <span class="rounded bg-figmaBlue/15 px-1.5 py-0.5 text-[9px] text-figmaBlue">AUTOMATION</span>
+              </div>
+              <div class="mt-1.5 font-display text-sm font-bold text-white">AI Dilawar</div>
+              <p class="mt-1 text-xs leading-snug text-slate-400">
+                Personalized conversational AI &amp; task automation
+              </p>
+            </a>
+
+            <!-- Module 3: Online Attendance -->
+            <a
+              href="#deployments"
+              data-build-node="hero-module-3"
+              class="block rounded-lg border border-white/[0.08] bg-surface p-3.5 transition hover:border-emerald-400/60 hover:bg-surfaceAlt"
+            >
+              <div class="flex items-center justify-between font-mono text-[10px]">
+                <span class="font-bold text-emerald-400">03 // CAMPUS SYS</span>
+                <span class="rounded bg-emerald-400/15 px-1.5 py-0.5 text-[9px] text-emerald-400">WEB + DB</span>
+              </div>
+              <div class="mt-1.5 font-display text-sm font-bold text-white">Online Attendance</div>
+              <p class="mt-1 text-xs leading-snug text-slate-400">
+                Smart student attendance tracking platform
+              </p>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- =====================================================================
-         SECTION 2: BACKGROUND, EDUCATION & PHILOSOPHY
+         SECTION 2: BACKGROUND & PHILOSOPHY (00:08 - 00:14)
          ===================================================================== -->
-    <section id="education" class="border-b border-white/[0.08] py-16 sm:py-20">
+    <section id="background" class="border-b border-white/[0.08] py-16 sm:py-20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="edu-header"
-          data-node-title="ACADEMIC_JOURNEY"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            ACADEMIC JOURNEY &amp; ROOTS
+        <div class="mb-3 font-mono text-[10px] text-slate-500">
+          // 01.00 SEC_ABOUT INDEX [01/04]
+        </div>
+
+        <div data-build-node="bg-header" class="mb-10">
+          <div class="font-mono text-[11px] font-bold uppercase tracking-widest text-crimsonBright">
+            ENGINEERING PROFILE
           </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+          <h2 class="mt-1.5 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
             Background &amp; Philosophy
           </h2>
         </div>
 
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <!-- Left Narrative: Schooling, CSE, Location & Mindset -->
-          <div class="space-y-4 lg:col-span-7">
+          <!-- Left Column: Narrative + Bulleted Academic Timeline -->
+          <div class="space-y-5 lg:col-span-7">
             <div
-              data-build-node="edu-story-1"
-              data-node-title="SCHOOLING_PATH"
-              class="rounded-xl border border-white/[0.08] bg-card p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
+              data-build-node="bg-narrative"
+              class="rounded-xl border border-white/[0.08] bg-surface p-5 text-sm leading-relaxed text-slate-300 sm:p-6 sm:text-base"
             >
-              My name is <strong class="font-semibold text-white">Dilawar Abass</strong>, and I am a Computer Science &amp; Engineering (CSE) student at
-              <strong class="font-semibold text-white">SSM College of Engineering</strong>. I completed my 10th at
-              <strong class="font-semibold text-white">Mehdi Public School Durbal</strong> and passed my 12th at
-              <strong class="font-semibold text-white">Budgam Higher Secondary School</strong>.
+              I am <strong class="font-semibold text-white">Dilawar Abass</strong>, a Computer Science &amp; Engineering student at
+              <strong class="font-semibold text-white">SSM College of Engineering</strong>, rooted in
+              <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>. My journey is driven by building practical voice assistants, low-level C programs, and reliable student management systems from first principles.
             </div>
 
+            <!-- Bulleted Academic Timeline -->
             <div
-              data-build-node="edu-story-2"
-              data-node-title="KASHMIR_MINDSET"
-              class="rounded-xl border border-white/[0.08] bg-card p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
+              data-build-node="bg-timeline"
+              class="space-y-3 rounded-xl border border-white/[0.08] bg-surface p-5 sm:p-6"
             >
-              Based in <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>, my approach to software is practical and hands-on: write clean
-              <strong class="font-semibold text-white">Python</strong> and <strong class="font-semibold text-white">C</strong> code, understand how systems work under the hood, and build useful tools like
-              <strong class="font-semibold text-white">AI Jarvis</strong>, <strong class="font-semibold text-white">AI Dilawar</strong>, and the
-              <strong class="font-semibold text-white">Online Attendance System</strong>.
-            </div>
+              <div class="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                ACADEMIC &amp; LOCATION TIMELINE
+              </div>
 
-            <!-- Compact Education Milestones Strip -->
-            <div
-              data-build-node="edu-milestones"
-              data-node-title="MILESTONES"
-              class="grid grid-cols-1 gap-3 sm:grid-cols-3"
-            >
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">10TH GRADE</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">Mehdi Public School Durbal</div>
-              </div>
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-figmaCyan">12TH PASSED</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">Budgam Higher Secondary School</div>
-              </div>
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-emerald-400">CSE DEGREE</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">SSM College of Engineering</div>
-              </div>
+              <ul class="space-y-3.5 text-sm">
+                <li class="flex items-start gap-3">
+                  <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-crimsonBright"></span>
+                  <div>
+                    <div class="font-semibold text-white">
+                      B.E. / B.Tech in Computer Science &amp; Engineering (CSE)
+                    </div>
+                    <div class="font-mono text-xs text-slate-400">
+                      SSM College of Engineering &mdash; <span class="text-crimsonBright">Current</span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-figmaBlue"></span>
+                  <div>
+                    <div class="font-semibold text-white">
+                      Higher Secondary (12th Grade)
+                    </div>
+                    <div class="font-mono text-xs text-slate-400">
+                      Budgam Higher Secondary School &mdash; <span class="text-figmaBlue">Completed</span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-emerald-400"></span>
+                  <div>
+                    <div class="font-semibold text-white">
+                      Secondary School (10th Grade)
+                    </div>
+                    <div class="font-mono text-xs text-slate-400">
+                      Mehdi Public School, Durbal &mdash; <span class="text-emerald-400">Completed</span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-amber-400"></span>
+                  <div>
+                    <div class="font-semibold text-white">
+                      Home Base
+                    </div>
+                    <div class="font-mono text-xs text-slate-400">
+                      Shareefabad, HMT, Kashmir
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <!-- Right Column: Stacked Cards with Red Left Accent Bars -->
+          <!-- Right Column: Philosophy Cards (matching 00:10) -->
           <div class="space-y-4 lg:col-span-5">
             <div
-              data-build-node="pillar-ai"
-              data-node-title="PILLAR // AI_ASSISTANTS"
-              data-frame-color="red"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
+              data-build-node="bg-card-1"
+              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-surface p-5"
             >
-              <h3 class="font-display text-base font-bold text-white">AI Assistants &amp; Automation</h3>
+              <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">01 // CORE LOGIC</div>
+              <h3 class="mt-1 font-display text-base font-bold text-white">First-Principles Coding</h3>
               <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Building <strong class="text-slate-200">AI Jarvis</strong> and <strong class="text-slate-200">AI Dilawar</strong> to automate daily tasks, assist with coding, and answer queries fast.
+                Writing clean, efficient logic from the ground up in C and Python.
               </p>
             </div>
 
             <div
-              data-build-node="pillar-code"
-              data-node-title="PILLAR // PYTHON_C"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
+              data-build-node="bg-card-2"
+              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-surface p-5"
             >
-              <h3 class="font-display text-base font-bold text-white">Python &amp; C Programming</h3>
+              <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">02 // INTELLIGENT TOOLS</div>
+              <h3 class="mt-1 font-display text-base font-bold text-white">Practical AI Automation</h3>
               <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Combining rapid Python scripting and automation with structured C programming, pointers, file handling, and data structures.
+                Turning everyday workflows into voice-controlled and intelligent tools.
               </p>
             </div>
 
             <div
-              data-build-node="pillar-systems"
-              data-node-title="PILLAR // PRACTICAL_SYSTEMS"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
+              data-build-node="bg-card-3"
+              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-surface p-5"
             >
-              <h3 class="font-display text-base font-bold text-white">Practical Systems &amp; Web</h3>
+              <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">03 // REAL DEPLOYMENT</div>
+              <h3 class="mt-1 font-display text-base font-bold text-white">Campus &amp; Community Utility</h3>
               <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Developing usable applications such as the <strong class="text-slate-200">Online Attendance System</strong> from Shareefabad, HMT, Kashmir.
+                Building reliable web and desktop software like automated attendance systems.
               </p>
             </div>
           </div>
@@ -670,129 +665,188 @@
     </section>
 
     <!-- =====================================================================
-         SECTION 3: FLAGSHIP PROJECTS & DEPLOYMENTS
+         SECTION 3: FLAGSHIP DEPLOYMENTS (00:14 - 00:32)
          ===================================================================== -->
-    <section id="projects" class="border-b border-white/[0.08] py-16 sm:py-20">
+    <section id="deployments" class="border-b border-white/[0.08] py-16 sm:py-20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="projects-header"
-          data-node-title="FLAGSHIP_PROJECTS"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            FEATURED BUILDS &amp; SYSTEMS
+        <div class="mb-3 font-mono text-[10px] text-slate-500">
+          // 02.00 SEC_DEPLOYMENTS INDEX [02/04]
+        </div>
+
+        <div data-build-node="dep-header" class="mb-10">
+          <div class="font-mono text-[11px] font-bold uppercase tracking-widest text-crimsonBright">
+            ARCHITECTURAL WORKS
           </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Flagship Projects
+          <h2 class="mt-1.5 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Flagship Deployments
           </h2>
         </div>
 
-        <!-- Featured Large Dark Card: AI Jarvis & AI Dilawar -->
+        <!-- Featured Hero Card (matching SAAI - 7-Layer Autonomous AI Ecosystem in 00:16 - 00:26) -->
         <article
-          data-build-node="project-ai-featured"
-          data-node-title="AI_JARVIS_AND_AI_DILAWAR"
-          data-frame-color="red"
-          class="rounded-2xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.1] bg-card p-6 sm:p-8"
+          data-build-node="dep-featured-card"
+          class="rounded-2xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.1] bg-surface p-6 sm:p-8"
         >
-          <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-            <span class="rounded bg-crimsonBright/15 px-2.5 py-1 font-bold uppercase text-crimsonBright">
-              FLAGSHIP ASSISTANT ECOSYSTEM
+          <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
+            <span class="inline-flex items-center gap-2 rounded-full border border-crimsonBright/40 bg-crimson/15 px-3 py-0.5 font-bold uppercase text-crimsonBright">
+              <span class="h-1.5 w-1.5 rounded-full bg-crimsonBright live-dot"></span>
+              <span>CORE AI ARCHITECTURE</span>
             </span>
-            <span class="text-slate-400">AI JARVIS &bull; AI DILAWAR</span>
+            <span class="text-slate-400">PYTHON VOICE &amp; AUTOMATION SUITE</span>
           </div>
 
           <h3 class="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">
-            AI Jarvis &amp; AI Dilawar — Personal AI Assistants
+            AI Jarvis &amp; AI Dilawar &mdash; Personal Voice &amp; Automation Suite
           </h3>
 
           <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Custom AI assistants created by Dilawar Abass for command execution, task automation, study and coding help, and personalized conversational workflows.
+            Custom Python-based intelligent assistants capable of natural voice commands, system automation, web queries, workflow execution, and personalized responses tailored for daily productivity.
           </p>
 
-          <!-- Stat / Metric Strip -->
-          <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <!-- 4-Column Metric Bar -->
+          <div
+            data-build-node="dep-featured-metrics"
+            class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
+          >
             <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-crimsonBright">Python / AI</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Core Assistant Logic</div>
+              <div class="font-display text-lg font-bold text-crimsonBright sm:text-xl">Voice NLP</div>
+              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-slate-400">Python Core</div>
             </div>
+
             <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-white">Voice &amp; Logic</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Command &amp; Query Routing</div>
+              <div class="font-display text-lg font-bold text-white sm:text-xl">24/7</div>
+              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-slate-400">Local Execution</div>
             </div>
+
             <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-figmaCyan">Custom Workflows</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Daily Automation &amp; Help</div>
+              <div class="font-display text-lg font-bold text-figmaBlue sm:text-xl">Auto</div>
+              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-slate-400">Task Routing</div>
+            </div>
+
+            <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
+              <div class="font-display text-lg font-bold text-emerald-400 sm:text-xl">Custom</div>
+              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-slate-400">Persona Engine</div>
             </div>
           </div>
 
-          <!-- Architecture / Feature Pills -->
-          <div class="mt-6 flex flex-wrap gap-2 font-mono text-xs">
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Intent &amp; Commands</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Local Automation</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Modular Scripts</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-crimsonBright">Chat &amp; Persona</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-figmaCyan">Extensible Tools</span>
+          <!-- Interactive Stack Pills -->
+          <div
+            data-build-node="dep-featured-pills"
+            class="mt-6 flex flex-wrap gap-2 font-mono text-[11px]"
+          >
+            <button
+              type="button"
+              data-stack-detail="Speech Recognition: Real-time microphone capture & voice-to-intent parsing in Python."
+              class="stack-pill rounded-md border border-crimsonBright/50 bg-crimson/15 px-3 py-1.5 font-semibold text-white transition hover:bg-crimson"
+            >
+              Speech Recognition
+            </button>
+            <button
+              type="button"
+              data-stack-detail="Python Engine: Modular command dispatcher powering both AI Jarvis and AI Dilawar."
+              class="stack-pill rounded-md border border-white/[0.1] bg-surfaceAlt px-3 py-1.5 text-slate-200 transition hover:border-figmaBlue hover:text-white"
+            >
+              Python Engine
+            </button>
+            <button
+              type="button"
+              data-stack-detail="OS Automation: Launches apps, searches the web, manages files, and automates daily routines."
+              class="stack-pill rounded-md border border-white/[0.1] bg-surfaceAlt px-3 py-1.5 text-slate-200 transition hover:border-figmaBlue hover:text-white"
+            >
+              OS Automation
+            </button>
+            <button
+              type="button"
+              data-stack-detail="Command Parser: Low-latency keyword & contextual routing for rapid assistant replies."
+              class="stack-pill rounded-md border border-white/[0.1] bg-surfaceAlt px-3 py-1.5 text-slate-200 transition hover:border-figmaBlue hover:text-white"
+            >
+              Command Parser
+            </button>
+            <button
+              type="button"
+              data-stack-detail="Custom Wake Word: Hands-free activation tailored specifically for Dilawar's workstation."
+              class="stack-pill rounded-md border border-white/[0.1] bg-surfaceAlt px-3 py-1.5 text-slate-200 transition hover:border-figmaBlue hover:text-white"
+            >
+              Custom Wake Word
+            </button>
+          </div>
+
+          <div id="stackDetailCaption" class="mt-3 font-mono text-[11px] text-slate-400">
+            Click any module pill above to inspect subsystem architecture.
           </div>
         </article>
 
-        <!-- Secondary Projects Grid -->
+        <!-- 3-Column Project Grid Right Underneath (00:28 - 00:32) -->
         <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <!-- Card 1: ONLINE ATTENDANCE SYSTEM -->
           <article
-            data-build-node="project-attendance"
-            data-node-title="ONLINE_ATTENDANCE_SYSTEM"
-            data-frame-color="red"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-crimsonBright/60"
+            data-build-node="dep-grid-1"
+            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-crimsonBright/60"
           >
             <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-crimsonBright">WEB &amp; RECORDS</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">Online Attendance System</h3>
+              <div class="font-mono text-[10px] font-bold uppercase tracking-wider text-crimsonBright">
+                01 // CAMPUS AUTOMATION
+              </div>
+              <h3 class="mt-2 font-display text-lg font-bold uppercase text-white">
+                ONLINE ATTENDANCE SYSTEM
+              </h3>
               <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Digital attendance tracking system for recording student and session presence, managing records, and calculating attendance summaries cleanly.
+                Automated digital attendance tracker for classrooms and institutions with student logs, date filtering, and instant report generation.
               </p>
             </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">Student Logs</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">Session Tracking</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-figmaCyan">Web System</span>
+
+            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-slate-200">Python</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-figmaBlue">Web UI</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-emerald-400">Database</span>
             </div>
           </article>
 
+          <!-- Card 2: C SYSTEMS & ALGORITHMS SUITE -->
           <article
-            data-build-node="project-python-cli"
-            data-node-title="PYTHON_CLI_TOOLKIT"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-figmaCyan/60"
+            data-build-node="dep-grid-2"
+            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-figmaBlue/60"
           >
             <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-figmaCyan">PYTHON AUTOMATION</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">Python CLI &amp; Automation Toolkit</h3>
+              <div class="font-mono text-[10px] font-bold uppercase tracking-wider text-figmaBlue">
+                02 // LOW-LEVEL ARCHITECTURE
+              </div>
+              <h3 class="mt-2 font-display text-lg font-bold uppercase text-white">
+                C SYSTEMS &amp; ALGORITHMS SUITE
+              </h3>
               <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Collection of Python scripts for file organization, text/data processing, task helpers, and rapid command-line utilities.
+                Low-level memory management utilities, data structure implementations, and console management tools engineered in C.
               </p>
             </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">Python</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">CLI Scripts</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-crimsonBright">Utilities</span>
+
+            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-slate-200">C Language</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-figmaBlue">Data Structures</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-crimsonBright">CLI</span>
             </div>
           </article>
 
+          <!-- Card 3: KASHMIR STUDENT RESOURCE PORTAL -->
           <article
-            data-build-node="project-c-lab"
-            data-node-title="C_SYSTEMS_DSA_LAB"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-emerald-400/60"
+            data-build-node="dep-grid-3"
+            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-emerald-400/60"
           >
             <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-emerald-400">C PROGRAMMING</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">C Systems &amp; Data Structures Lab</h3>
+              <div class="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                03 // PEER KNOWLEDGE HUB
+              </div>
+              <h3 class="mt-2 font-display text-lg font-bold uppercase text-white">
+                KASHMIR STUDENT RESOURCE PORTAL
+              </h3>
               <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Structured C programs covering pointers, arrays, structs, file I/O, linked lists, stacks, queues, and core CSE algorithms.
+                Clean, fast web hub organizing CSE notes, lab programs, and coding references for engineering peers.
               </p>
             </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">C Language</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">Data Structures</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-emerald-400">Algorithms</span>
+
+            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-slate-200">HTML/CSS</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-amber-400">JavaScript</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2 py-0.5 text-emerald-400">GitHub Pages</span>
             </div>
           </article>
         </div>
@@ -800,111 +854,91 @@
     </section>
 
     <!-- =====================================================================
-         SECTION 4: THE SKILLS MATRIX
+         SECTION 4: THE SYSTEMS MATRIX (00:32 - 00:38)
          ===================================================================== -->
-    <section id="skills" class="border-b border-white/[0.08] py-16 sm:py-20">
+    <section id="matrix" class="border-b border-white/[0.08] py-16 sm:py-20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="skills-header"
-          data-node-title="SKILLS_MATRIX_HEADER"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            CAPABILITIES &amp; STACK
+        <div class="mb-3 font-mono text-[10px] text-slate-500">
+          // 03.00 SEC_MATRIX INDEX [03/04]
+        </div>
+
+        <div data-build-node="matrix-header" class="mb-10">
+          <div class="font-mono text-[11px] font-bold uppercase tracking-widest text-crimsonBright">
+            ENGINEERING STACK
           </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            The Skills Matrix
+          <h2 class="mt-1.5 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            The Systems Matrix
           </h2>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <!-- Domain 1: AI & Assistants -->
+        <!-- 3-Column Capability & Skill Cards (00:36 - 00:38) -->
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <!-- Capability 1: Python & AI Engineering -->
           <div
-            data-build-node="skill-card-ai"
-            data-node-title="DOMAIN // AI_ASSISTANTS"
-            data-frame-color="red"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
+            data-build-node="matrix-card-1"
+            class="rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-crimsonBright/50"
           >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-crimsonBright">01 // AI &amp; ASSISTANTS</span>
-              <span class="text-slate-500">ACTIVE</span>
+            <div class="flex items-center justify-between font-mono text-[10px]">
+              <span class="font-bold uppercase text-crimsonBright">DOMAIN 01 // INTELLIGENCE</span>
+              <span class="text-slate-500">PRIMARY</span>
             </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">AI Assistants &amp; Workflows</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Designing personal assistants like <strong class="text-slate-200">AI Jarvis</strong> and <strong class="text-slate-200">AI Dilawar</strong>, prompt structuring, and automated assistant commands.
+            <h3 class="mt-2.5 font-display text-xl font-bold text-white">
+              Python &amp; AI Engineering
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400">
+              Speech synthesis/recognition, automation scripts, custom AI assistants (<strong class="text-slate-200">AI Jarvis</strong>, <strong class="text-slate-200">AI Dilawar</strong>), and rapid prototyping.
             </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Jarvis</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Dilawar</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-figmaCyan">Task Automation</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Prompt Logic</span>
+            <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-crimsonBright">Python</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Speech NLP</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Jarvis</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Dilawar</span>
             </div>
           </div>
 
-          <!-- Domain 2: Python & Scripting -->
+          <!-- Capability 2: C Programming & Core CS -->
           <div
-            data-build-node="skill-card-python"
-            data-node-title="DOMAIN // PYTHON"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
+            data-build-node="matrix-card-2"
+            class="rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-figmaBlue/50"
           >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-figmaCyan">02 // PYTHON &amp; SCRIPTING</span>
-              <span class="text-slate-500">CORE</span>
+            <div class="flex items-center justify-between font-mono text-[10px]">
+              <span class="font-bold uppercase text-figmaBlue">DOMAIN 02 // SYSTEMS</span>
+              <span class="text-slate-500">SSM CSE</span>
             </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">Python Programming &amp; Tooling</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Writing clean Python modules for automation, data handling, scripting, and building assistant &amp; web-connected tools.
+            <h3 class="mt-2.5 font-display text-xl font-bold text-white">
+              C Programming &amp; Core CS
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400">
+              Procedural architecture, pointers, memory efficiency, algorithms, and foundational computer science problem solving.
             </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-figmaCyan">Python</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Scripting</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">File &amp; Data Ops</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">CLI Tools</span>
+            <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-figmaBlue">C Programming</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Pointers</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Data Structures</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Algorithms</span>
             </div>
           </div>
 
-          <!-- Domain 3: C Programming & Core CS -->
+          <!-- Capability 3: Web, Git & Deployment -->
           <div
-            data-build-node="skill-card-c"
-            data-node-title="DOMAIN // C_CORE_CS"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
+            data-build-node="matrix-card-3"
+            class="rounded-2xl border border-white/[0.08] bg-surface p-6 transition hover:border-emerald-400/50"
           >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-emerald-400">03 // C PROGRAMMING &amp; CORE CS</span>
-              <span class="text-slate-500">CSE @ SSM</span>
+            <div class="flex items-center justify-between font-mono text-[10px]">
+              <span class="font-bold uppercase text-emerald-400">DOMAIN 03 // PRODUCTION</span>
+              <span class="text-slate-500">FULL-STACK</span>
             </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">C Programming &amp; Fundamentals</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Strong foundation in C syntax, memory &amp; pointers, problem solving, algorithms, and computer science fundamentals.
+            <h3 class="mt-2.5 font-display text-xl font-bold text-white">
+              Web, Git &amp; Deployment
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400">
+              Responsive frontends (<strong class="text-slate-200">HTML5</strong>, <strong class="text-slate-200">CSS3</strong>, <strong class="text-slate-200">JavaScript</strong>), database-backed attendance tools, and version control via Git &amp; GitHub.
             </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-emerald-400">C Programming</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Pointers &amp; Structs</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Problem Solving</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">CSE Core</span>
-            </div>
-          </div>
-
-          <!-- Domain 4: Web & Databases -->
-          <div
-            data-build-node="skill-card-web"
-            data-node-title="DOMAIN // WEB_DATABASES"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
-          >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-amber-400">04 // WEB &amp; DATABASES</span>
-              <span class="text-slate-500">SYSTEMS</span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">Web Interfaces &amp; Data Records</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Building structured web apps like the <strong class="text-slate-200">Online Attendance System</strong> with organized records, forms, and GitHub workflows.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-amber-400">HTML / CSS / JS</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Attendance System</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Records &amp; Data</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">GitHub</span>
+            <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[10px]">
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-emerald-400">HTML5 / CSS3</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">JavaScript</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Databases</span>
+              <span class="rounded border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Git &amp; GitHub</span>
             </div>
           </div>
         </div>
@@ -912,26 +946,25 @@
     </section>
 
     <!-- =====================================================================
-         SECTION 5: CONTACT & CLOSING CTA
+         SECTION 5: FOOTER / DIRECT CONTACT BAR
          ===================================================================== -->
-    <section id="contact" class="py-16 sm:py-20">
+    <section id="contact" class="py-16 pb-24 sm:py-20 sm:pb-28">
       <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div
-          data-build-node="contact-box"
-          data-node-title="CONTACT_CTA"
-          data-frame-color="red"
-          class="rounded-2xl border border-white/[0.1] bg-card p-8 text-center sm:p-12"
+          data-build-node="contact-cta-card"
+          class="rounded-2xl border border-white/[0.1] bg-surface p-8 text-center sm:p-12"
         >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            SHAREEFABAD, HMT, KASHMIR &bull; SSM CSE
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-obsidian px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 live-dot"></span>
+            <span>Shareefabad, HMT, Kashmir &bull; SSM CSE</span>
           </div>
 
-          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Let&apos;s Connect.
+          <h2 class="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Let&apos;s Architect Something Extraordinary.
           </h2>
 
-          <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Open to CSE collaborations, AI assistant ideas, Python &amp; C projects, and connecting with fellow builders.
+          <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
+            Available for CSE collaborations, custom Python AI assistants, C programming projects, and software builds.
           </p>
 
           <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -939,71 +972,79 @@
               href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-xl bg-crimsonBright px-6 py-3 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimsonBright/25 transition hover:bg-crimson sm:text-sm"
+              class="inline-flex items-center gap-2 rounded-md bg-crimsonBright px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimsonBright/25 transition hover:bg-crimson"
             >
-              <span>Open Instagram (@dilawar__abass)</span>
+              <span>INSTAGRAM (@dilawar__abass)</span>
               <span>&#8599;</span>
             </a>
 
             <button
               type="button"
-              id="copyInstagramLinkBtn"
-              class="inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-obsidian px-4 py-3 font-mono text-xs font-semibold text-slate-200 transition hover:border-figmaCyan hover:text-white sm:text-sm"
+              id="copyHandleBtn"
+              class="inline-flex items-center gap-2 rounded-md border border-white/[0.14] bg-obsidian px-4 py-2.5 font-mono text-xs font-semibold text-slate-200 transition hover:border-figmaBlue hover:text-white"
             >
-              <span id="copyLinkLabel">Copy Instagram Link</span>
+              <span id="copyHandleText">Copy Handle: @dilawar__abass</span>
             </button>
           </div>
 
-          <p class="mt-6 font-mono text-[11px] text-slate-400">
-            GitHub Profile: <strong class="text-white">Dilawar Abass</strong> &bull; Portrait Asset: <strong class="text-figmaCyan">./IMG_5291.PNG</strong>
-          </p>
+          <div class="mt-6 font-mono text-[10px] text-slate-500">
+            GitHub Pages Ready &bull; Dilawar Abass &bull; Portrait Asset: <span class="text-figmaBlue">./IMG_5291.PNG</span>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Minimal Footer -->
-  <footer class="border-t border-white/[0.08] bg-[#070708] py-6">
-    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 font-mono text-xs text-slate-400 sm:flex-row sm:px-6 lg:px-8">
-      <div>
-        <strong class="text-white">Dilawar Abass</strong> &bull; CSE @ SSM College of Engineering &bull; Shareefabad, HMT, Kashmir
-      </div>
-      <div class="flex items-center gap-4">
-        <a
-          href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-slate-300 transition hover:text-crimsonBright"
-        >
-          Instagram
-        </a>
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-slate-300 transition hover:text-figmaCyan"
-        >
-          GitHub
-        </a>
-      </div>
+  <!-- =====================================================================
+       FLOATING BOTTOM-CENTER MINI CONTROL STRIP (matching 00:06 - 00:14)
+       ===================================================================== -->
+  <div
+    aria-label="Reel Replay & Auto-Tour Controls"
+    class="fixed bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/[0.14] bg-[#0D0D11]/95 px-3.5 py-1.5 font-mono text-[10px] shadow-2xl backdrop-blur-md"
+  >
+    <!-- Mini color dots echoing the collaborative cursor palette -->
+    <div class="hidden sm:flex items-center gap-1 pr-1" aria-hidden="true">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8]"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-[#FB923C]"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-[#4ADE80]"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-[#F472B6]"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-[#FACC15]"></span>
     </div>
-  </footer>
+
+    <button
+      type="button"
+      id="replayBuildBtn"
+      class="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-1 font-bold text-white transition hover:bg-figmaBlue hover:text-void"
+    >
+      <span>&#8635; Replay Build</span>
+    </button>
+
+    <span class="text-white/20">|</span>
+
+    <button
+      type="button"
+      id="autoTourBtn"
+      class="inline-flex items-center gap-1 rounded-full bg-crimson/20 px-2.5 py-1 font-bold text-crimsonBright transition hover:bg-crimson hover:text-white"
+    >
+      <span id="autoTourLabel">&#9654; Auto-Scroll Demo</span>
+    </button>
+  </div>
 
   <!-- Subtle Notification Toast (replaces alert()) -->
   <div
-    id="statusToast"
+    id="toastBanner"
     role="status"
     aria-live="polite"
-    class="pointer-events-none fixed right-5 bottom-5 z-50 translate-y-3 rounded-lg border border-white/15 bg-cardAlt px-4 py-2.5 font-mono text-xs text-white opacity-0 shadow-2xl transition-all duration-200"
+    class="pointer-events-none fixed top-14 right-4 z-50 -translate-y-2 rounded-md border border-white/15 bg-surfaceAlt px-3.5 py-2 font-mono text-[11px] text-white opacity-0 shadow-2xl transition-all duration-200"
   ></div>
 
   <script>
     // =========================================================================
-    // 1. PORTRAIT FALLBACK & LOCAL FILE PREVIEW (./IMG_5291.PNG)
+    // 1. PORTRAIT FALLBACK & LOCAL PHOTO PREVIEW
     // =========================================================================
-    function showPortraitFallback() {
-      const img = document.getElementById('githubPortraitImg');
-      const fallback = document.getElementById('portraitFallbackView');
+    function handlePortraitFallback() {
+      const img = document.getElementById('dilawarPortraitImg');
+      const fallback = document.getElementById('portraitFallbackBox');
       if (img) img.classList.add('hidden');
       if (fallback) {
         fallback.classList.remove('hidden');
@@ -1011,413 +1052,77 @@
       }
     }
 
-    function triggerPortraitScan() {
-      const box = document.getElementById('portraitFrameBox');
-      if (!box) return;
-      const beam = document.createElement('div');
-      beam.className = 'portrait-scan-beam';
-      box.appendChild(beam);
-      setTimeout(() => beam.remove(), 950);
-    }
-
-    const portraitFileInput = document.getElementById('portraitFileInput');
-    portraitFileInput?.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const img = document.getElementById('githubPortraitImg');
-        const fallback = document.getElementById('portraitFallbackView');
-        if (img && typeof ev.target?.result === 'string') {
-          img.src = ev.target.result;
-          img.classList.remove('hidden');
-          if (fallback) {
-            fallback.classList.add('hidden');
-            fallback.classList.remove('flex');
-          }
-          triggerPortraitScan();
-          showToast(`Loaded preview: ${file.name}`);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // =========================================================================
-    // 2. TOAST & COPY HELPER
-    // =========================================================================
-    let toastTimer = null;
-    function showToast(message) {
-      const toast = document.getElementById('statusToast');
-      if (!toast) return;
-      toast.textContent = message;
-      toast.classList.remove('opacity-0', 'translate-y-3');
-      toast.classList.add('opacity-100', 'translate-y-0');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3');
-      }, 2400);
-    }
-
-    const INSTA_URL = 'https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr';
-    document.getElementById('copyInstagramLinkBtn')?.addEventListener('click', () => {
-      const label = document.getElementById('copyLinkLabel');
-      const temp = document.createElement('textarea');
-      temp.value = INSTA_URL;
-      temp.setAttribute('readonly', '');
-      temp.style.position = 'absolute';
-      temp.style.left = '-9999px';
-      document.body.appendChild(temp);
-      temp.select();
-      try {
-        document.execCommand('copy');
-        if (label) label.textContent = 'Copied!';
-        showToast('Instagram link copied to clipboard');
-      } catch (_) {
-        showToast('@dilawar__abass');
-      }
-      document.body.removeChild(temp);
-      setTimeout(() => {
-        if (label) label.textContent = 'Copy Instagram Link';
-      }, 1800);
-    });
-
-    // =========================================================================
-    // 3. REALISTIC WEB AUDIO HELICOPTER & AIR-DROP SOUND ENGINE
-    // =========================================================================
-    class TacticalAudioEngine {
-      constructor() {
-        this.ctx = null;
-        this.muted = false;
-        this.rotorGain = null;
-        this.rotorOsc = null;
-        this.bladeLfo = null;
-        this.turbineGain = null;
-        this.turbineOsc = null;
-        this.noiseBuffer = null;
-        this.initialized = false;
-      }
-
-      init() {
-        if (this.initialized) {
-          if (this.ctx && this.ctx.state === 'suspended' && !this.muted) {
-            this.ctx.resume().catch(() => {});
-          }
-          return;
-        }
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-
-        try {
-          this.ctx = new AudioCtx();
-          this.initialized = true;
-
-          // Pre-build 2-second white/pink noise buffer for rotor chop, wind & impacts
-          const sampleRate = this.ctx.sampleRate;
-          const length = sampleRate * 2;
-          this.noiseBuffer = this.ctx.createBuffer(1, length, sampleRate);
-          const data = this.noiseBuffer.getChannelData(0);
-          let b0 = 0, b1 = 0, b2 = 0;
-          for (let i = 0; i < length; i++) {
-            const white = Math.random() * 2 - 1;
-            b0 = 0.99765 * b0 + white * 0.099046;
-            b1 = 0.96300 * b1 + white * 0.2965164;
-            b2 = 0.57000 * b2 + white * 1.0526913;
-            data[i] = (b0 + b1 + b2 + white * 0.1848) * 0.22;
-          }
-
-          // Continuous low-frequency twin-rotor chop + turbine hum
-          this.rotorGain = this.ctx.createGain();
-          this.rotorGain.gain.value = 0.0001;
-          this.rotorGain.connect(this.ctx.destination);
-
-          // Filtered noise for realistic "whop-whop-whop" blade slap
-          const bladeNoise = this.ctx.createBufferSource();
-          bladeNoise.buffer = this.noiseBuffer;
-          bladeNoise.loop = true;
-
-          const bladeFilter = this.ctx.createBiquadFilter();
-          bladeFilter.type = 'lowpass';
-          bladeFilter.frequency.value = 165;
-          bladeFilter.Q.value = 2.4;
-
-          const chopShaper = this.ctx.createGain();
-          chopShaper.gain.value = 0.5;
-
-          // LFO modulating blade slap at ~13.5 Hz (heavy twin-blade attack chopper)
-          this.bladeLfo = this.ctx.createOscillator();
-          this.bladeLfo.type = 'sine';
-          this.bladeLfo.frequency.value = 13.5;
-          const lfoDepth = this.ctx.createGain();
-          lfoDepth.gain.value = 0.48;
-          this.bladeLfo.connect(lfoDepth);
-          lfoDepth.connect(chopShaper.gain);
-
-          bladeNoise.connect(bladeFilter);
-          bladeFilter.connect(chopShaper);
-          chopShaper.connect(this.rotorGain);
-
-          // Sub-bass rotor thump oscillator
-          this.rotorOsc = this.ctx.createOscillator();
-          this.rotorOsc.type = 'triangle';
-          this.rotorOsc.frequency.value = 27;
-          const subGain = this.ctx.createGain();
-          subGain.gain.value = 0.35;
-          this.rotorOsc.connect(subGain);
-          subGain.connect(chopShaper);
-
-          // High-pitched turboshaft engine whine
-          this.turbineOsc = this.ctx.createOscillator();
-          this.turbineOsc.type = 'sine';
-          this.turbineOsc.frequency.value = 410;
-          this.turbineGain = this.ctx.createGain();
-          this.turbineGain.gain.value = 0.0001;
-          this.turbineOsc.connect(this.turbineGain);
-          this.turbineGain.connect(this.ctx.destination);
-
-          bladeNoise.start();
-          this.bladeLfo.start();
-          this.rotorOsc.start();
-          this.turbineOsc.start();
-        } catch (_) {
-          // Audio blocked until gesture
-        }
-      }
-
-      setMuted(mute) {
-        this.muted = mute;
-        if (!this.initialized) return;
-        if (this.muted) {
-          if (this.rotorGain && this.ctx) {
-            this.rotorGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
-          }
-          if (this.turbineGain && this.ctx) {
-            this.turbineGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
-          }
-        } else if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume().catch(() => {});
-        }
-      }
-
-      updateFlightAudio(activeCount, avgSpeed, isDeploying) {
-        if (!this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-        if (this.muted || activeCount === 0) {
-          this.rotorGain.gain.setTargetAtTime(0.0001, now, 0.12);
-          this.turbineGain.gain.setTargetAtTime(0.0001, now, 0.12);
-          return;
-        }
-
-        // Scale volume & Doppler pitch dynamically with active formation count & speed
-        const formationBoost = Math.min(1.65, 0.75 + activeCount * 0.22);
-        const baseRotorVol = (isDeploying ? 0.22 : 0.09) * formationBoost;
-        const baseTurbineVol = (isDeploying ? 0.024 : 0.01) * formationBoost;
-
-        const dopplerShift = Math.min(45, avgSpeed * 2.2);
-        this.bladeLfo.frequency.setTargetAtTime(12.8 + Math.min(3.5, avgSpeed * 0.22), now, 0.1);
-        this.turbineOsc.frequency.setTargetAtTime(395 + dopplerShift, now, 0.12);
-
-        this.rotorGain.gain.setTargetAtTime(baseRotorVol, now, 0.14);
-        this.turbineGain.gain.setTargetAtTime(baseTurbineVol, now, 0.14);
-      }
-
-      playDropRelease() {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-
-        // Pneumatic cargo clamp release click + parachute canopy air whoosh
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(240, now);
-        osc.frequency.exponentialRampToValueAtTime(68, now + 0.18);
-        gain.gain.setValueAtTime(0.11, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.2);
-
-        if (this.noiseBuffer) {
-          const whoosh = this.ctx.createBufferSource();
-          whoosh.buffer = this.noiseBuffer;
-          const filter = this.ctx.createBiquadFilter();
-          filter.type = 'bandpass';
-          filter.frequency.setValueAtTime(650, now);
-          filter.frequency.exponentialRampToValueAtTime(220, now + 0.36);
-          filter.Q.value = 1.6;
-
-          const wGain = this.ctx.createGain();
-          wGain.gain.setValueAtTime(0.001, now);
-          wGain.gain.linearRampToValueAtTime(0.13, now + 0.06);
-          wGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-
-          whoosh.connect(filter);
-          filter.connect(wGain);
-          wGain.connect(this.ctx.destination);
-          whoosh.start(now);
-          whoosh.stop(now + 0.4);
-        }
-      }
-
-      playCargoImpact(isHeavy = false) {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-
-        // Deep tactical crate touchdown thud
-        const thudOsc = this.ctx.createOscillator();
-        const thudGain = this.ctx.createGain();
-        thudOsc.type = 'sine';
-        thudOsc.frequency.setValueAtTime(isHeavy ? 115 : 135, now);
-        thudOsc.frequency.exponentialRampToValueAtTime(28, now + (isHeavy ? 0.34 : 0.24));
-
-        thudGain.gain.setValueAtTime(isHeavy ? 0.32 : 0.2, now);
-        thudGain.gain.exponentialRampToValueAtTime(0.001, now + (isHeavy ? 0.36 : 0.25));
-
-        thudOsc.connect(thudGain);
-        thudGain.connect(this.ctx.destination);
-        thudOsc.start(now);
-        thudOsc.stop(now + 0.38);
-
-        // Metallic lock-in latch snap
-        if (this.noiseBuffer) {
-          const burst = this.ctx.createBufferSource();
-          burst.buffer = this.noiseBuffer;
-          const hp = this.ctx.createBiquadFilter();
-          hp.type = 'highpass';
-          hp.frequency.value = 900;
-
-          const bGain = this.ctx.createGain();
-          bGain.gain.setValueAtTime(isHeavy ? 0.14 : 0.08, now);
-          bGain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
-
-          burst.connect(hp);
-          hp.connect(bGain);
-          bGain.connect(this.ctx.destination);
-          burst.start(now);
-          burst.stop(now + 0.12);
-        }
-      }
-
-      playFlarePop() {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-        if (!this.noiseBuffer) return;
-
-        const pop = this.ctx.createBufferSource();
-        pop.buffer = this.noiseBuffer;
-        const bp = this.ctx.createBiquadFilter();
-        bp.type = 'bandpass';
-        bp.frequency.setValueAtTime(1200, now);
-        bp.frequency.exponentialRampToValueAtTime(320, now + 0.22);
-
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.16, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
-
-        pop.connect(bp);
-        bp.connect(gain);
-        gain.connect(this.ctx.destination);
-        pop.start(now);
-        pop.stop(now + 0.25);
-      }
+    let toastTimeout = null;
+    function showToast(msg) {
+      const el = document.getElementById('toastBanner');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.remove('opacity-0', '-translate-y-2');
+      el.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        el.classList.remove('opacity-100', 'translate-y-0');
+        el.classList.add('opacity-0', '-translate-y-2');
+      }, 2200);
     }
 
     // =========================================================================
-    // 4. MULTI-HELICOPTER FORMATION AIR-DROP & CARGO ENGINE
+    // 2. MULTI-CURSOR FIGMA LIVE-BUILDER ENGINE (Exact Video Replica)
     // =========================================================================
-    function createSelectionFrame(el) {
-      const frame = document.createElement('div');
-      const isRed = el.dataset.frameColor === 'red';
-      frame.className = `figma-frame-box${isRed ? ' frame-red' : ''}`;
+    const CURSOR_PALETTE = [
+      { color: '#38BDF8', tag: 'UI' },     // Cyan
+      { color: '#FB923C', tag: 'GRID' },   // Orange
+      { color: '#4ADE80', tag: 'SYS' },    // Green
+      { color: '#F472B6', tag: 'TYPE' },   // Pink
+      { color: '#FACC15', tag: 'AI' },     // Yellow
+      { color: '#A78BFA', tag: 'CORE' },   // Purple
+      { color: '#F87171', tag: 'RED' },    // Red
+      { color: '#38BDF8', tag: 'DOM' },    // Cyan
+      { color: '#FB923C', tag: 'BOX' },    // Orange
+      { color: '#4ADE80', tag: 'DEV' },    // Green
+      { color: '#F472B6', tag: 'UX' },     // Pink
+      { color: '#FACC15', tag: 'CSE' },    // Yellow
+    ];
 
-      const title = el.dataset.nodeTitle || 'PAYLOAD';
+    function createFigmaBoundingBox(el) {
+      const box = document.createElement('div');
+      box.className = 'figma-selection-box';
 
-      const badge = document.createElement('span');
-      badge.className = 'figma-dimension-badge';
-      badge.textContent = `DEPLOYED // ${title}`;
-      frame.appendChild(badge);
-
-      ['tl', 'tr', 'bl', 'br'].forEach((pos) => {
+      ['tl', 'tr', 'bl', 'br'].forEach((corner) => {
         const handle = document.createElement('span');
-        handle.className = `figma-corner-handle ${pos}`;
-        frame.appendChild(handle);
+        handle.className = `figma-handle ${corner}`;
+        box.appendChild(handle);
       });
 
-      return frame;
+      const rect = el.getBoundingClientRect();
+      const w = Math.max(48, Math.round(rect.width));
+      const h = Math.max(24, Math.round(rect.height));
+
+      const dimTag = document.createElement('span');
+      dimTag.className = 'figma-dim-tag';
+      dimTag.textContent = `${w}\u00D7${h}`;
+      box.appendChild(dimTag);
+
+      return box;
     }
 
-    class TacticalHelicopterDrop {
-      constructor(canvas, audioEngine) {
+    class FigmaMultiCursorEngine {
+      constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.audio = audioEngine;
         this.width = window.innerWidth;
         this.height = window.innerHeight;
-        this.mode = 'FORMATION_DROP'; // 'FORMATION_DROP' | 'ESCORT'
-        this.builtSet = new WeakSet();
-        this.choppers = [];
-        this.drops = [];
-        this.particles = [];
-        this.lastExhaustTime = 0;
-
-        this.pointer = {
-          x: this.width * 0.5,
-          y: this.height * 0.45,
-          active: false,
-          lastMove: 0,
-          down: false,
-        };
+        this.mode = 'PRELOADER_ORBIT'; // 'PRELOADER_ORBIT' | 'BURST_BUILD' | 'SCROLL_SWARM'
+        this.cursors = [];
+        this.jobs = [];
+        this.builtNodes = new WeakSet();
+        this.observer = null;
+        this.sequenceTimers = [];
 
         this.resize();
         window.addEventListener('resize', () => this.resize());
-        window.addEventListener('scroll', () => this.revealVisibleNodes(), { passive: true });
-        this.bindPointerEvents();
-      }
-
-      bindPointerEvents() {
-        const unlockAndMove = (x, y) => {
-          this.audio?.init();
-          this.pointer.x = x;
-          this.pointer.y = y;
-          this.pointer.active = true;
-          this.pointer.lastMove = performance.now();
-        };
-
-        window.addEventListener('mousemove', (e) => {
-          unlockAndMove(e.clientX, e.clientY);
-        }, { passive: true });
-
-        window.addEventListener('mousedown', (e) => {
-          unlockAndMove(e.clientX, e.clientY);
-          this.pointer.down = true;
-          const lead = this.choppers[0];
-          if (lead) {
-            this.spawnFlareBurst(lead.x - lead.facing * 28, lead.y + 14);
-            this.audio?.playFlarePop();
-          }
-        }, { passive: true });
-
-        window.addEventListener('mouseup', () => {
-          this.pointer.down = false;
-        }, { passive: true });
-
-        window.addEventListener('touchstart', (e) => {
-          const t = e.touches[0];
-          if (t) {
-            unlockAndMove(t.clientX, t.clientY);
-            this.pointer.down = true;
-          }
-        }, { passive: true });
-
-        window.addEventListener('touchmove', (e) => {
-          const t = e.touches[0];
-          if (t) unlockAndMove(t.clientX, t.clientY);
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => {
-          this.pointer.down = false;
-        }, { passive: true });
+        this.initCursors();
+        this.setupScrollObserver();
       }
 
       resize() {
@@ -1429,38 +1134,445 @@
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
-      createChopper({ id, callsign, role, startX, startY, altitudeY, speedX, payloadKeys, accentColor, isEscort = false }) {
-        return {
-          id,
-          callsign,
-          role,
-          x: startX,
-          y: startY,
-          vx: speedX,
-          vy: 0,
-          cruiseSpeedX: speedX,
-          altitudeY,
-          pitch: 0.1,
-          facing: 1,
-          rotorPhase: Math.random() * Math.PI * 2,
-          scale: isEscort ? 0.94 : 0.86,
-          payloadKeys: [...payloadKeys],
-          droppedKeys: new Set(),
-          accentColor,
-          isEscort,
-          exited: false,
-        };
+      initCursors() {
+        const cx = this.width * 0.5;
+        const cy = this.height * 0.5;
+        this.cursors = CURSOR_PALETTE.map((item, i) => {
+          const angle = (i / CURSOR_PALETTE.length) * Math.PI * 2;
+          return {
+            id: i,
+            color: item.color,
+            x: cx + Math.cos(angle) * 64,
+            y: cy + Math.sin(angle) * 64,
+            angle,
+            orbitRadius: 56 + (i % 3) * 14,
+            orbitSpeed: 0.048 + (i % 2) * 0.012,
+            busyUntil: 0,
+            idleTargetX: cx + Math.cos(angle) * 260,
+            idleTargetY: cy + Math.sin(angle) * 160,
+          };
+        });
       }
 
-      runSequence() {
-        const overlay = document.getElementById('openingBuildOverlay');
-        const statusLabel = document.getElementById('buildStatusLabel');
-        const topLiveStatus = document.getElementById('topLiveStatus');
-        const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
+      clearTimers() {
+        this.sequenceTimers.forEach((id) => clearTimeout(id));
+        this.sequenceTimers = [];
+      }
 
-        if (statusLabel) statusLabel.textContent = 'Squadron Incoming — Line Formation...';
-        if (topLiveStatus) topLiveStatus.textContent = 'AIR-DROP';
+      setupScrollObserver() {
+        if (this.observer) this.observer.disconnect();
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            if (this.mode === 'PRELOADER_ORBIT') return;
+            let stagger = 0;
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                if (!this.builtNodes.has(el)) {
+                  const t = setTimeout(() => this.scheduleBuildForElement(el), stagger * 95);
+                  this.sequenceTimers.push(t);
+                  stagger++;
+                }
+              }
+            });
+          },
+          { threshold: 0.14, rootMargin: '0px 0px -30px 0px' }
+        );
 
-        this.builtSet = new WeakSet();
-        this.drops = [];
-        this.particles = [];
+        document.querySelectorAll('[data-build-node]').forEach((el) => {
+          this.observer.observe(el);
+        });
+      }
+
+      scheduleBuildForElement(el) {
+        if (!el || this.builtNodes.has(el)) return;
+        this.builtNodes.add(el);
+
+        const rect = el.getBoundingClientRect();
+        // If off-screen, reveal immediately without clutter
+        if (rect.bottom < -40 || rect.top > this.height + 80) {
+          el.classList.remove('build-pending', 'build-drafting');
+          el.classList.add('build-ready');
+          return;
+        }
+
+        el.classList.remove('build-pending');
+        el.classList.add('build-drafting');
+
+        const box = createFigmaBoundingBox(el);
+        el.appendChild(box);
+
+        // Pick an available cursor nearest to the element
+        const now = performance.now();
+        let chosen = this.cursors[0];
+        let bestScore = Infinity;
+        const targetCenterX = rect.left + rect.width * 0.5;
+        const targetCenterY = rect.top + rect.height * 0.5;
+
+        for (let i = 0; i < this.cursors.length; i++) {
+          const c = this.cursors[i];
+          const busyPenalty = c.busyUntil > now ? 1200 : 0;
+          const dist = Math.hypot(c.x - targetCenterX, c.y - targetCenterY) + busyPenalty;
+          if (dist < bestScore) {
+            bestScore = dist;
+            chosen = c;
+          }
+        }
+
+        const duration = 440 + Math.random() * 140;
+        chosen.busyUntil = now + duration;
+
+        // Drag path across top-left -> top-right -> bottom-right of bounding box
+        const pad = 4;
+        const x1 = Math.max(12, rect.left - pad);
+        const y1 = Math.max(12, rect.top - pad);
+        const x2 = Math.min(this.width - 12, rect.right + pad);
+        const y2 = Math.min(this.height - 12, rect.bottom + pad);
+
+        this.jobs.push({
+          cursor: chosen,
+          el,
+          box,
+          start: now,
+          duration,
+          waypoints: [
+            { x: chosen.x, y: chosen.y },
+            { x: x1, y: y1 },
+            { x: x2, y: y1 },
+            { x: x2, y: y2 },
+          ],
+        });
+      }
+
+      startSequence() {
+        this.clearTimers();
+        this.jobs = [];
+        this.builtNodes = new WeakSet();
+        this.mode = 'PRELOADER_ORBIT';
+
+        const preloader = document.getElementById('preloaderVoid');
+        const progressLine = document.getElementById('preloaderProgressLine');
+        const statusText = document.getElementById('preloaderStatusText');
+
+        // Reset all nodes to pending state
+        document.querySelectorAll('[data-build-node]').forEach((el) => {
+          el.classList.remove('build-drafting', 'build-ready');
+          el.classList.add('build-pending');
+          el.querySelectorAll('.figma-selection-box').forEach((b) => b.remove());
+        });
+
+        this.initCursors();
+
+        if (preloader) {
+          preloader.style.display = 'flex';
+          preloader.style.opacity = '1';
+        }
+        if (progressLine) progressLine.style.width = '12%';
+        if (statusText) statusText.textContent = 'Constructing portfolio...';
+
+        // Animate sleek progress pill over 1.6s
+        this.sequenceTimers.push(
+          setTimeout(() => {
+            if (progressLine) progressLine.style.width = '55%';
+            if (statusText) statusText.textContent = 'Assembling Figma grid...';
+          }, 520)
+        );
+
+        this.sequenceTimers.push(
+          setTimeout(() => {
+            if (progressLine) progressLine.style.width = '100%';
+            if (statusText) statusText.textContent = 'Deploying UI blocks...';
+          }, 1150)
+        );
+
+        // At 1.6s: fade out preloader and burst colorful cursors outward to build Hero
+        this.sequenceTimers.push(
+          setTimeout(() => {
+            this.mode = 'BURST_BUILD';
+            if (preloader) {
+              preloader.style.opacity = '0';
+              setTimeout(() => {
+                if (this.mode !== 'PRELOADER_ORBIT') {
+                  preloader.style.display = 'none';
+                }
+              }, 480);
+            }
+
+            const heroSequence = [
+              'nav-brand',
+              'nav-links',
+              'nav-status',
+              'hero-wordmark',
+              'hero-title-block',
+              'hero-portrait-card',
+              'hero-module-1',
+              'hero-role-badge',
+              'hero-module-2',
+              'hero-bio',
+              'hero-module-3',
+              'hero-cta-row',
+              'hero-metrics-strip',
+            ];
+
+            heroSequence.forEach((nodeKey, index) => {
+              const el = document.querySelector(`[data-build-node="${nodeKey}"]`);
+              if (el) {
+                const t = setTimeout(() => this.scheduleBuildForElement(el), index * 75);
+                this.sequenceTimers.push(t);
+              }
+            });
+
+            // Transition to scroll-triggered construction mode after hero finishes
+            const switchTimer = setTimeout(() => {
+              this.mode = 'SCROLL_SWARM';
+              document.querySelectorAll('[data-build-node]').forEach((el) => {
+                const r = el.getBoundingClientRect();
+                if (r.top < this.height * 0.92 && r.bottom > 0 && !this.builtNodes.has(el)) {
+                  this.scheduleBuildForElement(el);
+                }
+              });
+            }, 1350);
+            this.sequenceTimers.push(switchTimer);
+          }, 1600)
+        );
+      }
+
+      update(now) {
+        const cx = this.width * 0.5;
+        const cy = this.height * 0.5;
+
+        // 1. Update active cursor bounding-box jobs
+        for (let i = this.jobs.length - 1; i >= 0; i--) {
+          const job = this.jobs[i];
+          const progress = Math.max(0, Math.min(1, (now - job.start) / job.duration));
+          const pts = job.waypoints;
+          const segCount = pts.length - 1;
+          const scaled = progress * segCount;
+          const segIdx = Math.min(segCount - 1, Math.floor(scaled));
+          const localT = scaled - segIdx;
+          const easeT = localT * localT * (3 - 2 * localT);
+
+          const pA = pts[segIdx] || pts[0];
+          const pB = pts[segIdx + 1] || pts[pts.length - 1];
+
+          job.cursor.x = pA.x + (pB.x - pA.x) * easeT;
+          job.cursor.y = pA.y + (pB.y - pA.y) * easeT;
+
+          if (progress >= 1) {
+            job.el.classList.remove('build-drafting');
+            job.el.classList.add('build-ready');
+            if (job.box) {
+              job.box.style.opacity = '0';
+              setTimeout(() => job.box.remove(), 340);
+            }
+            this.jobs.splice(i, 1);
+          }
+        }
+
+        // 2. Update idle / orbiting cursor positions
+        this.cursors.forEach((c, idx) => {
+          if (c.busyUntil > now) return;
+
+          if (this.mode === 'PRELOADER_ORBIT') {
+            c.angle += c.orbitSpeed;
+            const r = c.orbitRadius + Math.sin(now * 0.006 + idx) * 6;
+            const tx = cx + Math.cos(c.angle) * r;
+            const ty = cy + Math.sin(c.angle) * r;
+            c.x += (tx - c.x) * 0.24;
+            c.y += (ty - c.y) * 0.24;
+          } else {
+            // Subtle ambient patrol near edges so cursors stay alive on screen like the reel
+            c.angle += 0.011;
+            const anchorX = idx % 2 === 0 ? this.width * 0.14 : this.width * 0.86;
+            const anchorY = 120 + ((idx * 67) % Math.max(240, this.height - 200));
+            const tx = anchorX + Math.cos(c.angle + idx) * 38;
+            const ty = anchorY + Math.sin(c.angle * 1.3 + idx) * 28;
+            c.x += (tx - c.x) * 0.045;
+            c.y += (ty - c.y) * 0.045;
+          }
+        });
+      }
+
+      drawVectorCursor(c) {
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.translate(c.x, c.y);
+
+        // Crisp Figma-style vector pointer arrow with dark outline for high contrast
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, 15);
+        ctx.lineTo(4.2, 11.4);
+        ctx.lineTo(7.4, 17.5);
+        ctx.lineTo(9.8, 16.3);
+        ctx.lineTo(6.6, 10.2);
+        ctx.lineTo(11.8, 10.2);
+        ctx.closePath();
+
+        ctx.fillStyle = c.color;
+        ctx.shadowColor = c.color;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = '#060607';
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        for (let i = 0; i < this.cursors.length; i++) {
+          this.drawVectorCursor(this.cursors[i]);
+        }
+      }
+
+      loop(now) {
+        this.update(now);
+        this.draw();
+        requestAnimationFrame((t) => this.loop(t));
+      }
+    }
+
+    // =========================================================================
+    // 3. INITIALIZATION, INTERACTIVE STACK PILLS, COPY & AUTO-SCROLL DEMO
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('multiCursorCanvas');
+      const cursorEngine = new FigmaMultiCursorEngine(canvas);
+      cursorEngine.startSequence();
+      requestAnimationFrame((t) => cursorEngine.loop(t));
+
+      // Local Photo Preview Handler (for testing ./IMG_5291.PNG offline)
+      const localPhotoInput = document.getElementById('localPhotoInput');
+      localPhotoInput?.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = document.getElementById('dilawarPortraitImg');
+          const fallback = document.getElementById('portraitFallbackBox');
+          if (img && ev.target && typeof ev.target.result === 'string') {
+            img.src = ev.target.result;
+            img.classList.remove('hidden');
+          }
+          if (fallback) {
+            fallback.classList.add('hidden');
+            fallback.classList.remove('flex');
+          }
+          showToast(`Loaded local photo: ${file.name}`);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Mobile Navigation Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+      mobileMenuBtn?.addEventListener('click', () => {
+        mobileMenuDrawer?.classList.toggle('hidden');
+      });
+      document.querySelectorAll('.mobile-nav-item').forEach((link) => {
+        link.addEventListener('click', () => mobileMenuDrawer?.classList.add('hidden'));
+      });
+
+      // Interactive Stack Pills in Flagship Deployments
+      const stackCaption = document.getElementById('stackDetailCaption');
+      document.querySelectorAll('.stack-pill').forEach((pill) => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.stack-pill').forEach((p) => {
+            p.classList.remove('border-crimsonBright/50', 'bg-crimson/15', 'text-white', 'font-semibold');
+            p.classList.add('border-white/[0.1]', 'bg-surfaceAlt', 'text-slate-200');
+          });
+          pill.classList.remove('border-white/[0.1]', 'bg-surfaceAlt', 'text-slate-200');
+          pill.classList.add('border-crimsonBright/50', 'bg-crimson/15', 'text-white', 'font-semibold');
+          if (stackCaption && pill.dataset.stackDetail) {
+            stackCaption.textContent = pill.dataset.stackDetail;
+          }
+        });
+      });
+
+      // One-Click Copy Handle (@dilawar__abass) using document.execCommand('copy')
+      const copyHandleBtn = document.getElementById('copyHandleBtn');
+      const copyHandleText = document.getElementById('copyHandleText');
+      copyHandleBtn?.addEventListener('click', () => {
+        let ok = false;
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = '@dilawar__abass';
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (_) {
+          ok = false;
+        }
+        if (ok) {
+          if (copyHandleText) copyHandleText.textContent = 'Copied: @dilawar__abass!';
+          showToast('Copied @dilawar__abass to clipboard');
+          setTimeout(() => {
+            if (copyHandleText) copyHandleText.textContent = 'Copy Handle: @dilawar__abass';
+          }, 2000);
+        } else {
+          showToast('Handle: @dilawar__abass');
+        }
+      });
+
+      // Replay Build Button
+      let autoTourRaf = null;
+      let autoTourActive = false;
+      const autoTourBtn = document.getElementById('autoTourBtn');
+      const autoTourLabel = document.getElementById('autoTourLabel');
+
+      function stopAutoTour() {
+        autoTourActive = false;
+        if (autoTourRaf) cancelAnimationFrame(autoTourRaf);
+        autoTourRaf = null;
+        if (autoTourLabel) autoTourLabel.textContent = '\u25B6 Auto-Scroll Demo';
+      }
+
+      document.getElementById('replayBuildBtn')?.addEventListener('click', () => {
+        stopAutoTour();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        cursorEngine.startSequence();
+        showToast('Replaying multi-cursor assembly...');
+      });
+
+      // Smooth Auto-Scroll Demo Button (for recording a clean reel)
+      autoTourBtn?.addEventListener('click', () => {
+        if (autoTourActive) {
+          stopAutoTour();
+          showToast('Auto-Scroll Demo paused');
+          return;
+        }
+
+        autoTourActive = true;
+        if (autoTourLabel) autoTourLabel.textContent = '\u23F8 Stop Auto-Scroll';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        cursorEngine.startSequence();
+        showToast('Recording Reel Mode: Auto-Scrolling...');
+
+        // Start smooth downward scroll right after the 1.6s preloader burst completes
+        setTimeout(() => {
+          if (!autoTourActive) return;
+          const step = () => {
+            if (!autoTourActive) return;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (window.scrollY >= maxScroll - 2) {
+              stopAutoTour();
+              showToast('Reel showcase complete');
+              return;
+            }
+            window.scrollBy(0, 2.4);
+            autoTourRaf = requestAnimationFrame(step);
+          };
+          autoTourRaf = requestAnimationFrame(step);
+        }, 2400);
+      });
+    });
+  </script>
+</body>
+</html>
