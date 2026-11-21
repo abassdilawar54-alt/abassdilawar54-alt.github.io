@@ -1,2259 +1,350 @@
+
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dilawar Abass — CSE Engineering & AI Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DILAWAR ABASS | Portfolio</title>
 
-  <!-- Google Fonts: Space Grotesk, Inter, and JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
-    rel="stylesheet"
-  />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Space Grotesk', 'Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            obsidian: '#070708',
-            card: '#0E0F12',
-            cardAlt: '#13151A',
-            crimson: '#DC2626',
-            crimsonBright: '#EF4444',
-            figmaCyan: '#38BDF8',
-          },
-        },
-      },
-    };
-  </script>
+body{
+  background:#080e14;
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow-x:hidden;
+}
 
-  <style>
-    :root {
-      color-scheme: dark;
-    }
+.scene{
+  height:100vh;
+  min-height:650px;
+  position:relative;
+  overflow:hidden;
+  background:
+  linear-gradient(#101c2b66,#071019),
+  linear-gradient(180deg,#26394b,#81909a 55%,#17252a);
+}
 
-    html,
-    body {
-      background-color: #070708;
-      color: #F4F4F6;
-      overflow-x: hidden;
-    }
+.sky{
+  position:absolute;
+  inset:0;
+  background:
+  radial-gradient(ellipse at 75% 25%,#d5c5a044,transparent 35%),
+  linear-gradient(180deg,transparent 55%,#17242a 100%);
+}
 
-    /* Subtle dot-grid engineering canvas background */
-    body {
-      background-image:
-        radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-      background-size: 28px 28px, 84px 84px, 84px 84px;
-    }
+.mountains{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:35%;
+  background:#111c20;
+  clip-path:polygon(0 65%,12% 25%,24% 60%,39% 5%,
+  55% 62%,70% 12%,87% 65%,100% 25%,100% 100%,0 100%);
+}
 
-    /* Giant crimson-stroked display backdrop word "PORTFOLIO" */
-    .portfolio-backdrop-word {
-      color: transparent;
-      -webkit-text-stroke: 2px #DC2626;
-      letter-spacing: -0.035em;
-      user-select: none;
-    }
+.mountains.back{
+  bottom:15%;
+  height:30%;
+  background:#53616a;
+  opacity:.45;
+  filter:blur(3px);
+}
 
-    @media (min-width: 768px) {
-      .portfolio-backdrop-word {
-        -webkit-text-stroke: 2.5px #EF4444;
-      }
-    }
+.helicopter{
+  position:absolute;
+  width:330px;
+  top:20%;
+  left:-400px;
+  animation:fly 11s linear forwards;
+  z-index:5;
+}
 
-    /* =========================================================================
-       TACTICAL HELICOPTER AIR-DROP & CARGO DEPLOYMENT SYSTEM
-       ========================================================================= */
-    [data-build-node] {
-      position: relative;
-      transition:
-        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.55s ease;
-    }
+.helicopter.second{
+  top:36%;
+  width:230px;
+  animation:flySecond 13s linear 2s forwards;
+  opacity:.8;
+}
 
-    [data-build-node].node-hidden {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-28px) scale(0.96);
-      filter: brightness(0.65) contrast(1.1);
-    }
+@keyframes fly{
+  0%{left:-400px;transform:translateY(0)}
+  40%{transform:translateY(-30px)}
+  100%{left:120%;transform:translateY(-5px)}
+}
 
-    [data-build-node].node-constructing {
-      opacity: 0.45;
-      visibility: visible;
-      transform: translateY(-10px) scale(0.985);
-      filter: brightness(0.88);
-    }
+@keyframes flySecond{
+  0%{left:-300px}
+  100%{left:120%}
+}
 
-    [data-build-node].node-snapped {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(3px) scale(1.01);
-      filter: brightness(1.12);
-    }
+.rotor{
+  transform-origin:150px 35px;
+  animation:spin .08s linear infinite;
+}
 
-    [data-build-node].node-ready {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-      filter: brightness(1);
-    }
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    /* Tactical HUD target lock frame drawn around a section when deployed */
-    .figma-frame-box {
-      position: absolute;
-      inset: -4px;
-      border: 1.5px solid #38BDF8;
-      background: rgba(56, 189, 248, 0.045);
-      border-radius: 6px;
-      pointer-events: none;
-      z-index: 25;
-      box-shadow: 0 0 22px rgba(56, 189, 248, 0.22);
-      transition: opacity 0.4s ease;
-    }
+.package{
+  position:absolute;
+  top:35%;
+  left:43%;
+  z-index:8;
+  opacity:0;
+  animation:drop 5s ease-in 3s forwards;
+}
 
-    .figma-frame-box.frame-red {
-      border-color: #EF4444;
-      background: rgba(239, 68, 68, 0.06);
-      box-shadow: 0 0 26px rgba(239, 68, 68, 0.28);
-    }
+@keyframes drop{
+  0%{opacity:0;transform:translateY(-100px)}
+  15%{opacity:1}
+  70%{transform:translateY(230px)}
+  100%{opacity:0;transform:translateY(300px)}
+}
 
-    .figma-corner-handle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: transparent;
-      border-color: #38BDF8;
-    }
-    .figma-frame-box.frame-red .figma-corner-handle {
-      border-color: #EF4444;
-    }
-    .figma-corner-handle.tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
-    .figma-corner-handle.tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
-    .figma-corner-handle.bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
-    .figma-corner-handle.br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+.parachute{
+  width:110px;
+  height:55px;
+  background:#c6b58b;
+  border-radius:60px 60px 8px 8px;
+  margin:auto;
+  border:2px solid #e4d6b1;
+  position:relative;
+}
 
-    .figma-dimension-badge {
-      position: absolute;
-      top: -20px;
-      left: -1px;
-      background: #38BDF8;
-      color: #070708;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      font-weight: 700;
-      line-height: 1;
-      padding: 3px 7px;
-      border-radius: 3px;
-      white-space: nowrap;
-      letter-spacing: 0.05em;
-    }
+.parachute:after{
+  content:"";
+  position:absolute;
+  width:2px;
+  height:45px;
+  background:#eee;
+  left:50%;
+  top:50px;
+  box-shadow:-40px 0 #eee,40px 0 #eee;
+}
 
-    .figma-frame-box.frame-red .figma-dimension-badge {
-      background: #EF4444;
-      color: #FFFFFF;
-    }
+.crate{
+  width:48px;
+  height:48px;
+  background:linear-gradient(135deg,#b38b54,#59432c);
+  border:3px solid #d0ad73;
+  margin:43px auto 0;
+  box-shadow:0 0 20px #000;
+}
 
-    /* Laser scan bar across ./IMG_5291.PNG portrait during construction */
-    @keyframes scanPortrait {
-      0% { top: 0%; opacity: 0.95; }
-      100% { top: 100%; opacity: 0; }
-    }
-    .portrait-scan-beam {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #38BDF8, #EF4444, transparent);
-      box-shadow: 0 0 14px #38BDF8;
-      z-index: 20;
-      pointer-events: none;
-      animation: scanPortrait 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
+.intro{
+  position:absolute;
+  top:12%;
+  width:100%;
+  text-align:center;
+  letter-spacing:5px;
+  color:#e4e2d9;
+  font-size:12px;
+}
 
-    @keyframes pulseRing {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35), 0 0 28px rgba(239, 68, 68, 0.25);
-      }
-      50% {
-        box-shadow: 0 0 0 12px rgba(56, 189, 248, 0), 0 0 40px rgba(239, 68, 68, 0.42);
-      }
-    }
-    .build-center-node {
-      animation: pulseRing 1.3s infinite ease-in-out;
-    }
+.profile{
+  position:absolute;
+  z-index:10;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-35%) scale(.7);
+  width:min(90%,480px);
+  text-align:center;
+  padding:30px;
+  background:#0b131de8;
+  border:1px solid #b7a77b;
+  border-radius:15px;
+  box-shadow:0 0 50px #000b;
+  opacity:0;
+  animation:reveal 1.5s ease 7.5s forwards;
+}
 
-    @keyframes blinkDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.8); }
-    }
-    .status-dot {
-      animation: blinkDot 1.7s infinite ease-in-out;
-    }
+@keyframes reveal{
+  to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 7px; }
-    ::-webkit-scrollbar-track { background: #070708; }
-    ::-webkit-scrollbar-thumb { background: #1f232e; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #EF4444; }
+.profile img{
+  width:145px;
+  height:145px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #c7b17e;
+  box-shadow:0 0 25px #c7b17e66;
+}
 
-    /* Custom tactical HUD cursor on desktop pointers */
-    @media (hover: hover) and (pointer: fine) {
-      body, a, button, label, input {
-        cursor: none !important;
-      }
-    }
-  </style>
+.profile h1{
+  margin:18px 0 8px;
+  letter-spacing:4px;
+  font-size:29px;
+}
+
+.profile h3{
+  color:#c7b17e;
+  font-size:13px;
+  letter-spacing:3px;
+}
+
+.profile p{
+  margin:17px 0;
+  color:#b8c2cc;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.info div{
+  background:#ffffff0b;
+  padding:13px;
+  border-radius:7px;
+  font-size:12px;
+  color:#ddd;
+}
+
+.info strong{
+  display:block;
+  color:#c7b17e;
+  margin-bottom:5px;
+}
+
+.buttons{
+  margin-top:22px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.buttons a{
+  padding:11px 20px;
+  border:1px solid #c7b17e;
+  color:white;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:1px;
+  transition:.3s;
+}
+
+.buttons a:hover{
+  background:#c7b17e;
+  color:black;
+}
+
+.footer{
+  text-align:center;
+  padding:22px;
+  color:#89939c;
+  font-size:11px;
+  letter-spacing:3px;
+  background:#080e14;
+}
+
+#replay{
+  position:absolute;
+  bottom:25px;
+  right:25px;
+  z-index:20;
+  padding:12px 20px;
+  background:#c7b17e;
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
+}
+</style>
 </head>
 
-<body class="bg-[#070708] text-[#F4F4F6] font-sans antialiased selection:bg-crimsonBright selection:text-white">
-  <!-- Full-viewport 60fps Realistic Tactical Helicopter & Air-Drop Canvas -->
-  <canvas
-    id="cursorSwarmCanvas"
-    aria-hidden="true"
-    class="pointer-events-none fixed inset-0 z-50 h-screen w-screen"
-  ></canvas>
+<body>
+
+<section class="scene" id="scene">
+<div class="sky"></div>
+<div class="mountains back"></div>
+<div class="mountains"></div>
+
+<div class="intro">
+SPECIAL DELIVERY • KASHMIR • PORTFOLIO MISSION
+</div>
+
+<!-- Helicopter 1 -->
+<div class="helicopter">
+<svg viewBox="0 0 400 120" width="100%">
+<g fill="#303a39" stroke="#151d1b" stroke-width="3">
+<path d="M55 62 Q90 30 170 45 L230 55 Q250 65 220 83 L100 88 Q65 85 55 62Z"/>
+<path d="M220 61 L350 45 L370 49 L255 75Z"/>
+<path d="M340 42 L350 17 L357 18 L355 48Z"/>
+<path d="M365 40 L390 30 L393 35 L370 47Z"/>
+<path d="M85 82 L65 102 L140 102 L150 84Z"/>
+<path d="M130 47 Q160 20 190 45 L205 58 L130 58Z" fill="#70818a"/>
+</g>
+<g stroke="#252d2c" stroke-width="5">
+<path d="M145 43 L145 25"/>
+</g>
+<g class="rotor" stroke="#202725" stroke-width="4">
+<path d="M145 25 L25 15"/>
+<path d="M145 25 L265 15"/>
+</g>
+<path d="M95 105 L205 105" stroke="#151d1b" stroke-width="5"/>
+</svg>
+</div>
+
+<!-- Helicopter 2 -->
+<div class="helicopter second">
+<svg viewBox="0 0 400 120" width="100%">
+<g fill="#35413e" stroke="#151d1b" stroke-width="3">
+<path d="M55 62 Q90 30 170 45 L230 55 Q250 65 220 83 L100 88Z"/>
+<path d="M220 61 L350 45 L370 49 L255 75Z"/>
+<path d="M130 47 Q160 20 190 45 L205 58 L130 58Z" fill="#70818a"/>
+</g>
+<g class="rotor" stroke="#202725" stroke-width="4">
+<path d="M145 25 L25 15"/>
+<path d="M145 25 L265 15"/>
+</g>
+</svg>
+</div>
+
+<!-- Parachute package -->
+<div class="package">
+<div class="parachute"></div>
+<div class="crate"></div>
+</div>
+
+<!-- Your portfolio -->
+<div class="profile">
+<img src="IMG_5291.PNG" alt="Dilawar Abass">
+
+<h1>DILAWAR ABASS</h1>
+<h3>FUTURE SOFTWARE ENGINEER</h3>
+
+<p>
+Hello! I am Dilawar, a Computer Science Engineering
+student from Kashmir. I love computers, programming,
+technology and building creative digital projects.
+</p>
+
+<div class="info">
+<div><strong>LOCATION</strong>Kashmir, India</div>
+<div><strong>EDUCATION</strong>B.Tech CSE</div>
+<div><strong>COLLEGE</strong>SSM College of Engineering</div>
+<div><strong>INTERESTS</strong>Software & Technology</div>
+</div>
+
+<div class="buttons">
+<a href="https://github.com/" target="_blank">GITHUB</a>
+<a href="https://www.instagram.com/" target="_blank">INSTAGRAM</a>
+</div>
+</div>
+
+<button id="replay" onclick="location.reload()">REPLAY MISSION ↻</button>
+
+</section>
+
+<div class="footer">
+DILAWAR ABASS • BUILT WITH PASSION • 2026
+</div>
 
-  <!-- Opening Tactical Airspace Dispatch HUD (0:00 - 0:01.3) -->
-  <div
-    id="openingBuildOverlay"
-    aria-hidden="true"
-    class="pointer-events-none fixed inset-x-0 top-16 z-40 flex flex-col items-center justify-center gap-2.5 transition-opacity duration-300"
-  >
-    <div class="flex items-center gap-2.5 rounded-full border border-crimsonBright/40 bg-[#070708]/90 px-4 py-1.5 font-mono text-[11px] text-slate-200 shadow-2xl backdrop-blur-md">
-      <span class="h-2 w-2 rounded-full bg-crimsonBright status-dot"></span>
-      <span class="font-bold text-crimsonBright">[ AIR-DROP // CHOPPER-01 ]</span>
-      <span id="buildStatusLabel">Inbound to Kashmir Sector...</span>
-    </div>
-  </div>
-
-  <!-- Top Navigation Bar -->
-  <header id="topNav" class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#070708]/90 backdrop-blur-md">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-      <!-- Left Brand: Small Red Square Logo + Dilawar -->
-      <a
-        href="#hero"
-        data-build-node="nav-logo"
-        data-node-title="NAV_LOGO // DILAWAR"
-        data-frame-color="red"
-        data-wave="0"
-        class="flex items-center gap-2.5 focus:outline-none"
-      >
-        <span class="flex h-7 w-7 items-center justify-center rounded bg-crimsonBright font-mono text-xs font-bold text-white shadow-md shadow-crimsonBright/30">
-          D
-        </span>
-        <span class="font-display text-base font-bold tracking-tight text-white">
-          Dilawar<span class="text-crimsonBright">.</span>
-        </span>
-      </a>
-
-      <!-- Center-Left Nav Links -->
-      <nav
-        aria-label="Main Navigation"
-        data-build-node="nav-links"
-        data-node-title="NAV_LINKS"
-        data-wave="0"
-        class="hidden md:flex items-center gap-1 font-mono text-xs"
-      >
-        <a href="#hero" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">About</a>
-        <a href="#education" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Education</a>
-        <a href="#projects" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Projects</a>
-        <a href="#skills" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Skills</a>
-        <a href="#contact" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Contact</a>
-      </nav>
-
-      <!-- Right Status & Replay Build Trigger -->
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-card px-3 py-1 font-mono text-[10px] text-slate-300">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 status-dot"></span>
-          <span id="topLiveStatus">BUILDING</span>
-        </span>
-
-        <button
-          type="button"
-          id="audioToggleBtn"
-          aria-label="Toggle helicopter audio"
-          class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-2.5 py-1.5 font-mono text-xs font-semibold text-figmaCyan transition hover:border-figmaCyan hover:text-white"
-        >
-          <span id="audioToggleIcon">🔊</span>
-          <span id="audioToggleLabel" class="hidden sm:inline">SFX ON</span>
-        </button>
-
-        <button
-          type="button"
-          id="replayBuildBtn"
-          class="inline-flex items-center gap-1.5 rounded-lg border border-crimsonBright/50 bg-crimsonBright/15 px-3 py-1.5 font-mono text-xs font-bold text-crimsonBright transition hover:bg-crimsonBright hover:text-white"
-        >
-          <span>🚁 Replay Air-Drop</span>
-        </button>
-
-        <button
-          type="button"
-          id="mobileNavToggle"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-card text-slate-200 md:hidden"
-        >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Drawer -->
-    <div id="mobileNavMenu" class="hidden border-t border-white/[0.08] bg-card px-4 py-3 md:hidden">
-      <div class="flex flex-col gap-1 font-mono text-xs">
-        <a href="#hero" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">About</a>
-        <a href="#education" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Education</a>
-        <a href="#projects" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Projects</a>
-        <a href="#skills" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Skills</a>
-        <a href="#contact" class="mobile-nav-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimsonBright">Contact</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- =====================================================================
-         HERO SECTION (2-Column Split + Giant "PORTFOLIO" Backdrop)
-         ===================================================================== -->
-    <section id="hero" class="relative overflow-hidden border-b border-white/[0.08] pt-6 pb-16 sm:pt-10 sm:pb-20">
-      <div
-        aria-hidden="true"
-        class="pointer-events-none absolute top-14 left-1/2 h-[380px] w-[640px] -translate-x-1/2 rounded-full bg-crimsonBright/10 blur-[130px]"
-      ></div>
-
-      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <!-- Giant Crimson-Stroked PORTFOLIO Backdrop -->
-        <div
-          data-build-node="hero-portfolio-word"
-          data-node-title="BACKDROP // PORTFOLIO"
-          data-frame-color="red"
-          data-wave="0"
-          class="mb-4 overflow-hidden text-center"
-        >
-          <div class="portfolio-backdrop-word font-display text-[15vw] font-bold uppercase leading-[0.86] sm:text-[13vw] xl:text-[168px]">
-            PORTFOLIO
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-8">
-          <!-- Left Column (7 cols): Greeting, Name, Tagline, Bio, CTAs, Metrics -->
-          <div class="lg:col-span-7">
-            <div
-              data-build-node="hero-greeting"
-              data-node-title="HERO_TITLE // DILAWAR."
-              data-frame-color="red"
-              data-wave="1"
-            >
-              <p class="font-display text-lg font-medium italic text-slate-300 sm:text-xl">
-                Hello, I&apos;m
-              </p>
-              <h1 class="mt-0.5 font-display text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl xl:text-7xl">
-                DILAWAR<span class="text-crimsonBright">.</span>
-              </h1>
-            </div>
-
-            <div
-              data-build-node="hero-status-line"
-              data-node-title="ROLE_TAG"
-              data-frame-color="red"
-              data-wave="1"
-              class="mt-3 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-crimsonBright"
-            >
-              <span class="h-2 w-2 rounded-full bg-crimsonBright status-dot"></span>
-              <span>CSE ENGINEERING &bull; AI &amp; SYSTEMS BUILDER</span>
-            </div>
-
-            <p
-              data-build-node="hero-summary"
-              data-node-title="BIO_SUMMARY"
-              data-wave="2"
-              class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base"
-            >
-              <strong class="font-semibold text-white">Dilawar Abass</strong> — CSE engineering student at
-              <strong class="font-semibold text-white">SSM College of Engineering</strong>, completed 10th at
-              <strong class="font-semibold text-white">Mehdi Public School Durbal</strong> and 12th at
-              <strong class="font-semibold text-white">Budgam Higher Secondary School</strong>, building from
-              <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>.
-            </p>
-
-            <!-- Action Buttons + Social Links -->
-            <div
-              data-build-node="hero-actions"
-              data-node-title="HERO_CTAS"
-              data-wave="3"
-              class="mt-6 flex flex-wrap items-center gap-3"
-            >
-              <a
-                href="#projects"
-                class="inline-flex items-center gap-2 rounded-lg bg-crimsonBright px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimsonBright/25 transition hover:bg-crimson"
-              >
-                <span>VIEW PROJECTS</span>
-                <span>&rarr;</span>
-              </a>
-
-              <a
-                href="#education"
-                class="inline-flex items-center gap-2 rounded-lg border border-white/[0.12] bg-card px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-200 transition hover:border-figmaCyan hover:text-white"
-              >
-                <span>EXPLORE BACKGROUND</span>
-              </a>
-
-              <a
-                href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-3.5 py-2.5 font-mono text-xs text-slate-300 transition hover:border-crimsonBright hover:text-white"
-              >
-                <span>Instagram</span>
-                <span>&#8599;</span>
-              </a>
-
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-3.5 py-2.5 font-mono text-xs text-slate-300 transition hover:border-figmaCyan hover:text-white"
-              >
-                <span>GitHub</span>
-                <span>&#8599;</span>
-              </a>
-            </div>
-
-            <!-- Bottom-Left Metric Strip & Caption -->
-            <div
-              data-build-node="hero-metrics"
-              data-node-title="METRICS_ROW"
-              data-wave="3"
-              class="mt-7"
-            >
-              <div class="grid grid-cols-3 gap-2.5 sm:max-w-lg">
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-white sm:text-base">CSE @ SSM</div>
-                  <div class="font-mono text-[10px] text-slate-400">Engineering</div>
-                </div>
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-crimsonBright sm:text-base">AI &amp; Code</div>
-                  <div class="font-mono text-[10px] text-slate-400">Python &amp; C</div>
-                </div>
-                <div class="rounded-lg border border-white/[0.08] bg-card px-3 py-2.5">
-                  <div class="font-mono text-sm font-bold text-figmaCyan sm:text-base">HMT, KMR</div>
-                  <div class="font-mono text-[10px] text-slate-400">Shareefabad</div>
-                </div>
-              </div>
-              <div class="mt-2.5 font-mono text-[10px] uppercase tracking-widest text-slate-500">
-                SYSTEMS &amp; CODE &bull; BUILT IN KASHMIR
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column (5 cols): Portrait Frame (./IMG_5291.PNG) + Featured AI Callouts -->
-          <div class="space-y-4 lg:col-span-5">
-            <div
-              id="portraitCardContainer"
-              data-build-node="hero-portrait"
-              data-node-title="PORTRAIT // IMG_5291.PNG"
-              data-frame-color="red"
-              data-wave="2"
-              class="mx-auto max-w-[360px] rounded-xl border border-white/[0.12] bg-card p-2.5 shadow-2xl"
-            >
-              <div class="mb-2 flex items-center justify-between px-1 font-mono text-[10px] text-slate-400">
-                <span class="flex items-center gap-1.5">
-                  <span class="h-2 w-2 rounded-full bg-crimsonBright"></span>
-                  <span>IMG_5291.PNG</span>
-                </span>
-                <label
-                  for="portraitFileInput"
-                  class="cursor-pointer rounded border border-white/10 bg-obsidian px-2 py-0.5 text-[9px] text-figmaCyan transition hover:border-figmaCyan"
-                  title="Preview a local photo if testing offline"
-                >
-                  Preview Photo
-                </label>
-                <input type="file" id="portraitFileInput" accept="image/*" class="hidden" />
-              </div>
-
-              <div id="portraitFrameBox" class="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-[#070708]">
-                <img
-                  id="githubPortraitImg"
-                  src="./IMG_5291.PNG"
-                  alt="Dilawar Abass — IMG_5291.PNG"
-                  class="h-full w-full object-cover object-center"
-                  onerror="showPortraitFallback()"
-                />
-
-                <!-- Fallback Portrait when ./IMG_5291.PNG is not present in current folder -->
-                <div
-                  id="portraitFallbackView"
-                  class="hidden h-full w-full flex-col items-center justify-between bg-gradient-to-b from-[#161822] via-[#0B0C10] to-[#070708] p-5 text-center"
-                >
-                  <div class="flex w-full justify-between font-mono text-[9px] text-slate-400">
-                    <span>DILAWAR ABASS</span>
-                    <span class="text-crimsonBright">SSM CSE</span>
-                  </div>
-
-                  <div class="my-auto flex flex-col items-center">
-                    <div class="flex h-32 w-32 items-center justify-center rounded-full border border-crimsonBright/40 bg-crimsonBright/5">
-                      <svg class="h-24 w-24" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="60" cy="40" r="17" fill="#1C202B" stroke="#EF4444" stroke-width="2" />
-                        <path
-                          d="M24 105C24 81 39 65 60 65C81 65 96 81 96 105"
-                          fill="#141720"
-                          stroke="#EF4444"
-                          stroke-width="2"
-                        />
-                        <path d="M50 66L60 84L70 66" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" />
-                      </svg>
-                    </div>
-                    <p class="mt-3 rounded border border-white/10 bg-obsidian px-2.5 py-1 font-mono text-[10px] text-slate-300">
-                      GitHub Photo: <strong class="text-white">IMG_5291.PNG</strong>
-                    </p>
-                  </div>
-
-                  <div class="font-mono text-[9px] text-slate-500">
-                    Shareefabad, HMT, Kashmir
-                  </div>
-                </div>
-
-                <div class="absolute inset-x-2.5 bottom-2.5 rounded border border-white/10 bg-[#070708]/90 px-2.5 py-1.5 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
-                  DILAWAR ABASS <span class="text-crimsonBright">//</span> IMG_5291.PNG
-                </div>
-              </div>
-            </div>
-
-            <!-- Featured AI Assistant Callouts -->
-            <div class="mx-auto grid max-w-[360px] grid-cols-2 gap-3">
-              <div
-                data-build-node="hero-ai-jarvis"
-                data-node-title="AI_JARVIS"
-                data-frame-color="red"
-                data-wave="3"
-                class="rounded-xl border-l-2 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-3.5"
-              >
-                <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">AI Assistant</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">AI Jarvis</div>
-                <p class="mt-1 text-[11px] leading-snug text-slate-400">Python command &amp; desktop assistant.</p>
-              </div>
-
-              <div
-                data-build-node="hero-ai-dilawar"
-                data-node-title="AI_DILAWAR"
-                data-wave="3"
-                class="rounded-xl border-l-2 border-l-figmaCyan border-y border-r border-white/[0.08] bg-card p-3.5"
-              >
-                <div class="font-mono text-[10px] font-bold uppercase text-figmaCyan">Custom Persona</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">AI Dilawar</div>
-                <p class="mt-1 text-[11px] leading-snug text-slate-400">Personal CSE &amp; workflow AI.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         SECTION 2: BACKGROUND, EDUCATION & PHILOSOPHY
-         ===================================================================== -->
-    <section id="education" class="border-b border-white/[0.08] py-16 sm:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="edu-header"
-          data-node-title="ACADEMIC_JOURNEY"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            ACADEMIC JOURNEY &amp; ROOTS
-          </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Background &amp; Philosophy
-          </h2>
-        </div>
-
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <!-- Left Narrative: Schooling, CSE, Location & Mindset -->
-          <div class="space-y-4 lg:col-span-7">
-            <div
-              data-build-node="edu-story-1"
-              data-node-title="SCHOOLING_PATH"
-              class="rounded-xl border border-white/[0.08] bg-card p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
-            >
-              My name is <strong class="font-semibold text-white">Dilawar Abass</strong>, and I am a Computer Science &amp; Engineering (CSE) student at
-              <strong class="font-semibold text-white">SSM College of Engineering</strong>. I completed my 10th at
-              <strong class="font-semibold text-white">Mehdi Public School Durbal</strong> and passed my 12th at
-              <strong class="font-semibold text-white">Budgam Higher Secondary School</strong>.
-            </div>
-
-            <div
-              data-build-node="edu-story-2"
-              data-node-title="KASHMIR_MINDSET"
-              class="rounded-xl border border-white/[0.08] bg-card p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
-            >
-              Based in <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>, my approach to software is practical and hands-on: write clean
-              <strong class="font-semibold text-white">Python</strong> and <strong class="font-semibold text-white">C</strong> code, understand how systems work under the hood, and build useful tools like
-              <strong class="font-semibold text-white">AI Jarvis</strong>, <strong class="font-semibold text-white">AI Dilawar</strong>, and the
-              <strong class="font-semibold text-white">Online Attendance System</strong>.
-            </div>
-
-            <!-- Compact Education Milestones Strip -->
-            <div
-              data-build-node="edu-milestones"
-              data-node-title="MILESTONES"
-              class="grid grid-cols-1 gap-3 sm:grid-cols-3"
-            >
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-crimsonBright">10TH GRADE</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">Mehdi Public School Durbal</div>
-              </div>
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-figmaCyan">12TH PASSED</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">Budgam Higher Secondary School</div>
-              </div>
-              <div class="rounded-xl border border-white/[0.08] bg-cardAlt p-4">
-                <div class="font-mono text-[10px] font-bold uppercase text-emerald-400">CSE DEGREE</div>
-                <div class="mt-1 font-display text-sm font-bold text-white">SSM College of Engineering</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Stacked Cards with Red Left Accent Bars -->
-          <div class="space-y-4 lg:col-span-5">
-            <div
-              data-build-node="pillar-ai"
-              data-node-title="PILLAR // AI_ASSISTANTS"
-              data-frame-color="red"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
-            >
-              <h3 class="font-display text-base font-bold text-white">AI Assistants &amp; Automation</h3>
-              <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Building <strong class="text-slate-200">AI Jarvis</strong> and <strong class="text-slate-200">AI Dilawar</strong> to automate daily tasks, assist with coding, and answer queries fast.
-              </p>
-            </div>
-
-            <div
-              data-build-node="pillar-code"
-              data-node-title="PILLAR // PYTHON_C"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
-            >
-              <h3 class="font-display text-base font-bold text-white">Python &amp; C Programming</h3>
-              <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Combining rapid Python scripting and automation with structured C programming, pointers, file handling, and data structures.
-              </p>
-            </div>
-
-            <div
-              data-build-node="pillar-systems"
-              data-node-title="PILLAR // PRACTICAL_SYSTEMS"
-              class="rounded-xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.08] bg-card p-5"
-            >
-              <h3 class="font-display text-base font-bold text-white">Practical Systems &amp; Web</h3>
-              <p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-sm">
-                Developing usable applications such as the <strong class="text-slate-200">Online Attendance System</strong> from Shareefabad, HMT, Kashmir.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         SECTION 3: FLAGSHIP PROJECTS & DEPLOYMENTS
-         ===================================================================== -->
-    <section id="projects" class="border-b border-white/[0.08] py-16 sm:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="projects-header"
-          data-node-title="FLAGSHIP_PROJECTS"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            FEATURED BUILDS &amp; SYSTEMS
-          </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Flagship Projects
-          </h2>
-        </div>
-
-        <!-- Featured Large Dark Card: AI Jarvis & AI Dilawar -->
-        <article
-          data-build-node="project-ai-featured"
-          data-node-title="AI_JARVIS_AND_AI_DILAWAR"
-          data-frame-color="red"
-          class="rounded-2xl border-l-4 border-l-crimsonBright border-y border-r border-white/[0.1] bg-card p-6 sm:p-8"
-        >
-          <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-            <span class="rounded bg-crimsonBright/15 px-2.5 py-1 font-bold uppercase text-crimsonBright">
-              FLAGSHIP ASSISTANT ECOSYSTEM
-            </span>
-            <span class="text-slate-400">AI JARVIS &bull; AI DILAWAR</span>
-          </div>
-
-          <h3 class="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">
-            AI Jarvis &amp; AI Dilawar — Personal AI Assistants
-          </h3>
-
-          <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Custom AI assistants created by Dilawar Abass for command execution, task automation, study and coding help, and personalized conversational workflows.
-          </p>
-
-          <!-- Stat / Metric Strip -->
-          <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-crimsonBright">Python / AI</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Core Assistant Logic</div>
-            </div>
-            <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-white">Voice &amp; Logic</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Command &amp; Query Routing</div>
-            </div>
-            <div class="rounded-xl border border-white/[0.08] bg-obsidian p-4">
-              <div class="font-mono text-lg font-bold text-figmaCyan">Custom Workflows</div>
-              <div class="mt-0.5 font-mono text-[11px] text-slate-400">Daily Automation &amp; Help</div>
-            </div>
-          </div>
-
-          <!-- Architecture / Feature Pills -->
-          <div class="mt-6 flex flex-wrap gap-2 font-mono text-xs">
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Intent &amp; Commands</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Local Automation</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-slate-200">Modular Scripts</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-crimsonBright">Chat &amp; Persona</span>
-            <span class="rounded-md border border-white/[0.1] bg-cardAlt px-3 py-1 text-figmaCyan">Extensible Tools</span>
-          </div>
-        </article>
-
-        <!-- Secondary Projects Grid -->
-        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-          <article
-            data-build-node="project-attendance"
-            data-node-title="ONLINE_ATTENDANCE_SYSTEM"
-            data-frame-color="red"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-crimsonBright/60"
-          >
-            <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-crimsonBright">WEB &amp; RECORDS</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">Online Attendance System</h3>
-              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Digital attendance tracking system for recording student and session presence, managing records, and calculating attendance summaries cleanly.
-              </p>
-            </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">Student Logs</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">Session Tracking</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-figmaCyan">Web System</span>
-            </div>
-          </article>
-
-          <article
-            data-build-node="project-python-cli"
-            data-node-title="PYTHON_CLI_TOOLKIT"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-figmaCyan/60"
-          >
-            <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-figmaCyan">PYTHON AUTOMATION</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">Python CLI &amp; Automation Toolkit</h3>
-              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Collection of Python scripts for file organization, text/data processing, task helpers, and rapid command-line utilities.
-              </p>
-            </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">Python</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">CLI Scripts</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-crimsonBright">Utilities</span>
-            </div>
-          </article>
-
-          <article
-            data-build-node="project-c-lab"
-            data-node-title="C_SYSTEMS_DSA_LAB"
-            class="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-card p-6 transition hover:border-emerald-400/60"
-          >
-            <div>
-              <div class="font-mono text-[11px] font-bold uppercase text-emerald-400">C PROGRAMMING</div>
-              <h3 class="mt-2 font-display text-xl font-bold text-white">C Systems &amp; Data Structures Lab</h3>
-              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
-                Structured C programs covering pointers, arrays, structs, file I/O, linked lists, stacks, queues, and core CSE algorithms.
-              </p>
-            </div>
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-white/[0.08] pt-4 font-mono text-[10px] text-slate-300">
-              <span class="rounded bg-obsidian px-2 py-0.5">C Language</span>
-              <span class="rounded bg-obsidian px-2 py-0.5">Data Structures</span>
-              <span class="rounded bg-obsidian px-2 py-0.5 text-emerald-400">Algorithms</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         SECTION 4: THE SKILLS MATRIX
-         ===================================================================== -->
-    <section id="skills" class="border-b border-white/[0.08] py-16 sm:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="skills-header"
-          data-node-title="SKILLS_MATRIX_HEADER"
-          data-frame-color="red"
-          class="mb-10"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            CAPABILITIES &amp; STACK
-          </div>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            The Skills Matrix
-          </h2>
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <!-- Domain 1: AI & Assistants -->
-          <div
-            data-build-node="skill-card-ai"
-            data-node-title="DOMAIN // AI_ASSISTANTS"
-            data-frame-color="red"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
-          >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-crimsonBright">01 // AI &amp; ASSISTANTS</span>
-              <span class="text-slate-500">ACTIVE</span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">AI Assistants &amp; Workflows</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Designing personal assistants like <strong class="text-slate-200">AI Jarvis</strong> and <strong class="text-slate-200">AI Dilawar</strong>, prompt structuring, and automated assistant commands.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Jarvis</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">AI Dilawar</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-figmaCyan">Task Automation</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Prompt Logic</span>
-            </div>
-          </div>
-
-          <!-- Domain 2: Python & Scripting -->
-          <div
-            data-build-node="skill-card-python"
-            data-node-title="DOMAIN // PYTHON"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
-          >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-figmaCyan">02 // PYTHON &amp; SCRIPTING</span>
-              <span class="text-slate-500">CORE</span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">Python Programming &amp; Tooling</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Writing clean Python modules for automation, data handling, scripting, and building assistant &amp; web-connected tools.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-figmaCyan">Python</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Scripting</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">File &amp; Data Ops</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">CLI Tools</span>
-            </div>
-          </div>
-
-          <!-- Domain 3: C Programming & Core CS -->
-          <div
-            data-build-node="skill-card-c"
-            data-node-title="DOMAIN // C_CORE_CS"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
-          >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-emerald-400">03 // C PROGRAMMING &amp; CORE CS</span>
-              <span class="text-slate-500">CSE @ SSM</span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">C Programming &amp; Fundamentals</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Strong foundation in C syntax, memory &amp; pointers, problem solving, algorithms, and computer science fundamentals.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-emerald-400">C Programming</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Pointers &amp; Structs</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Problem Solving</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">CSE Core</span>
-            </div>
-          </div>
-
-          <!-- Domain 4: Web & Databases -->
-          <div
-            data-build-node="skill-card-web"
-            data-node-title="DOMAIN // WEB_DATABASES"
-            class="rounded-2xl border border-white/[0.08] bg-card p-6"
-          >
-            <div class="flex items-center justify-between font-mono text-xs">
-              <span class="font-bold uppercase text-amber-400">04 // WEB &amp; DATABASES</span>
-              <span class="text-slate-500">SYSTEMS</span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold text-white">Web Interfaces &amp; Data Records</h3>
-            <p class="mt-2 text-sm text-slate-400">
-              Building structured web apps like the <strong class="text-slate-200">Online Attendance System</strong> with organized records, forms, and GitHub workflows.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-amber-400">HTML / CSS / JS</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Attendance System</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">Records &amp; Data</span>
-              <span class="rounded-md border border-white/[0.08] bg-obsidian px-2.5 py-1 text-slate-200">GitHub</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         SECTION 5: CONTACT & CLOSING CTA
-         ===================================================================== -->
-    <section id="contact" class="py-16 sm:py-20">
-      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div
-          data-build-node="contact-box"
-          data-node-title="CONTACT_CTA"
-          data-frame-color="red"
-          class="rounded-2xl border border-white/[0.1] bg-card p-8 text-center sm:p-12"
-        >
-          <div class="font-mono text-xs font-bold uppercase tracking-widest text-crimsonBright">
-            SHAREEFABAD, HMT, KASHMIR &bull; SSM CSE
-          </div>
-
-          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Let&apos;s Connect.
-          </h2>
-
-          <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Open to CSE collaborations, AI assistant ideas, Python &amp; C projects, and connecting with fellow builders.
-          </p>
-
-          <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-xl bg-crimsonBright px-6 py-3 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimsonBright/25 transition hover:bg-crimson sm:text-sm"
-            >
-              <span>Open Instagram (@dilawar__abass)</span>
-              <span>&#8599;</span>
-            </a>
-
-            <button
-              type="button"
-              id="copyInstagramLinkBtn"
-              class="inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-obsidian px-4 py-3 font-mono text-xs font-semibold text-slate-200 transition hover:border-figmaCyan hover:text-white sm:text-sm"
-            >
-              <span id="copyLinkLabel">Copy Instagram Link</span>
-            </button>
-          </div>
-
-          <p class="mt-6 font-mono text-[11px] text-slate-400">
-            GitHub Profile: <strong class="text-white">Dilawar Abass</strong> &bull; Portrait Asset: <strong class="text-figmaCyan">./IMG_5291.PNG</strong>
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Minimal Footer -->
-  <footer class="border-t border-white/[0.08] bg-[#070708] py-6">
-    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 font-mono text-xs text-slate-400 sm:flex-row sm:px-6 lg:px-8">
-      <div>
-        <strong class="text-white">Dilawar Abass</strong> &bull; CSE @ SSM College of Engineering &bull; Shareefabad, HMT, Kashmir
-      </div>
-      <div class="flex items-center gap-4">
-        <a
-          href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-slate-300 transition hover:text-crimsonBright"
-        >
-          Instagram
-        </a>
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-slate-300 transition hover:text-figmaCyan"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Subtle Notification Toast (replaces alert()) -->
-  <div
-    id="statusToast"
-    role="status"
-    aria-live="polite"
-    class="pointer-events-none fixed right-5 bottom-5 z-50 translate-y-3 rounded-lg border border-white/15 bg-cardAlt px-4 py-2.5 font-mono text-xs text-white opacity-0 shadow-2xl transition-all duration-200"
-  ></div>
-
-  <script>
-    // =========================================================================
-    // 1. PORTRAIT FALLBACK & LOCAL FILE PREVIEW (./IMG_5291.PNG)
-    // =========================================================================
-    function showPortraitFallback() {
-      const img = document.getElementById('githubPortraitImg');
-      const fallback = document.getElementById('portraitFallbackView');
-      if (img) img.classList.add('hidden');
-      if (fallback) {
-        fallback.classList.remove('hidden');
-        fallback.classList.add('flex');
-      }
-    }
-
-    function triggerPortraitScan() {
-      const box = document.getElementById('portraitFrameBox');
-      if (!box) return;
-      const beam = document.createElement('div');
-      beam.className = 'portrait-scan-beam';
-      box.appendChild(beam);
-      setTimeout(() => beam.remove(), 950);
-    }
-
-    const portraitFileInput = document.getElementById('portraitFileInput');
-    portraitFileInput?.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const img = document.getElementById('githubPortraitImg');
-        const fallback = document.getElementById('portraitFallbackView');
-        if (img && typeof ev.target?.result === 'string') {
-          img.src = ev.target.result;
-          img.classList.remove('hidden');
-          if (fallback) {
-            fallback.classList.add('hidden');
-            fallback.classList.remove('flex');
-          }
-          triggerPortraitScan();
-          showToast(`Loaded preview: ${file.name}`);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // =========================================================================
-    // 2. TOAST & COPY HELPER
-    // =========================================================================
-    let toastTimer = null;
-    function showToast(message) {
-      const toast = document.getElementById('statusToast');
-      if (!toast) return;
-      toast.textContent = message;
-      toast.classList.remove('opacity-0', 'translate-y-3');
-      toast.classList.add('opacity-100', 'translate-y-0');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3');
-      }, 2400);
-    }
-
-    const INSTA_URL = 'https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr';
-    document.getElementById('copyInstagramLinkBtn')?.addEventListener('click', () => {
-      const label = document.getElementById('copyLinkLabel');
-      const temp = document.createElement('textarea');
-      temp.value = INSTA_URL;
-      temp.setAttribute('readonly', '');
-      temp.style.position = 'absolute';
-      temp.style.left = '-9999px';
-      document.body.appendChild(temp);
-      temp.select();
-      try {
-        document.execCommand('copy');
-        if (label) label.textContent = 'Copied!';
-        showToast('Instagram link copied to clipboard');
-      } catch (_) {
-        showToast('@dilawar__abass');
-      }
-      document.body.removeChild(temp);
-      setTimeout(() => {
-        if (label) label.textContent = 'Copy Instagram Link';
-      }, 1800);
-    });
-
-    // =========================================================================
-    // 3. REALISTIC WEB AUDIO HELICOPTER & AIR-DROP SOUND ENGINE
-    // =========================================================================
-    class TacticalAudioEngine {
-      constructor() {
-        this.ctx = null;
-        this.muted = false;
-        this.rotorGain = null;
-        this.rotorOsc = null;
-        this.bladeLfo = null;
-        this.turbineGain = null;
-        this.turbineOsc = null;
-        this.noiseBuffer = null;
-        this.initialized = false;
-      }
-
-      init() {
-        if (this.initialized) {
-          if (this.ctx && this.ctx.state === 'suspended' && !this.muted) {
-            this.ctx.resume().catch(() => {});
-          }
-          return;
-        }
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-
-        try {
-          this.ctx = new AudioCtx();
-          this.initialized = true;
-
-          // Pre-build 2-second white/pink noise buffer for rotor chop, wind & impacts
-          const sampleRate = this.ctx.sampleRate;
-          const length = sampleRate * 2;
-          this.noiseBuffer = this.ctx.createBuffer(1, length, sampleRate);
-          const data = this.noiseBuffer.getChannelData(0);
-          let b0 = 0, b1 = 0, b2 = 0;
-          for (let i = 0; i < length; i++) {
-            const white = Math.random() * 2 - 1;
-            b0 = 0.99765 * b0 + white * 0.099046;
-            b1 = 0.96300 * b1 + white * 0.2965164;
-            b2 = 0.57000 * b2 + white * 1.0526913;
-            data[i] = (b0 + b1 + b2 + white * 0.1848) * 0.22;
-          }
-
-          // Continuous low-frequency twin-rotor chop + turbine hum
-          this.rotorGain = this.ctx.createGain();
-          this.rotorGain.gain.value = 0.0001;
-          this.rotorGain.connect(this.ctx.destination);
-
-          // Filtered noise for realistic "whop-whop-whop" blade slap
-          const bladeNoise = this.ctx.createBufferSource();
-          bladeNoise.buffer = this.noiseBuffer;
-          bladeNoise.loop = true;
-
-          const bladeFilter = this.ctx.createBiquadFilter();
-          bladeFilter.type = 'lowpass';
-          bladeFilter.frequency.value = 165;
-          bladeFilter.Q.value = 2.4;
-
-          const chopShaper = this.ctx.createGain();
-          chopShaper.gain.value = 0.5;
-
-          // LFO modulating blade slap at ~13.5 Hz (heavy twin-blade attack chopper)
-          this.bladeLfo = this.ctx.createOscillator();
-          this.bladeLfo.type = 'sine';
-          this.bladeLfo.frequency.value = 13.5;
-          const lfoDepth = this.ctx.createGain();
-          lfoDepth.gain.value = 0.48;
-          this.bladeLfo.connect(lfoDepth);
-          lfoDepth.connect(chopShaper.gain);
-
-          bladeNoise.connect(bladeFilter);
-          bladeFilter.connect(chopShaper);
-          chopShaper.connect(this.rotorGain);
-
-          // Sub-bass rotor thump oscillator
-          this.rotorOsc = this.ctx.createOscillator();
-          this.rotorOsc.type = 'triangle';
-          this.rotorOsc.frequency.value = 27;
-          const subGain = this.ctx.createGain();
-          subGain.gain.value = 0.35;
-          this.rotorOsc.connect(subGain);
-          subGain.connect(chopShaper);
-
-          // High-pitched turboshaft engine whine
-          this.turbineOsc = this.ctx.createOscillator();
-          this.turbineOsc.type = 'sine';
-          this.turbineOsc.frequency.value = 410;
-          this.turbineGain = this.ctx.createGain();
-          this.turbineGain.gain.value = 0.0001;
-          this.turbineOsc.connect(this.turbineGain);
-          this.turbineGain.connect(this.ctx.destination);
-
-          bladeNoise.start();
-          this.bladeLfo.start();
-          this.rotorOsc.start();
-          this.turbineOsc.start();
-        } catch (_) {
-          // Audio blocked until gesture
-        }
-      }
-
-      setMuted(mute) {
-        this.muted = mute;
-        if (!this.initialized) return;
-        if (this.muted) {
-          if (this.rotorGain && this.ctx) {
-            this.rotorGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
-          }
-          if (this.turbineGain && this.ctx) {
-            this.turbineGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
-          }
-        } else if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume().catch(() => {});
-        }
-      }
-
-      updateFlightAudio(activeCount, avgSpeed, isDeploying) {
-        if (!this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-        if (this.muted || activeCount === 0) {
-          this.rotorGain.gain.setTargetAtTime(0.0001, now, 0.12);
-          this.turbineGain.gain.setTargetAtTime(0.0001, now, 0.12);
-          return;
-        }
-
-        // Scale volume & Doppler pitch dynamically with active formation count & speed
-        const formationBoost = Math.min(1.65, 0.75 + activeCount * 0.22);
-        const baseRotorVol = (isDeploying ? 0.22 : 0.09) * formationBoost;
-        const baseTurbineVol = (isDeploying ? 0.024 : 0.01) * formationBoost;
-
-        const dopplerShift = Math.min(45, avgSpeed * 2.2);
-        this.bladeLfo.frequency.setTargetAtTime(12.8 + Math.min(3.5, avgSpeed * 0.22), now, 0.1);
-        this.turbineOsc.frequency.setTargetAtTime(395 + dopplerShift, now, 0.12);
-
-        this.rotorGain.gain.setTargetAtTime(baseRotorVol, now, 0.14);
-        this.turbineGain.gain.setTargetAtTime(baseTurbineVol, now, 0.14);
-      }
-
-      playDropRelease() {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-
-        // Pneumatic cargo clamp release click + parachute canopy air whoosh
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(240, now);
-        osc.frequency.exponentialRampToValueAtTime(68, now + 0.18);
-        gain.gain.setValueAtTime(0.11, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.2);
-
-        if (this.noiseBuffer) {
-          const whoosh = this.ctx.createBufferSource();
-          whoosh.buffer = this.noiseBuffer;
-          const filter = this.ctx.createBiquadFilter();
-          filter.type = 'bandpass';
-          filter.frequency.setValueAtTime(650, now);
-          filter.frequency.exponentialRampToValueAtTime(220, now + 0.36);
-          filter.Q.value = 1.6;
-
-          const wGain = this.ctx.createGain();
-          wGain.gain.setValueAtTime(0.001, now);
-          wGain.gain.linearRampToValueAtTime(0.13, now + 0.06);
-          wGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-
-          whoosh.connect(filter);
-          filter.connect(wGain);
-          wGain.connect(this.ctx.destination);
-          whoosh.start(now);
-          whoosh.stop(now + 0.4);
-        }
-      }
-
-      playCargoImpact(isHeavy = false) {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-
-        // Deep tactical crate touchdown thud
-        const thudOsc = this.ctx.createOscillator();
-        const thudGain = this.ctx.createGain();
-        thudOsc.type = 'sine';
-        thudOsc.frequency.setValueAtTime(isHeavy ? 115 : 135, now);
-        thudOsc.frequency.exponentialRampToValueAtTime(28, now + (isHeavy ? 0.34 : 0.24));
-
-        thudGain.gain.setValueAtTime(isHeavy ? 0.32 : 0.2, now);
-        thudGain.gain.exponentialRampToValueAtTime(0.001, now + (isHeavy ? 0.36 : 0.25));
-
-        thudOsc.connect(thudGain);
-        thudGain.connect(this.ctx.destination);
-        thudOsc.start(now);
-        thudOsc.stop(now + 0.38);
-
-        // Metallic lock-in latch snap
-        if (this.noiseBuffer) {
-          const burst = this.ctx.createBufferSource();
-          burst.buffer = this.noiseBuffer;
-          const hp = this.ctx.createBiquadFilter();
-          hp.type = 'highpass';
-          hp.frequency.value = 900;
-
-          const bGain = this.ctx.createGain();
-          bGain.gain.setValueAtTime(isHeavy ? 0.14 : 0.08, now);
-          bGain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
-
-          burst.connect(hp);
-          hp.connect(bGain);
-          bGain.connect(this.ctx.destination);
-          burst.start(now);
-          burst.stop(now + 0.12);
-        }
-      }
-
-      playFlarePop() {
-        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
-        const now = this.ctx.currentTime;
-        if (!this.noiseBuffer) return;
-
-        const pop = this.ctx.createBufferSource();
-        pop.buffer = this.noiseBuffer;
-        const bp = this.ctx.createBiquadFilter();
-        bp.type = 'bandpass';
-        bp.frequency.setValueAtTime(1200, now);
-        bp.frequency.exponentialRampToValueAtTime(320, now + 0.22);
-
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.16, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
-
-        pop.connect(bp);
-        bp.connect(gain);
-        gain.connect(this.ctx.destination);
-        pop.start(now);
-        pop.stop(now + 0.25);
-      }
-    }
-
-    // =========================================================================
-    // 4. MULTI-HELICOPTER FORMATION AIR-DROP & CARGO ENGINE
-    // =========================================================================
-    function createSelectionFrame(el) {
-      const frame = document.createElement('div');
-      const isRed = el.dataset.frameColor === 'red';
-      frame.className = `figma-frame-box${isRed ? ' frame-red' : ''}`;
-
-      const title = el.dataset.nodeTitle || 'PAYLOAD';
-
-      const badge = document.createElement('span');
-      badge.className = 'figma-dimension-badge';
-      badge.textContent = `DEPLOYED // ${title}`;
-      frame.appendChild(badge);
-
-      ['tl', 'tr', 'bl', 'br'].forEach((pos) => {
-        const handle = document.createElement('span');
-        handle.className = `figma-corner-handle ${pos}`;
-        frame.appendChild(handle);
-      });
-
-      return frame;
-    }
-
-    class TacticalHelicopterDrop {
-      constructor(canvas, audioEngine) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.audio = audioEngine;
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.mode = 'FORMATION_DROP'; // 'FORMATION_DROP' | 'ESCORT'
-        this.builtSet = new WeakSet();
-        this.choppers = [];
-        this.drops = [];
-        this.particles = [];
-        this.lastExhaustTime = 0;
-
-        this.pointer = {
-          x: this.width * 0.5,
-          y: this.height * 0.45,
-          active: false,
-          lastMove: 0,
-          down: false,
-        };
-
-        this.resize();
-        window.addEventListener('resize', () => this.resize());
-        window.addEventListener('scroll', () => this.revealVisibleNodes(), { passive: true });
-        this.bindPointerEvents();
-      }
-
-      bindPointerEvents() {
-        const unlockAndMove = (x, y) => {
-          this.audio?.init();
-          this.pointer.x = x;
-          this.pointer.y = y;
-          this.pointer.active = true;
-          this.pointer.lastMove = performance.now();
-        };
-
-        window.addEventListener('mousemove', (e) => {
-          unlockAndMove(e.clientX, e.clientY);
-        }, { passive: true });
-
-        window.addEventListener('mousedown', (e) => {
-          unlockAndMove(e.clientX, e.clientY);
-          this.pointer.down = true;
-          const lead = this.choppers[0];
-          if (lead) {
-            this.spawnFlareBurst(lead.x - lead.facing * 28, lead.y + 14);
-            this.audio?.playFlarePop();
-          }
-        }, { passive: true });
-
-        window.addEventListener('mouseup', () => {
-          this.pointer.down = false;
-        }, { passive: true });
-
-        window.addEventListener('touchstart', (e) => {
-          const t = e.touches[0];
-          if (t) {
-            unlockAndMove(t.clientX, t.clientY);
-            this.pointer.down = true;
-          }
-        }, { passive: true });
-
-        window.addEventListener('touchmove', (e) => {
-          const t = e.touches[0];
-          if (t) unlockAndMove(t.clientX, t.clientY);
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => {
-          this.pointer.down = false;
-        }, { passive: true });
-      }
-
-      resize() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.canvas.width = Math.floor(this.width * dpr);
-        this.canvas.height = Math.floor(this.height * dpr);
-        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-
-      createChopper({ id, callsign, role, startX, startY, altitudeY, speedX, payloadKeys, accentColor, isEscort = false }) {
-        return {
-          id,
-          callsign,
-          role,
-          x: startX,
-          y: startY,
-          vx: speedX,
-          vy: 0,
-          cruiseSpeedX: speedX,
-          altitudeY,
-          pitch: 0.1,
-          facing: 1,
-          rotorPhase: Math.random() * Math.PI * 2,
-          scale: isEscort ? 0.94 : 0.86,
-          payloadKeys: [...payloadKeys],
-          droppedKeys: new Set(),
-          accentColor,
-          isEscort,
-          exited: false,
-        };
-      }
-
-      runSequence() {
-        const overlay = document.getElementById('openingBuildOverlay');
-        const statusLabel = document.getElementById('buildStatusLabel');
-        const topLiveStatus = document.getElementById('topLiveStatus');
-        const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
-
-        if (statusLabel) statusLabel.textContent = 'Squadron Incoming — Line Formation...';
-        if (topLiveStatus) topLiveStatus.textContent = 'AIR-DROP';
-
-        this.builtSet = new WeakSet();
-        this.drops = [];
-        this.particles = [];
-        this.mode = 'FORMATION_DROP';
-
-        nodes.forEach((node) => {
-          node.classList.remove('node-constructing', 'node-snapped', 'node-ready');
-          node.classList.add('node-hidden');
-          node.querySelectorAll('.figma-frame-box').forEach((f) => f.remove());
-        });
-
-        // 5 distinct helicopters enter one-by-one in line formation, each carrying its own unique payload
-        const formationPlan = [
-          {
-            id: 1,
-            callsign: 'ALPHA-01',
-            role: 'PHOTO DROP',
-            accentColor: '#EF4444',
-            altitudeY: Math.min(115, this.height * 0.14),
-            payloadKeys: ['hero-portrait', 'nav-logo'],
-            isEscort: true, // Stays on station after formation pass to escort cursor
-          },
-          {
-            id: 2,
-            callsign: 'BRAVO-02',
-            role: 'IDENTITY',
-            accentColor: '#38BDF8',
-            altitudeY: Math.min(155, this.height * 0.19),
-            payloadKeys: ['hero-greeting', 'hero-status-line'],
-          },
-          {
-            id: 3,
-            callsign: 'CHARLIE-03',
-            role: 'BANNER',
-            accentColor: '#EF4444',
-            altitudeY: Math.min(92, this.height * 0.11),
-            payloadKeys: ['hero-portfolio-word', 'nav-links'],
-          },
-          {
-            id: 4,
-            callsign: 'DELTA-04',
-            role: 'INTEL BIO',
-            accentColor: '#34D399',
-            altitudeY: Math.min(188, this.height * 0.23),
-            payloadKeys: ['hero-summary', 'hero-ai-jarvis'],
-          },
-          {
-            id: 5,
-            callsign: 'ECHO-05',
-            role: 'SYSTEMS',
-            accentColor: '#FACC15',
-            altitudeY: Math.min(138, this.height * 0.17),
-            payloadKeys: ['hero-actions', 'hero-metrics', 'hero-ai-dilawar'],
-          },
-        ];
-
-        const baseSpeed = Math.max(4.6, Math.min(7.2, this.width / 230));
-        this.choppers = formationPlan.map((cfg, idx) =>
-          this.createChopper({
-            ...cfg,
-            startX: -180 - idx * 270, // Staggered one-by-one line entry
-            startY: cfg.altitudeY - 22,
-            speedX: baseSpeed,
-          })
-        );
-
-        if (overlay) overlay.style.opacity = '1';
-      }
-
-      spawnSmokeAndSparks(x, y, count = 14) {
-        for (let i = 0; i < count; i++) {
-          const angle = -Math.PI * Math.random();
-          const speed = 1.2 + Math.random() * 3.4;
-          const isSpark = i % 3 === 0;
-          this.particles.push({
-            x: x + (Math.random() - 0.5) * 40,
-            y,
-            vx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1),
-            vy: Math.sin(angle) * speed * 0.7 - 0.5,
-            size: isSpark ? 2 + Math.random() * 2 : 6 + Math.random() * 10,
-            alpha: isSpark ? 0.95 : 0.35,
-            life: 0,
-            maxLife: isSpark ? 26 + Math.random() * 16 : 38 + Math.random() * 20,
-            type: isSpark ? 'spark' : 'smoke',
-          });
-        }
-      }
-
-      spawnExhaustPlume(chopper) {
-        const exhaustX = chopper.x - chopper.facing * 24 * chopper.scale;
-        const exhaustY = chopper.y - 5 * chopper.scale;
-        this.particles.push({
-          x: exhaustX + (Math.random() - 0.5) * 4,
-          y: exhaustY + (Math.random() - 0.5) * 3,
-          vx: -chopper.facing * (1.5 + Math.random() * 1.1) + chopper.vx * 0.2,
-          vy: (Math.random() - 0.5) * 0.4 - 0.15,
-          size: 3.5 + Math.random() * 3.5,
-          alpha: 0.2,
-          life: 0,
-          maxLife: 22 + Math.random() * 10,
-          type: 'exhaust',
-        });
-      }
-
-      spawnFlareBurst(x, y) {
-        for (let i = 0; i < 6; i++) {
-          const spread = (i - 2.5) * 0.24;
-          this.particles.push({
-            x,
-            y,
-            vx: (Math.random() - 0.5) * 3.5 + Math.sin(spread) * 1.5,
-            vy: 1.8 + Math.random() * 2.1,
-            size: 3.2,
-            alpha: 1,
-            life: 0,
-            maxLife: 36 + Math.random() * 14,
-            type: 'flare',
-          });
-        }
-      }
-
-      releasePayloadFromChopper(chopper, el) {
-        if (!el || this.builtSet.has(el)) return;
-        this.builtSet.add(el);
-
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < -40 || rect.top > this.height + 100) {
-          el.classList.remove('node-hidden', 'node-constructing');
-          el.classList.add('node-ready');
-          return;
-        }
-
-        const targetCenterX = rect.left + rect.width * 0.5;
-        const targetCenterY = rect.top + rect.height * 0.5;
-        const isPortrait = el.dataset.buildNode === 'hero-portrait';
-
-        el.classList.remove('node-hidden');
-        el.classList.add('node-constructing');
-
-        const frame = createSelectionFrame(el);
-        el.appendChild(frame);
-
-        this.audio?.playDropRelease();
-
-        const statusLabel = document.getElementById('buildStatusLabel');
-        if (statusLabel) {
-          statusLabel.textContent = `${chopper.callsign} Dropped ${el.dataset.nodeTitle || 'Payload'}`;
-        }
-
-        this.drops.push({
-          el,
-          frame,
-          callsign: chopper.callsign,
-          label: isPortrait ? 'IMG_5291.PNG' : (el.dataset.nodeTitle || 'INTEL DROP'),
-          startX: chopper.x,
-          startY: chopper.y + 16,
-          targetX: targetCenterX,
-          targetY: targetCenterY,
-          width: Math.min(118, Math.max(52, rect.width * 0.36)),
-          height: Math.min(54, Math.max(24, rect.height * 0.26)),
-          isPortrait,
-          start: performance.now(),
-          duration: isPortrait ? 780 : 620,
-        });
-      }
-
-      revealVisibleNodes() {
-        const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
-        const escort = this.choppers[0];
-        nodes.forEach((el, idx) => {
-          if (this.builtSet.has(el)) return;
-          const r = el.getBoundingClientRect();
-          if (r.top < this.height * 0.92 && r.bottom > 0) {
-            setTimeout(() => {
-              if (this.builtSet.has(el)) return;
-              if (escort && !escort.exited) {
-                this.releasePayloadFromChopper(escort, el);
-              } else {
-                this.builtSet.add(el);
-                el.classList.remove('node-hidden', 'node-constructing');
-                el.classList.add('node-ready');
-              }
-            }, (idx % 3) * 140);
-          }
-        });
-      }
-
-      update(now) {
-        const spawnExhaust = now - this.lastExhaustTime > 55;
-        if (spawnExhaust) this.lastExhaustTime = now;
-
-        // Every formation helicopter has dropped all of its assigned info payloads and no crates are still in flight
-        const formationDropsComplete =
-          this.mode === 'FORMATION_DROP' &&
-          this.choppers.every((c) => c.payloadKeys.every((k) => c.droppedKeys.has(k))) &&
-          this.drops.length === 0;
-
-        let activeCount = 0;
-        let speedSum = 0;
-
-        // Update each helicopter in the one-by-one formation
-        this.choppers.forEach((c) => {
-          c.rotorPhase += 0.66;
-          if (c.exited) return;
-
-          activeCount++;
-          if (spawnExhaust && c.x > -140 && c.x < this.width + 140) {
-            this.spawnExhaustPlume(c);
-          }
-
-          if (this.mode === 'FORMATION_DROP') {
-            const finishedOwnDrops =
-              c.payloadKeys.every((k) => c.droppedKeys.has(k)) &&
-              !this.drops.some((d) => d.callsign === c.callsign);
-
-            if (formationDropsComplete && c.isEscort) {
-              // Switch ALPHA-01 right into cursor-following escort mode once all drops complete
-              this.mode = 'ESCORT';
-              const overlay = document.getElementById('openingBuildOverlay');
-              const topLiveStatus = document.getElementById('topLiveStatus');
-              if (overlay) overlay.style.opacity = '0';
-              if (topLiveStatus) topLiveStatus.textContent = 'ESCORT';
-              this.revealVisibleNodes();
-            } else if (!c.isEscort && (finishedOwnDrops || formationDropsComplete)) {
-              // Leave off-screen immediately once this helicopter finishes dropping its info
-              c.vx = Math.max(c.cruiseSpeedX * 1.9, 13);
-              c.x += c.vx;
-              c.vy = (-36 - c.y) * 0.1;
-              c.y += c.vy;
-              c.facing = 1;
-              c.pitch = -0.1;
-              if (c.x > this.width + 180) {
-                c.exited = true;
-              }
-            } else {
-              // Fly horizontally in formation across the sky
-              c.vx = c.cruiseSpeedX;
-              c.x += c.vx;
-              const bob = Math.sin(now * 0.004 + c.id * 1.4) * 5;
-              c.vy = (c.altitudeY + bob - c.y) * 0.08;
-              c.y += c.vy;
-              c.facing = 1;
-              c.pitch = 0.11;
-
-              // Check if chopper is passing over any of its assigned drop targets
-              c.payloadKeys.forEach((key) => {
-                if (c.droppedKeys.has(key)) return;
-                const el = document.querySelector(`[data-build-node="${key}"]`);
-                if (!el) {
-                  c.droppedKeys.add(key);
-                  return;
-                }
-                const rect = el.getBoundingClientRect();
-                const targetX = rect.left + rect.width * 0.5;
-                // Release slightly ahead of target center so forward momentum carries crate onto target
-                const releaseX = Math.max(90, Math.min(this.width - 90, targetX - 35));
-                if (c.x >= releaseX) {
-                  c.droppedKeys.add(key);
-                  this.releasePayloadFromChopper(c, el);
-                }
-              });
-
-              // Once past right edge of viewport: non-escort choppers exit; ALPHA-01 transitions to cursor escort
-              if (c.x > this.width + 220) {
-                if (c.isEscort) {
-                  this.mode = 'ESCORT';
-                  c.x = this.width + 160;
-                  c.facing = -1;
-                  const overlay = document.getElementById('openingBuildOverlay');
-                  const topLiveStatus = document.getElementById('topLiveStatus');
-                  if (overlay) overlay.style.opacity = '0';
-                  if (topLiveStatus) topLiveStatus.textContent = 'ESCORT';
-                  this.revealVisibleNodes();
-                } else {
-                  c.exited = true;
-                }
-              }
-            }
-          } else if (this.mode === 'ESCORT' && c.isEscort) {
-            const cursorRecent = this.pointer.active && (now - this.pointer.lastMove < 4500);
-            let targetX;
-            let targetY;
-            if (cursorRecent) {
-              targetX = Math.max(120, Math.min(this.width - 120, this.pointer.x + Math.cos(now * 0.0025) * 26));
-              targetY = Math.max(66, Math.min(this.height - 90, this.pointer.y - 88 + Math.sin(now * 0.004) * 6));
-            } else {
-              const t = now * 0.00055;
-              targetX = this.width * 0.5 + Math.cos(t) * (this.width * 0.36);
-              targetY = 86 + Math.sin(t * 2) * 14;
-            }
-
-            c.vx = (targetX - c.x) * 0.085;
-            c.vy = (targetY - c.y) * 0.085;
-            c.x += c.vx;
-            c.y += c.vy;
-
-            if (cursorRecent && Math.abs(this.pointer.x - c.x) > 18) {
-              c.facing = this.pointer.x >= c.x ? 1 : -1;
-            } else if (Math.abs(c.vx) > 0.6) {
-              c.facing = c.vx >= 0 ? 1 : -1;
-            }
-            const targetPitch = Math.max(-0.22, Math.min(0.22, c.vx * 0.013));
-            c.pitch += (targetPitch - c.pitch) * 0.14;
-          }
-
-          speedSum += Math.hypot(c.vx, c.vy);
-        });
-
-        const avgSpeed = activeCount > 0 ? speedSum / activeCount : 0;
-        this.audio?.updateFlightAudio(activeCount, avgSpeed, this.mode === 'FORMATION_DROP');
-
-        // Update falling parachute crates
-        for (let i = this.drops.length - 1; i >= 0; i--) {
-          const d = this.drops[i];
-          const progress = Math.max(0, Math.min(1, (now - d.start) / d.duration));
-          d.progress = progress;
-          // Realistic parabolic horizontal drift + parachute deceleration curve
-          const easeX = 1 - Math.pow(1 - progress, 2);
-          const easeY = progress * progress * (3 - 2 * progress);
-          d.curX = d.startX + (d.targetX - d.startX) * easeX;
-          d.curY = d.startY + (d.targetY - d.startY) * easeY;
-
-          if (progress >= 1) {
-            this.spawnSmokeAndSparks(d.targetX, d.targetY, d.isPortrait ? 26 : 12);
-            this.audio?.playCargoImpact(d.isPortrait);
-            if (d.isPortrait) {
-              triggerPortraitScan();
-            }
-
-            d.el.classList.remove('node-constructing');
-            d.el.classList.add('node-snapped');
-
-            if (d.frame) {
-              d.frame.style.opacity = '0';
-              setTimeout(() => d.frame.remove(), 380);
-            }
-
-            setTimeout(() => {
-              d.el.classList.remove('node-snapped');
-              d.el.classList.add('node-ready');
-            }, 280);
-
-            this.drops.splice(i, 1);
-          }
-        }
-
-        // Update dust clouds, turbine exhaust & IR flares
-        for (let i = this.particles.length - 1; i >= 0; i--) {
-          const p = this.particles[i];
-          p.life++;
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.type === 'spark') {
-            p.vy += 0.16;
-          } else if (p.type === 'flare') {
-            p.vy += 0.09;
-            p.vx *= 0.98;
-            if (p.life % 3 === 0) {
-              this.particles.push({
-                x: p.x,
-                y: p.y,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: -0.2,
-                size: 3.5,
-                alpha: 0.25,
-                life: 0,
-                maxLife: 22,
-                type: 'exhaust',
-              });
-            }
-          } else {
-            p.size += 0.35;
-            p.vx *= 0.96;
-          }
-          if (p.life >= p.maxLife) {
-            this.particles.splice(i, 1);
-          }
-        }
-      }
-
-      drawSingleHelicopter(chopper) {
-        if (chopper.exited) return;
-        const ctx = this.ctx;
-        const { x, y, pitch, facing, scale, rotorPhase, callsign, role, accentColor, isEscort } = chopper;
-        const cursorActive = this.pointer.active && this.mode === 'ESCORT' && isEscort;
-
-        ctx.save();
-        ctx.translate(x, y);
-
-        // Tactical callsign transponder tag above each helicopter in the line
-        ctx.font = '700 8px "JetBrains Mono", monospace';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = accentColor;
-        ctx.fillText(`${callsign} // ${role}`, 0, -34 * scale);
-
-        // Searchlight cone
-        const noseX = facing * 42 * scale;
-        const noseY = 16 * scale;
-        const aimX = cursorActive ? (this.pointer.x - x) : facing * 52 * scale;
-        const aimY = cursorActive ? Math.max(60, this.pointer.y - y) : 220 * scale;
-
-        const beamGrad = ctx.createLinearGradient(noseX, noseY, aimX, aimY);
-        beamGrad.addColorStop(0, cursorActive ? 'rgba(56, 189, 248, 0.22)' : 'rgba(239, 68, 68, 0.2)');
-        beamGrad.addColorStop(1, 'rgba(7, 7, 8, 0)');
-        ctx.fillStyle = beamGrad;
-        ctx.beginPath();
-        ctx.moveTo(noseX, noseY);
-        ctx.lineTo(aimX + 48 * scale, aimY);
-        ctx.lineTo(aimX - 48 * scale, aimY);
-        ctx.closePath();
-        ctx.fill();
-
-        if (cursorActive) {
-          ctx.strokeStyle = this.pointer.down ? 'rgba(239, 68, 68, 0.75)' : 'rgba(56, 189, 248, 0.32)';
-          ctx.lineWidth = this.pointer.down ? 1.5 : 1;
-          ctx.setLineDash([4, 4]);
-          ctx.beginPath();
-          ctx.moveTo(facing * 64 * scale, 18 * scale);
-          ctx.lineTo(this.pointer.x - x, this.pointer.y - y);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-
-        ctx.scale(facing * scale, scale);
-        ctx.rotate(pitch);
-
-        // Rotor downwash air-pressure ring
-        const washPulse = (rotorPhase * 0.12) % 1;
-        ctx.strokeStyle = `rgba(148, 163, 184, ${(1 - washPulse) * 0.16})`;
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.ellipse(0, 38 + washPulse * 28, 65 + washPulse * 45, 7 + washPulse * 5, 0, 0, Math.PI * 2);
-        ctx.stroke();
-
-        // Landing skids
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 2.6;
-        ctx.beginPath();
-        ctx.moveTo(-26, 18);
-        ctx.lineTo(-22, 28);
-        ctx.moveTo(22, 18);
-        ctx.lineTo(26, 28);
-        ctx.moveTo(-42, 28);
-        ctx.lineTo(44, 28);
-        ctx.quadraticCurveTo(52, 28, 55, 23);
-        ctx.stroke();
-
-        // Tail boom & stabilizer
-        const tailGrad = ctx.createLinearGradient(-115, -14, -20, 8);
-        tailGrad.addColorStop(0, '#1E242B');
-        tailGrad.addColorStop(1, '#333D47');
-        ctx.fillStyle = tailGrad;
-        ctx.beginPath();
-        ctx.moveTo(-26, -6);
-        ctx.lineTo(-110, -4);
-        ctx.lineTo(-122, -22);
-        ctx.lineTo(-108, -22);
-        ctx.lineTo(-98, -2);
-        ctx.lineTo(-112, 10);
-        ctx.lineTo(-102, 10);
-        ctx.lineTo(-92, 4);
-        ctx.lineTo(-26, 8);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Tail rotor
-        ctx.save();
-        ctx.translate(-112, -12);
-        ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.arc(0, 0, 13, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.rotate(rotorPhase * 1.7);
-        ctx.strokeStyle = '#E2E8F0';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(-12, 0);
-        ctx.lineTo(12, 0);
-        ctx.moveTo(0, -12);
-        ctx.lineTo(0, 12);
-        ctx.stroke();
-        ctx.restore();
-
-        // Armored fuselage
-        const hullGrad = ctx.createLinearGradient(0, -22, 0, 20);
-        hullGrad.addColorStop(0, '#475569');
-        hullGrad.addColorStop(0.45, '#27303A');
-        hullGrad.addColorStop(1, '#11161D');
-        ctx.fillStyle = hullGrad;
-        ctx.beginPath();
-        ctx.moveTo(-34, -8);
-        ctx.lineTo(-12, -18);
-        ctx.lineTo(24, -15);
-        ctx.lineTo(62, -2);
-        ctx.lineTo(68, 6);
-        ctx.lineTo(46, 16);
-        ctx.lineTo(-28, 16);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#64748B';
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        // Turboshaft nacelle & exhaust
-        ctx.fillStyle = '#1E293B';
-        ctx.beginPath();
-        ctx.roundRect(-24, -15, 34, 9, 3);
-        ctx.fill();
-        ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.fillStyle = 'rgba(251, 146, 60, 0.65)';
-        ctx.fillRect(-26, -13, 3, 5);
-
-        // Stub wing & rocket pod
-        ctx.fillStyle = '#1E293B';
-        ctx.beginPath();
-        ctx.moveTo(-10, 2);
-        ctx.lineTo(16, 2);
-        ctx.lineTo(10, 11);
-        ctx.lineTo(-14, 11);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.fillStyle = '#334155';
-        ctx.fillRect(-6, 9, 22, 7);
-        ctx.fillStyle = accentColor;
-        ctx.fillRect(14, 10, 3, 5);
-
-        // Armored cockpit canopy
-        const glassGrad = ctx.createLinearGradient(14, -14, 52, 2);
-        glassGrad.addColorStop(0, '#0F172A');
-        glassGrad.addColorStop(0.5, '#1E3A5F');
-        glassGrad.addColorStop(1, '#38BDF8');
-        ctx.fillStyle = glassGrad;
-        ctx.beginPath();
-        ctx.moveTo(12, -13);
-        ctx.lineTo(34, -11);
-        ctx.lineTo(54, -1);
-        ctx.lineTo(26, 1);
-        ctx.lineTo(10, -4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#94A3B8';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Nose FLIR turret & chain gun
-        ctx.fillStyle = '#0F172A';
-        ctx.beginPath();
-        ctx.arc(62, 7, 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#38BDF8';
-        ctx.beginPath();
-        ctx.arc(64, 7, 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = '#0F172A';
-        ctx.fillRect(44, 13, 12, 6);
-        ctx.strokeStyle = '#94A3B8';
-        ctx.lineWidth = 2.2;
-        ctx.beginPath();
-        ctx.moveTo(56, 16);
-        ctx.lineTo(74, 18);
-        ctx.stroke();
-
-        // Squadron insignia stripe & strobe
-        ctx.fillStyle = accentColor;
-        ctx.fillRect(-38, -2, 16, 3);
-        const strobeOn = Math.sin(rotorPhase * 0.25) > 0;
-        if (strobeOn) {
-          ctx.fillStyle = accentColor;
-          ctx.shadowColor = accentColor;
-          ctx.shadowBlur = 12;
-          ctx.beginPath();
-          ctx.arc(-112, -23, 2.8, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-
-        // Main rotor mast & spinning blades
-        ctx.fillStyle = '#64748B';
-        ctx.fillRect(-2, -26, 8, 9);
-
-        const bladeSpan = 126 * Math.abs(Math.cos(rotorPhase));
-        const rotorGrad = ctx.createLinearGradient(-128, -26, 132, -26);
-        rotorGrad.addColorStop(0, 'rgba(148, 163, 184, 0.12)');
-        rotorGrad.addColorStop(0.5, 'rgba(226, 232, 240, 0.85)');
-        rotorGrad.addColorStop(1, 'rgba(148, 163, 184, 0.12)');
-
-        ctx.strokeStyle = rotorGrad;
-        ctx.lineWidth = 3.4;
-        ctx.beginPath();
-        ctx.moveTo(2 - bladeSpan, -26);
-        ctx.lineTo(2 + bladeSpan, -26);
-        ctx.stroke();
-
-        ctx.strokeStyle = 'rgba(226, 232, 240, 0.16)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.ellipse(2, -26, 128, 5, 0, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.restore();
-      }
-
-      drawCustomTacticalCursor() {
-        if (!this.pointer.active) return;
-        const ctx = this.ctx;
-        const { x, y, down } = this.pointer;
-        const accent = down ? '#EF4444' : '#38BDF8';
-        const ringRadius = down ? 13 : 18;
-        const spin = performance.now() * 0.0025;
-
-        ctx.save();
-        ctx.translate(x, y);
-
-        ctx.save();
-        ctx.rotate(spin);
-        ctx.strokeStyle = accent;
-        ctx.lineWidth = 1.4;
-        for (let i = 0; i < 4; i++) {
-          ctx.rotate(Math.PI * 0.5);
-          ctx.beginPath();
-          ctx.arc(0, 0, ringRadius, -0.38, 0.38);
-          ctx.stroke();
-        }
-        ctx.restore();
-
-        ctx.strokeStyle = 'rgba(244, 244, 246, 0.85)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.moveTo(-7, 0);
-        ctx.lineTo(-3, 0);
-        ctx.moveTo(3, 0);
-        ctx.lineTo(7, 0);
-        ctx.moveTo(0, -7);
-        ctx.lineTo(0, -3);
-        ctx.moveTo(0, 3);
-        ctx.lineTo(0, 7);
-        ctx.stroke();
-
-        ctx.fillStyle = '#EF4444';
-        ctx.beginPath();
-        ctx.arc(0, 0, 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.font = '700 8px "JetBrains Mono", monospace';
-        ctx.textAlign = 'left';
-        ctx.fillStyle = accent;
-        ctx.fillText(`LOCK ${Math.round(x)}:${Math.round(y)}`, 22, -6);
-        ctx.fillStyle = 'rgba(226, 232, 240, 0.65)';
-        ctx.fillText(down ? 'FLARE DISPENSED' : 'ESCORT // ALPHA-01', 22, 4);
-
-        ctx.restore();
-      }
-
-      drawDropsAndParticles() {
-        const ctx = this.ctx;
-
-        this.drops.forEach((d) => {
-          ctx.save();
-          ctx.translate(d.curX, d.curY);
-
-          if (d.progress < 0.86) {
-            ctx.strokeStyle = 'rgba(226, 232, 240, 0.5)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(-16, -26);
-            ctx.lineTo(-d.width * 0.35, -d.height * 0.5);
-            ctx.moveTo(16, -26);
-            ctx.lineTo(d.width * 0.35, -d.height * 0.5);
-            ctx.stroke();
-
-            ctx.fillStyle = d.isPortrait ? 'rgba(239, 68, 68, 0.8)' : 'rgba(56, 189, 248, 0.7)';
-            ctx.beginPath();
-            ctx.arc(0, -26, 17, Math.PI, 0);
-            ctx.closePath();
-            ctx.fill();
-          }
-
-          ctx.fillStyle = '#0E0F12';
-          ctx.strokeStyle = d.isPortrait ? '#EF4444' : '#38BDF8';
-          ctx.lineWidth = 1.6;
-          ctx.beginPath();
-          ctx.roundRect(-d.width * 0.5, -d.height * 0.5, d.width, d.height, 4);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = d.isPortrait ? '#EF4444' : '#38BDF8';
-          ctx.font = '700 7.5px "JetBrains Mono", monospace';
-          ctx.textAlign = 'center';
-          ctx.fillText(d.label.slice(0, 18), 0, 3);
-
-          ctx.restore();
-        });
-
-        this.particles.forEach((p) => {
-          const alpha = (1 - p.life / p.maxLife) * p.alpha;
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, alpha);
-          if (p.type === 'spark') {
-            ctx.fillStyle = '#FACC15';
-            ctx.fillRect(p.x, p.y, p.size, p.size);
-          } else if (p.type === 'flare') {
-            ctx.fillStyle = '#FDBA74';
-            ctx.shadowColor = '#F97316';
-            ctx.shadowBlur = 14;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
-          } else {
-            ctx.fillStyle = '#94A3B8';
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          ctx.restore();
-        });
-      }
-
-      draw() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
-        this.drawDropsAndParticles();
-        this.choppers.forEach((c) => this.drawSingleHelicopter(c));
-        this.drawCustomTacticalCursor();
-      }
-
-      loop(now) {
-        this.update(now);
-        this.draw();
-        requestAnimationFrame((t) => this.loop(t));
-      }
-    }
-
-    // =========================================================================
-    // 5. INITIALIZATION & CONTROLS
-    // =========================================================================
-    let builderEngine = null;
-    let audioEngine = null;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const mobileBtn = document.getElementById('mobileNavToggle');
-      const mobileMenu = document.getElementById('mobileNavMenu');
-      mobileBtn?.addEventListener('click', () => {
-        const open = mobileMenu.classList.toggle('hidden');
-        mobileBtn.setAttribute('aria-expanded', String(!open));
-      });
-      document.querySelectorAll('.mobile-nav-link').forEach((link) => {
-        link.addEventListener('click', () => {
-          mobileMenu?.classList.add('hidden');
-          mobileBtn?.setAttribute('aria-expanded', 'false');
-        });
-      });
-
-      audioEngine = new TacticalAudioEngine();
-      // Attempt immediate init; browsers that require interaction will unlock on first pointer/click event
-      audioEngine.init();
-
-      const audioToggleBtn = document.getElementById('audioToggleBtn');
-      const audioToggleIcon = document.getElementById('audioToggleIcon');
-      const audioToggleLabel = document.getElementById('audioToggleLabel');
-
-      audioToggleBtn?.addEventListener('click', () => {
-        audioEngine.init();
-        const nextMuted = !audioEngine.muted;
-        audioEngine.setMuted(nextMuted);
-        if (audioToggleIcon) audioToggleIcon.textContent = nextMuted ? '🔇' : '🔊';
-        if (audioToggleLabel) audioToggleLabel.textContent = nextMuted ? 'SFX OFF' : 'SFX ON';
-        showToast(nextMuted ? 'Helicopter audio muted' : 'Helicopter audio enabled');
-      });
-
-      const canvas = document.getElementById('cursorSwarmCanvas');
-      if (canvas) {
-        builderEngine = new TacticalHelicopterDrop(canvas, audioEngine);
-        builderEngine.runSequence();
-        requestAnimationFrame((t) => builderEngine.loop(t));
-      }
-
-      document.getElementById('replayBuildBtn')?.addEventListener('click', () => {
-        audioEngine?.init();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => {
-          builderEngine?.runSequence();
-          showToast('Squadron formation air-drop inbound');
-        }, 180);
-      });
-    });
-  </script>
 </body>
 </html>
