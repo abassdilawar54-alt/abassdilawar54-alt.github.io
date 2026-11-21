@@ -1,1 +1,1429 @@
-<!-- Google Fonts: Space Grotesk, Inter, and JetBrains Mono -->  <link rel="preconnect" href="https://fonts.googleapis.com" />  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  <link    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"    rel="stylesheet"  />  <script>    tailwind.config = {      darkMode: 'class',      theme: {        extend: {          fontFamily: {            sans: ['Inter', 'system-ui', 'sans-serif'],            display: ['Space Grotesk', 'Inter', 'sans-serif'],            mono: ['JetBrains Mono', 'monospace'],          },          colors: {            obsidian: '#070709',            surface: '#0D0E12',            surfaceElev: '#13151B',            crimson: '#EF4444',            crimsonDark: '#DC2626',            figmaBlue: '#38BDF8',          },        },      },    };  </script>  <style>    :root {      color-scheme: dark;
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DILAWAR ABASS // Collaborative Systems &amp; AI Portfolio</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Space Grotesk, Inter, and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#070709',
+            surface: '#0D0E12',
+            surfaceElev: '#13151B',
+            crimson: '#EF4444',
+            crimsonDark: '#DC2626',
+            figmaBlue: '#38BDF8',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    html,
+    body {
+      background-color: #070709;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Subtle architectural grid background */
+    body {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Giant outlined hollow display word "PORTFOLIO" behind Hero */
+    .hollow-display-word {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.16);
+      letter-spacing: -0.03em;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .hollow-display-word {
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.17);
+      }
+    }
+
+    /* =========================================================================
+       FIGMA LIVE-BUILDING BLUEPRINT & BOUNDING-BOX SYSTEM
+       Every [data-build] target starts as a dark wireframe blueprint and
+       populates smoothly as the multi-cursor swarm traces & renders it!
+       ========================================================================= */
+    [data-build] {
+      position: relative;
+      transition:
+        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.55s ease;
+    }
+
+    [data-build].build-pending {
+      opacity: 0.08;
+      transform: translateY(10px) scale(0.985);
+      filter: brightness(0.65);
+    }
+
+    [data-build].build-active {
+      opacity: 0.72;
+      transform: translateY(2px) scale(0.996);
+      filter: brightness(0.95);
+    }
+
+    [data-build].build-done {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: brightness(1);
+    }
+
+    /* Dynamic Figma selection bounding box overlay drawn during construction */
+    .figma-selection-box {
+      position: absolute;
+      inset: -4px;
+      border: 1.5px solid #38bdf8;
+      background: rgba(56, 189, 248, 0.04);
+      pointer-events: none;
+      z-index: 30;
+      border-radius: 6px;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.16);
+      transition: opacity 0.45s ease;
+    }
+
+    .figma-selection-box.crimson-box {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+      box-shadow: 0 0 22px rgba(239, 68, 68, 0.22);
+    }
+
+    /* 4px square corner resize handles */
+    .figma-handle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #070709;
+      border: 1.5px solid #38bdf8;
+    }
+    .figma-selection-box.crimson-box .figma-handle {
+      border-color: #ef4444;
+    }
+    .figma-handle.tl { top: -3.5px; left: -3.5px; }
+    .figma-handle.tr { top: -3.5px; right: -3.5px; }
+    .figma-handle.bl { bottom: -3.5px; left: -3.5px; }
+    .figma-handle.br { bottom: -3.5px; right: -3.5px; }
+
+    /* Node dimension / label pill on top-left of selection box */
+    .figma-node-tag {
+      position: absolute;
+      top: -19px;
+      left: -1px;
+      background: #38bdf8;
+      color: #070709;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 3px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+
+    .figma-selection-box.crimson-box .figma-node-tag {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    /* Scanning laser sweep across portrait image during build */
+    @keyframes portraitScanSweep {
+      0% { top: 0%; opacity: 0.95; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .portrait-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ef4444, transparent);
+      box-shadow: 0 0 14px #38bdf8;
+      z-index: 25;
+      pointer-events: none;
+      animation: portraitScanSweep 1.1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* Central [ BUILD ] swarm origin hub at 0.0s */
+    @keyframes hubPulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35), 0 0 32px rgba(239, 68, 68, 0.25);
+      }
+      50% {
+        box-shadow: 0 0 0 14px rgba(56, 189, 248, 0), 0 0 44px rgba(239, 68, 68, 0.45);
+      }
+    }
+    .build-hub-badge {
+      animation: hubPulse 1.4s infinite ease-in-out;
+    }
+
+    /* Live indicator dot */
+    @keyframes livePing {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .live-dot {
+      animation: livePing 1.8s infinite ease-in-out;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #070709; }
+    ::-webkit-scrollbar-thumb { background: #1e222d; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+  </style>
+</head>
+
+<body class="bg-obsidian text-slate-50 font-sans antialiased selection:bg-crimson selection:text-white">
+  <!-- FULL-VIEWPORT 60FPS MULTI-CURSOR SWARM CANVAS OVERLAY -->
+  <canvas
+    id="cursorSwarmCanvas"
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-50 h-full w-full"
+  ></canvas>
+
+  <!-- CENTRAL [ BUILD ] SWARM ORIGIN NODE (Appears at 0.0s as cursors swirl around it, then fades as they burst outward) -->
+  <div
+    id="buildSwarmOrigin"
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-40 flex items-center justify-center transition-opacity duration-500"
+  >
+    <div class="build-hub-badge flex items-center gap-2.5 rounded-lg border border-figmaBlue/70 bg-obsidian/95 px-4 py-2 font-mono text-xs font-bold tracking-widest text-white backdrop-blur-md">
+      <span class="h-2 w-2 rounded-full bg-figmaBlue"></span>
+      <span>[ BUILD // DILAWAR.SYS ]</span>
+    </div>
+  </div>
+
+  <!-- TOP STICKY NAVBAR -->
+  <header id="top" class="sticky top-0 z-40 border-b border-white/10 bg-obsidian/90 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <!-- Brand Monogram -->
+      <a href="#intro" class="group flex items-center gap-2.5 focus:outline-none">
+        <span class="flex h-8 w-8 items-center justify-center rounded-md bg-crimson font-mono text-xs font-bold tracking-tighter text-white shadow-md shadow-crimson/30 transition group-hover:bg-crimsonDark">
+          DA
+        </span>
+        <span class="font-display text-base font-bold tracking-tight text-white">
+          DILAWAR<span class="text-crimson">.</span>
+        </span>
+      </a>
+
+      <!-- Center Nav Links -->
+      <nav aria-label="Primary Navigation" class="hidden md:flex items-center gap-1 font-mono text-xs">
+        <a href="#intro" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Intro</a>
+        <a href="#about" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">About</a>
+        <a href="#flagships" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Flagships</a>
+        <a href="#matrix" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Matrix</a>
+        <a href="#contact" class="rounded-lg px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-white">Contact</a>
+      </nav>
+
+      <!-- Right Controls: Location Pill, Cursors Toggle, Replay Build, Mobile Menu -->
+      <div class="flex items-center gap-2">
+        <div class="hidden xl:flex items-center gap-2 rounded-full border border-white/10 bg-surface px-3 py-1.5 font-mono text-[11px] text-slate-300">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 live-dot"></span>
+          <span>SHAREEFABAD, KASHMIR</span>
+        </div>
+
+        <button
+          type="button"
+          id="toggleCursorsBtn"
+          class="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-surface px-2.5 py-1.5 font-mono text-[11px] font-semibold text-figmaBlue transition hover:border-figmaBlue/60"
+          title="Toggle live multi-cursor overlay"
+        >
+          <span id="cursorToggleDot" class="h-1.5 w-1.5 rounded-full bg-figmaBlue"></span>
+          <span id="cursorToggleLabel">CURSORS: ON</span>
+        </button>
+
+        <button
+          type="button"
+          id="replayBuildBtn"
+          class="inline-flex items-center gap-1.5 rounded-lg bg-crimson px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-white shadow-lg shadow-crimson/25 transition hover:bg-crimsonDark"
+          title="Replay the multi-cursor live website construction"
+        >
+          <span>↻ REPLAY BUILD</span>
+        </button>
+
+        <button
+          type="button"
+          id="mobileMenuBtn"
+          aria-label="Open menu"
+          aria-expanded="false"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-surface text-slate-200 md:hidden"
+        >
+          <svg id="menuOpenSvg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="18" x2="20" y2="18" />
+          </svg>
+          <svg id="menuCloseSvg" class="hidden h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenuDrawer" class="hidden border-t border-white/10 bg-surface px-4 py-3 md:hidden">
+      <div class="flex flex-col gap-1.5 font-mono text-xs">
+        <a href="#intro" class="mobile-drawer-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimson">01. Intro</a>
+        <a href="#about" class="mobile-drawer-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimson">02. About &amp; Philosophy</a>
+        <a href="#flagships" class="mobile-drawer-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimson">03. Flagship Deployments</a>
+        <a href="#matrix" class="mobile-drawer-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimson">04. The Systems Matrix</a>
+        <a href="#contact" class="mobile-drawer-link rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5 hover:text-crimson">05. Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- =======================================================================
+         HERO SECTION (Exact Editorial Layout from Reference Video)
+         ======================================================================= -->
+    <section id="intro" class="relative overflow-hidden border-b border-white/10 pt-6 pb-14 sm:pt-10 sm:pb-20">
+      <!-- Subtle Crimson Ambient Glow -->
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute top-12 left-1/2 h-[420px] w-[680px] -translate-x-1/2 rounded-full bg-crimson/10 blur-[130px]"
+      ></div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <!-- Giant Outlined Hollow Display Word "PORTFOLIO" spanning full width -->
+        <div
+          data-build="hero-banner"
+          data-node-label="DISPLAY_HEADER // 1440×180"
+          data-wave="0"
+          class="mb-4 overflow-hidden text-center"
+        >
+          <div class="hollow-display-word font-display text-[15vw] font-bold uppercase leading-[0.86] sm:text-[13.2vw] xl:text-[172px]">
+            PORTFOLIO
+          </div>
+        </div>
+
+        <!-- 12-Column Editorial Hero Grid -->
+        <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-6">
+          <!-- LEFT COLUMN (5 cols): Identity, Engineering Tagline, Summary & CTAs -->
+          <div class="lg:col-span-5">
+            <div
+              data-build="hero-name"
+              data-node-label="HERO_IDENTITY // H1"
+              data-wave="1"
+              class="inline-block"
+            >
+              <p class="font-display text-lg font-medium italic text-slate-300 sm:text-xl">
+                Hello, I&apos;m
+              </p>
+              <h1 class="mt-0.5 font-display text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl xl:text-7xl">
+                DILAWAR<span class="text-crimson">.</span>
+              </h1>
+              <div class="mt-2 h-1.5 w-28 rounded-full bg-crimson"></div>
+            </div>
+
+            <div
+              data-build="hero-role"
+              data-node-label="ROLE_SUBTITLE // MONO"
+              data-wave="2"
+              class="mt-5 flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-crimson sm:text-xs"
+            >
+              <span class="h-2 w-2 rounded-full bg-crimson live-dot"></span>
+              <span>CSE ENGINEERING STUDENT // SSM COLLEGE OF ENGINEERING</span>
+            </div>
+
+            <p
+              data-build="hero-bio"
+              data-node-label="HERO_SUMMARY // TEXT"
+              data-wave="2"
+              class="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base"
+            >
+              Engineering autonomous AI assistants (<strong class="font-semibold text-white">JARVIS</strong> &amp;
+              <strong class="font-semibold text-white">AI Dilawar</strong>), deterministic low-level
+              <strong class="font-semibold text-white">C &amp; Python</strong> architectures, and full-stack institutional
+              automation tools from <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>.
+            </p>
+
+            <!-- Two CTA Buttons -->
+            <div
+              data-build="hero-ctas"
+              data-node-label="ACTION_CLUSTER // CTA"
+              data-wave="3"
+              class="mt-6 flex flex-wrap items-center gap-3"
+            >
+              <a
+                href="#contact"
+                class="inline-flex items-center gap-2 rounded-lg bg-crimson px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimson/25 transition hover:bg-crimsonDark"
+              >
+                <span>INITIATE DISPATCH</span>
+                <span>→</span>
+              </a>
+
+              <a
+                href="#flagships"
+                class="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-surface px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-200 transition hover:border-figmaBlue hover:text-white"
+              >
+                <span>EXPLORE ARCHITECTURE</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- CENTER-RIGHT FOCAL CARD (4 cols): Tall Crimson-Framed Portrait (./IMG_5291.PNG) -->
+          <div class="lg:col-span-4">
+            <div
+              id="heroPortraitCard"
+              data-build="hero-portrait"
+              data-node-label="PORTRAIT_FRAME // IMG_5291.PNG"
+              data-box-theme="crimson"
+              data-wave="1"
+              class="relative mx-auto max-w-[340px] rounded-xl border-2 border-crimson/80 bg-surface p-2.5 shadow-2xl shadow-crimson/15"
+            >
+              <!-- Top Micro Frame Header -->
+              <div class="mb-2 flex items-center justify-between px-1 font-mono text-[10px] text-slate-400">
+                <span class="flex items-center gap-1.5">
+                  <span class="h-2 w-2 rounded-full bg-crimson"></span>
+                  <span>./IMG_5291.PNG</span>
+                </span>
+                <label
+                  for="localPhotoPicker"
+                  class="cursor-pointer rounded border border-white/15 bg-obsidian px-2 py-0.5 text-[9px] text-figmaBlue transition hover:border-figmaBlue"
+                  title="Preview a local photo if IMG_5291.PNG isn't in this preview folder"
+                >
+                  LOAD PHOTO
+                </label>
+                <input type="file" id="localPhotoPicker" accept="image/*" class="hidden" />
+              </div>
+
+              <!-- Portrait Frame -->
+              <div id="portraitViewport" class="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-obsidian">
+                <!-- Primary GitHub Repository Image ./IMG_5291.PNG -->
+                <img
+                  id="dilawarPortraitImg"
+                  src="./IMG_5291.PNG"
+                  alt="Dilawar Abass — CSE Engineering Student"
+                  class="h-full w-full object-cover object-center transition duration-500"
+                  onerror="activateEditorialFallbackPortrait()"
+                />
+
+                <!-- Sleek Dark Editorial Fallback Silhouette if ./IMG_5291.PNG is not yet present in browser preview -->
+                <div
+                  id="editorialPortraitFallback"
+                  class="hidden h-full w-full flex-col items-center justify-between bg-gradient-to-b from-[#151720] via-[#0B0C10] to-[#070709] p-5 text-center"
+                >
+                  <div class="flex w-full items-center justify-between font-mono text-[9px] text-slate-400">
+                    <span>SSM // CSE</span>
+                    <span class="text-crimson">34.09°N 74.73°E</span>
+                  </div>
+
+                  <!-- Stylized Vector Silhouette -->
+                  <div class="relative my-auto flex flex-col items-center">
+                    <div class="relative flex h-36 w-36 items-center justify-center rounded-full border border-crimson/40 bg-crimson/5 shadow-[0_0_40px_rgba(239,68,68,0.18)]">
+                      <svg class="h-28 w-28" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <linearGradient id="suitGrad" x1="60" y1="58" x2="60" y2="115" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#1E222E" />
+                            <stop offset="100%" stop-color="#090A0E" />
+                          </linearGradient>
+                        </defs>
+                        <!-- Head -->
+                        <circle cx="60" cy="39" r="17" fill="#1E222E" stroke="#EF4444" stroke-width="2" />
+                        <!-- Shoulders / Blazer -->
+                        <path
+                          d="M22 106C22 81 38 64 60 64C82 64 98 81 98 106"
+                          fill="url(#suitGrad)"
+                          stroke="#EF4444"
+                          stroke-width="2"
+                        />
+                        <!-- Collar V -->
+                        <path d="M49 65L60 85L71 65" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" />
+                      </svg>
+                    </div>
+                    <span class="mt-3 rounded border border-white/10 bg-surface px-2.5 py-1 font-mono text-[10px] text-slate-300">
+                      GitHub Asset: <strong class="text-white">IMG_5291.PNG</strong>
+                    </span>
+                  </div>
+
+                  <div class="w-full font-mono text-[9px] text-slate-500">
+                    Auto-loads ./IMG_5291.PNG on GitHub Pages
+                  </div>
+                </div>
+
+                <!-- Red Bottom Nameplate Badge -->
+                <div class="absolute inset-x-3 bottom-3 rounded-md bg-crimson px-3 py-2 text-center shadow-lg">
+                  <div class="font-mono text-[11px] font-bold uppercase tracking-widest text-white">
+                    DILAWAR ABASS // KASHMIR
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE (3 cols): Architecture Index Vertical List -->
+          <div class="lg:col-span-3">
+            <div
+              data-build="hero-index"
+              data-node-label="ARCH_INDEX // LIST"
+              data-wave="2"
+              class="rounded-xl border border-white/10 bg-surface/90 p-4"
+            >
+              <div class="mb-3 flex items-center justify-between border-b border-white/10 pb-2 font-mono text-[10px] uppercase tracking-widest text-slate-400">
+                <span>ARCHITECTURE INDEX</span>
+                <span class="text-crimson">[03]</span>
+              </div>
+
+              <div class="space-y-2.5">
+                <a
+                  href="#flagships"
+                  class="group block rounded-lg border border-white/10 bg-obsidian p-3 transition hover:border-crimson/60"
+                >
+                  <div class="flex items-center justify-between font-mono text-[10px] text-crimson">
+                    <span>01. CORE AI</span>
+                    <span>↗</span>
+                  </div>
+                  <div class="mt-1 font-display text-sm font-bold text-white group-hover:text-crimson">
+                    JARVIS AI Assistant
+                  </div>
+                  <div class="mt-0.5 font-mono text-[10px] text-slate-400">
+                    Voice &amp; Command Autonomy
+                  </div>
+                </a>
+
+                <a
+                  href="#flagships"
+                  class="group block rounded-lg border border-white/10 bg-obsidian p-3 transition hover:border-crimson/60"
+                >
+                  <div class="flex items-center justify-between font-mono text-[10px] text-figmaBlue">
+                    <span>02. DIGITAL TWIN</span>
+                    <span>↗</span>
+                  </div>
+                  <div class="mt-1 font-display text-sm font-bold text-white group-hover:text-figmaBlue">
+                    AI Dilawar Core
+                  </div>
+                  <div class="mt-0.5 font-mono text-[10px] text-slate-400">
+                    Personalized Dev &amp; CSE Agent
+                  </div>
+                </a>
+
+                <a
+                  href="#flagships"
+                  class="group block rounded-lg border border-white/10 bg-obsidian p-3 transition hover:border-crimson/60"
+                >
+                  <div class="flex items-center justify-between font-mono text-[10px] text-emerald-400">
+                    <span>03. CAMPUS SYS</span>
+                    <span>↗</span>
+                  </div>
+                  <div class="mt-1 font-display text-sm font-bold text-white group-hover:text-emerald-400">
+                    Smart Attendance System
+                  </div>
+                  <div class="mt-0.5 font-mono text-[10px] text-slate-400">
+                    Real-Time Tracking &amp; Logs
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Hero Metrics Bar -->
+        <div
+          data-build="hero-metrics"
+          data-node-label="TELEMETRY_STRIP // 4_COLS"
+          data-wave="3"
+          class="mt-10 grid grid-cols-2 gap-3 border-t border-white/10 pt-6 sm:grid-cols-4"
+        >
+          <div class="rounded-lg border border-white/10 bg-surface px-4 py-3">
+            <div class="font-display text-2xl font-bold text-white sm:text-3xl">
+              03<span class="text-crimson">+</span>
+            </div>
+            <div class="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              Flagship Systems
+            </div>
+          </div>
+
+          <div class="rounded-lg border border-white/10 bg-surface px-4 py-3">
+            <div class="font-display text-2xl font-bold text-white sm:text-3xl">
+              CSE<span class="text-crimson">.</span>
+            </div>
+            <div class="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              SSM Engineering
+            </div>
+          </div>
+
+          <div class="rounded-lg border border-white/10 bg-surface px-4 py-3">
+            <div class="font-display text-2xl font-bold text-white sm:text-3xl">
+              100<span class="text-crimson">%</span>
+            </div>
+            <div class="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              Custom Built
+            </div>
+          </div>
+
+          <div class="rounded-lg border border-white/10 bg-surface px-4 py-3">
+            <div class="font-display text-2xl font-bold text-white sm:text-3xl">
+              HMT<span class="text-crimson">.</span>
+            </div>
+            <div class="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              Kashmir Base
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 01: // ACADEMIC & ENGINEERING PROFILE — Background & Philosophy
+         ======================================================================= -->
+    <section id="about" class="border-b border-white/10 py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          data-build="about-header"
+          data-node-label="SEC_01 // PROFILE_HEADER"
+          class="mb-10"
+        >
+          <div class="font-mono text-xs font-semibold uppercase tracking-widest text-crimson">
+            // ACADEMIC &amp; ENGINEERING PROFILE
+          </div>
+          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Background &amp; Philosophy
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <!-- Left Column: Cursor-Built Paragraphs & Blockquote Callout -->
+          <div class="space-y-5 lg:col-span-7">
+            <div
+              data-build="about-para-1"
+              data-node-label="BIO_BLOCK_01 // ACADEMIC"
+              class="rounded-xl border border-white/10 bg-surface p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
+            >
+              I am <strong class="font-semibold text-white">Dilawar Abass</strong> — a Computer Science &amp; Engineering student currently pursuing my
+              <strong class="font-semibold text-white">B.E. in Computer Science &amp; Engineering (CSE)</strong> at
+              <strong class="font-semibold text-white">SSM College of Engineering</strong>. My academic foundation was forged in Kashmir, completing
+              my <strong class="font-semibold text-white">12th Grade at Budgam Higher Secondary School</strong> after earning my
+              <strong class="font-semibold text-white">10th Grade at Mehdi Public School, Durbal</strong>.
+            </div>
+
+            <div
+              data-build="about-para-2"
+              data-node-label="BIO_BLOCK_02 // SYSTEMS"
+              class="rounded-xl border border-white/10 bg-surface p-5 text-sm leading-relaxed text-slate-300 sm:text-base"
+            >
+              Rooted in <strong class="font-semibold text-white">Shareefabad, HMT, Kashmir</strong>, my engineering work centers on practical, high-utility
+              software: building voice-and-command AI assistants (<strong class="font-semibold text-white">JARVIS</strong> and
+              <strong class="font-semibold text-white">AI Dilawar</strong>), writing deterministic, memory-conscious programs in
+              <strong class="font-semibold text-white">C Programming</strong> and <strong class="font-semibold text-white">Python</strong>, and
+              deploying institutional automation like the <strong class="font-semibold text-white">Online Attendance System</strong>.
+            </div>
+
+            <blockquote
+              data-build="about-quote"
+              data-node-label="PHILOSOPHY_QUOTE // CALLOUT"
+              class="rounded-r-xl border-l-4 border-crimson bg-surfaceElev p-5 font-display text-base font-semibold leading-snug text-white sm:text-lg"
+            >
+              &ldquo;Engineering intelligent assistants and deterministic software systems from first principles — bridging core C/Python fundamentals with real-world AI automation.&rdquo;
+            </blockquote>
+          </div>
+
+          <!-- Right Column: Core Pillars List with Cursor-Drawn Selection Boxes -->
+          <div class="lg:col-span-5">
+            <div
+              data-build="about-pillars-wrap"
+              data-node-label="CORE_PILLARS // STACK"
+              class="rounded-xl border border-white/10 bg-surface p-5"
+            >
+              <div class="mb-4 flex items-center justify-between border-b border-white/10 pb-2.5 font-mono text-xs uppercase tracking-widest text-slate-400">
+                <span>Core Pillars</span>
+                <span class="text-figmaBlue">04 NODES</span>
+              </div>
+
+              <div class="space-y-3">
+                <div
+                  data-build="pillar-1"
+                  data-node-label="PILLAR_01"
+                  class="rounded-lg border border-white/10 bg-obsidian p-3.5 transition hover:border-crimson/50"
+                >
+                  <div class="font-mono text-xs font-bold text-crimson">
+                    01. Autonomous Voice &amp; AI Assistants
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-slate-400">
+                    JARVIS &amp; AI Dilawar architecture — intent parsing, voice synthesis, and automated desktop command pipelines.
+                  </p>
+                </div>
+
+                <div
+                  data-build="pillar-2"
+                  data-node-label="PILLAR_02"
+                  class="rounded-lg border border-white/10 bg-obsidian p-3.5 transition hover:border-crimson/50"
+                >
+                  <div class="font-mono text-xs font-bold text-figmaBlue">
+                    02. Systems &amp; Algorithmic Programming
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-slate-400">
+                    C Programming, Python, C++, pointers, file structures, and data-structure optimization from the ground up.
+                  </p>
+                </div>
+
+                <div
+                  data-build="pillar-3"
+                  data-node-label="PILLAR_03"
+                  class="rounded-lg border border-white/10 bg-obsidian p-3.5 transition hover:border-crimson/50"
+                >
+                  <div class="font-mono text-xs font-bold text-emerald-400">
+                    03. Institutional &amp; Web Automation
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-slate-400">
+                    Online Attendance System &amp; campus workflows engineered for fast database logging and real-time reporting.
+                  </p>
+                </div>
+
+                <div
+                  data-build="pillar-4"
+                  data-node-label="PILLAR_04"
+                  class="rounded-lg border border-white/10 bg-obsidian p-3.5 transition hover:border-crimson/50"
+                >
+                  <div class="font-mono text-xs font-bold text-amber-400">
+                    04. Academic Pedigree
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-slate-400">
+                    SSM College of Engineering (B.E. CSE) • Budgam Higher Secondary School (12th) • Mehdi Public School, Durbal (10th).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 02: // PRODUCTION SYSTEMS — Flagship Deployments
+         ======================================================================= -->
+    <section id="flagships" class="border-b border-white/10 py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          data-build="flagships-header"
+          data-node-label="SEC_02 // FLAGSHIPS"
+          class="mb-10"
+        >
+          <div class="font-mono text-xs font-semibold uppercase tracking-widest text-crimson">
+            // PRODUCTION SYSTEMS
+          </div>
+          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Flagship Deployments
+          </h2>
+          <p class="mt-2 max-w-2xl text-sm text-slate-400 sm:text-base">
+            Core autonomous AI engines, institutional platforms, and low-level C systems engineered by Dilawar Abass.
+          </p>
+        </div>
+
+        <!-- FEATURED MAIN CARD: JARVIS — Personal Autonomous AI Assistant -->
+        <div
+          data-build="flagship-jarvis"
+          data-node-label="CORE_FLAGSHIP // JARVIS_AI"
+          data-box-theme="crimson"
+          class="rounded-2xl border border-white/15 bg-surface p-6 shadow-2xl sm:p-8"
+        >
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span class="inline-flex items-center gap-2 rounded-md border border-crimson/40 bg-crimson/15 px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-crimson">
+              <span class="h-2 w-2 rounded-full bg-crimson live-dot"></span>
+              CORE FLAGSHIP
+            </span>
+            <span class="font-mono text-xs text-slate-400">
+              RUNTIME: PYTHON 3 // MULTI-MODAL AI ENGINE
+            </span>
+          </div>
+
+          <h3 class="mt-4 font-display text-2xl font-bold text-white sm:text-4xl">
+            JARVIS — Personal Autonomous AI Assistant
+          </h3>
+
+          <p class="mt-3 max-w-4xl text-sm leading-relaxed text-slate-300 sm:text-base">
+            A multi-modal voice and command AI assistant engineered in Python. Features natural language intent parsing, OS-level system task execution, automated developer workflows, contextual memory retention, and real-time voice synthesis.
+          </p>
+
+          <!-- 4 Crimson Metric Callouts -->
+          <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-xl border border-white/10 bg-obsidian p-4">
+              <div class="font-display text-2xl font-bold text-crimson sm:text-3xl">24/7</div>
+              <div class="mt-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                Voice &amp; CLI Engine
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-obsidian p-4">
+              <div class="font-display text-2xl font-bold text-crimson sm:text-3xl">Python</div>
+              <div class="mt-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                Core Runtime
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-obsidian p-4">
+              <div class="font-display text-2xl font-bold text-crimson sm:text-3xl">&lt;180ms</div>
+              <div class="mt-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                Intent Dispatch
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-obsidian p-4">
+              <div class="font-display text-2xl font-bold text-crimson sm:text-3xl">Modular</div>
+              <div class="mt-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                Skill Plugins
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive 5-Layer Pipeline Tabs (Inspired by Video's Constitutional Stack Bar) -->
+          <div class="mt-8 border-t border-white/10 pt-6">
+            <div class="mb-3 flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+              <span class="uppercase tracking-widest text-slate-400">
+                5-LAYER JARVIS ARCHITECTURE STACK <span class="text-slate-500">(Click layer to inspect)</span>
+              </span>
+              <span class="text-figmaBlue">INTERACTIVE PIPELINE</span>
+            </div>
+
+            <div id="jarvisLayerTabs" class="flex flex-wrap gap-2" role="tablist">
+              <!-- Populated via JS -->
+            </div>
+
+            <div
+              id="jarvisLayerDetail"
+              class="mt-4 rounded-xl border border-crimson/30 bg-obsidian p-5 transition-all"
+            >
+              <!-- Active layer detail rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-COLUMN SUB-FLAGSHIP CARDS -->
+        <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <!-- Sub-Flagship 1: AI Dilawar -->
+          <article
+            data-build="subflag-1"
+            data-node-label="SUB_SYSTEM_01 // AI_DILAWAR"
+            class="flex flex-col justify-between rounded-2xl border border-white/10 bg-surface p-6 transition hover:border-crimson/60"
+          >
+            <div>
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="rounded bg-crimson/15 px-2 py-0.5 font-bold text-crimson">SYS 01 // DIGITAL TWIN</span>
+                <span class="text-slate-500">PYTHON • LLM</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-bold text-white">
+                AI Dilawar — Personalized Digital Twin AI
+              </h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
+                Custom-trained conversational AI persona modeled on Dilawar&apos;s workflow, CSE study notes, coding style, and knowledge base for automated Q&amp;A and developer assistance.
+              </p>
+            </div>
+            <div class="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-slate-300">
+              <div class="flex items-center justify-between">
+                <span class="text-figmaBlue">Persona Context Engine</span>
+                <span class="text-crimson">ACTIVE</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Sub-Flagship 2: Online Attendance System -->
+          <article
+            data-build="subflag-2"
+            data-node-label="SUB_SYSTEM_02 // ATTENDANCE"
+            class="flex flex-col justify-between rounded-2xl border border-white/10 bg-surface p-6 transition hover:border-crimson/60"
+          >
+            <div>
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="rounded bg-figmaBlue/15 px-2 py-0.5 font-bold text-figmaBlue">SYS 02 // INSTITUTIONAL</span>
+                <span class="text-slate-500">PYTHON • SQL • WEB</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-bold text-white">
+                Online Attendance System
+              </h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
+                End-to-end automated student &amp; faculty attendance management platform with real-time session tracking, relational database logging, threshold alerts, and instant report generation.
+              </p>
+            </div>
+            <div class="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-slate-300">
+              <div class="flex items-center justify-between">
+                <span class="text-emerald-400">Zero-Paper Campus Flow</span>
+                <span class="text-crimson">DEPLOYED</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Sub-Flagship 3: C-Core Systems & Algo Engine -->
+          <article
+            data-build="subflag-3"
+            data-node-label="SUB_SYSTEM_03 // C_CORE"
+            class="flex flex-col justify-between rounded-2xl border border-white/10 bg-surface p-6 transition hover:border-crimson/60"
+          >
+            <div>
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span class="rounded bg-emerald-500/15 px-2 py-0.5 font-bold text-emerald-400">SYS 03 // LOW-LEVEL</span>
+                <span class="text-slate-500">PURE C • ALGOS</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-bold text-white">
+                C-Core Systems &amp; Algo Engine
+              </h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-slate-400">
+                High-efficiency memory-safe utilities, binary file-handling engines, and classic data-structure implementations (trees, graphs, hash maps) engineered in pure C.
+              </p>
+            </div>
+            <div class="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-slate-300">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-400">Deterministic Memory</span>
+                <span class="text-crimson">VERIFIED</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 03: // ENGINEERING INDEX — The Systems Matrix
+         ======================================================================= -->
+    <section id="matrix" class="border-b border-white/10 py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          data-build="matrix-header"
+          data-node-label="SEC_03 // SYSTEMS_MATRIX"
+          class="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end"
+        >
+          <div>
+            <div class="font-mono text-xs font-semibold uppercase tracking-widest text-crimson">
+              // ENGINEERING INDEX
+            </div>
+            <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
+              The Systems Matrix
+            </h2>
+            <p class="mt-2 max-w-xl text-sm text-slate-400">
+              Interactive matrix of core technical capabilities and engineering projects. Filter by domain or click any node to inspect architecture specs.
+            </p>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div class="relative">
+              <input
+                type="search"
+                id="matrixSearchInput"
+                placeholder="Search Python, C, JARVIS..."
+                class="w-full rounded-lg border border-white/15 bg-surface px-3.5 py-2 font-mono text-xs text-white placeholder-slate-500 focus:border-figmaBlue focus:outline-none sm:w-56"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Category Filter Pills -->
+        <div
+          data-build="matrix-filters"
+          data-node-label="FILTER_BAR // PILLS"
+          id="matrixFilterBar"
+          class="mb-6 flex flex-wrap gap-2 font-mono text-xs"
+        >
+          <button
+            type="button"
+            data-cat="ALL"
+            class="matrix-pill rounded-lg bg-crimson px-3.5 py-2 font-bold text-white transition"
+          >
+            All Systems
+          </button>
+          <button
+            type="button"
+            data-cat="AI_PYTHON"
+            class="matrix-pill rounded-lg border border-white/10 bg-surface px-3.5 py-2 text-slate-300 transition hover:border-crimson/50 hover:text-white"
+          >
+            AI &amp; Python
+          </button>
+          <button
+            type="button"
+            data-cat="C_SYSTEMS"
+            class="matrix-pill rounded-lg border border-white/10 bg-surface px-3.5 py-2 text-slate-300 transition hover:border-crimson/50 hover:text-white"
+          >
+            C &amp; Systems
+          </button>
+          <button
+            type="button"
+            data-cat="WEB_DB"
+            class="matrix-pill rounded-lg border border-white/10 bg-surface px-3.5 py-2 text-slate-300 transition hover:border-crimson/50 hover:text-white"
+          >
+            Web &amp; Database
+          </button>
+        </div>
+
+        <!-- 2-Column Matrix Grid -->
+        <div
+          data-build="matrix-grid-wrap"
+          data-node-label="MATRIX_NODES // 2_COL"
+          id="systemsMatrixGrid"
+          class="grid grid-cols-1 gap-4 md:grid-cols-2"
+        >
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 04: FOOTER CTA — Let's Architect Something Extraordinary.
+         ======================================================================= -->
+    <section id="contact" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div
+          data-build="contact-card"
+          data-node-label="CONTACT_DISPATCH // CTA_CARD"
+          data-box-theme="crimson"
+          class="rounded-2xl border border-white/15 bg-surface p-8 text-center shadow-2xl sm:p-12 lg:p-14"
+        >
+          <div class="inline-flex items-center gap-2 rounded-full border border-crimson/40 bg-crimson/10 px-3.5 py-1 font-mono text-xs font-semibold uppercase tracking-widest text-crimson">
+            <span class="h-2 w-2 rounded-full bg-crimson live-dot"></span>
+            <span>DIRECT UPLINK // OPEN TO COLLABORATION</span>
+          </div>
+
+          <h2
+            data-build="contact-headline"
+            data-node-label="CTA_HEADLINE"
+            class="mx-auto mt-5 max-w-3xl font-display text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+          >
+            Let&apos;s Architect Something <span class="text-crimson">Extraordinary.</span>
+          </h2>
+
+          <p
+            data-build="contact-location"
+            data-node-label="LOCATION_META"
+            class="mx-auto mt-4 max-w-xl font-mono text-xs text-slate-400 sm:text-sm"
+          >
+            Shareefabad, HMT, Kashmir &bull; SSM College of Engineering (CSE)
+          </p>
+
+          <!-- Primary Crimson Button + Secondary Dark Pills -->
+          <div
+            data-build="contact-actions"
+            data-node-label="SOCIAL_LINKS // BUTTONS"
+            class="mt-8 flex flex-wrap items-center justify-center gap-3.5"
+          >
+            <a
+              href="https://www.instagram.com/dilawar__abass?jplx=MTh2bzMzM2M4eXA1aA%3D%3D&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2.5 rounded-xl bg-crimson px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-crimson/30 transition hover:bg-crimsonDark sm:text-sm"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+              <span>Instagram (@dilawar__abass)</span>
+            </a>
+
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-obsidian px-5 py-3.5 font-mono text-xs font-semibold text-slate-200 transition hover:border-figmaBlue hover:text-white sm:text-sm"
+            >
+              <svg class="h-4 w-4 text-figmaBlue" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              <span>GitHub Profile</span>
+            </a>
+
+            <div class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-obsidian px-4 py-3.5 font-mono text-xs text-slate-300 sm:text-sm">
+              <span class="text-crimson">⌖</span>
+              <span>Shareefabad, HMT, Kashmir</span>
+            </div>
+
+            <button
+              type="button"
+              id="copyHandleBtn"
+              class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-obsidian px-4 py-3.5 font-mono text-xs font-semibold text-slate-200 transition hover:border-crimson hover:text-white sm:text-sm"
+            >
+              <span>⧉</span>
+              <span id="copyHandleText">Copy Handle / Contact</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTTOM STATUS BAR WITH LIVE KASHMIR (IST) CLOCK -->
+  <footer class="border-t border-white/10 bg-obsidian py-6">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 font-mono text-xs sm:flex-row sm:px-6 lg:px-8">
+      <div class="flex items-center gap-2 text-slate-300">
+        <span class="font-bold text-white">DILAWAR ABASS</span>
+        <span class="text-crimson">//</span>
+        <span>PORTFOLIO</span>
+      </div>
+
+      <div class="flex items-center gap-2 rounded-lg border border-white/10 bg-surface px-3 py-1.5 text-slate-300">
+        <span class="text-slate-500">KASHMIR TIME:</span>
+        <span id="kashmirIstClock" class="font-bold text-white">--:--:-- IST</span>
+      </div>
+
+      <div class="flex items-center gap-2 text-emerald-400">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 live-dot"></span>
+        <span>ALL SYSTEMS OPERATIONAL</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MATRIX / ARCHITECTURE INSPECTION MODAL -->
+  <div
+    id="nodeDetailModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nodeModalTitle"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-md"
+  >
+    <div class="w-full max-w-xl rounded-2xl border border-figmaBlue/40 bg-surfaceElev p-6 shadow-2xl sm:p-7">
+      <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <span id="nodeModalBadge" class="rounded bg-crimson/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase text-crimson">
+            SYSTEM NODE
+          </span>
+          <h3 id="nodeModalTitle" class="mt-2 font-display text-2xl font-bold text-white">
+            Node Title
+          </h3>
+        </div>
+        <button
+          type="button"
+          id="closeNodeModalBtn"
+          aria-label="Close modal"
+          class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-obsidian font-mono text-xs text-slate-300 hover:border-crimson hover:text-white"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-4">
+        <p id="nodeModalDesc" class="text-sm leading-relaxed text-slate-300"></p>
+
+        <div>
+          <div class="font-mono text-[11px] uppercase tracking-widest text-slate-400">
+            Architecture &amp; Capabilities
+          </div>
+          <ul id="nodeModalBullets" class="mt-2 space-y-1.5 text-sm text-slate-200"></ul>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1" id="nodeModalTags"></div>
+
+        <div class="flex items-center justify-between border-t border-white/10 pt-4 font-mono text-xs">
+          <span id="nodeModalMeta" class="text-figmaBlue"></span>
+          <button
+            type="button"
+            id="doneNodeModalBtn"
+            class="rounded-lg bg-crimson px-4 py-2 font-bold text-white hover:bg-crimsonDark"
+          >
+            CLOSE NODE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div
+    id="toastAlert"
+    class="pointer-events-none fixed bottom-5 right-5 z-50 translate-y-3 rounded-lg border border-figmaBlue/50 bg-surfaceElev px-4 py-2.5 font-mono text-xs text-white opacity-0 shadow-xl transition duration-300"
+  >
+    Copied!
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. DATA: JARVIS 5-LAYER PIPELINE & SYSTEMS MATRIX ITEMS
+    // =========================================================================
+
+    const JARVIS_LAYERS = [
+      {
+        id: 'L1',
+        tab: 'L1: Voice & Audio I/O',
+        title: 'Layer 01 — Real-Time Speech Recognition & Neural TTS Pipeline',
+        code: 'jarvis/io/audio_stream.py',
+        summary:
+          'Captures low-latency microphone streams with ambient noise filtering, wake-word detection ("Hey JARVIS"), and crisp voice synthesis responses.',
+        specs: ['Wake-word trigger loop', 'Noise-gate pre-processing', 'Sub-180ms speech-to-intent handoff'],
+      },
+      {
+        id: 'L2',
+        tab: 'L2: NLP Intent Parser',
+        title: 'Layer 02 — Deterministic & LLM Hybrid Intent Router',
+        code: 'jarvis/core/intent_router.py',
+        summary:
+          'Classifies user commands into structured action schemas — separating instant local system commands from deep conversational AI reasoning.',
+        specs: ['Entity & parameter extraction', 'Fallback to AI Dilawar knowledge context', 'Zero-hallucination command guardrails'],
+      },
+      {
+        id: 'L3',
+        tab: 'L3: System Automation',
+        title: 'Layer 03 — OS-Level Process & Workflow Orchestrator',
+        code: 'jarvis/exec/os_controller.py',
+        summary:
+          'Executes native desktop automation: launching IDEs, compiling C/Python scripts, managing files, scheduling reminders, and fetching live web telemetry.',
+        specs: ['Subprocess sandboxing', 'Automated C/Python build triggers', 'Browser & workspace orchestration'],
+      },
+      {
+        id: 'L4',
+        tab: 'L4: Knowledge Memory',
+        title: 'Layer 04 — Persistent Session & Academic Context Store',
+        code: 'jarvis/memory/context_store.py',
+        summary:
+          'Maintains structured recall of Dilawar’s CSE subjects, project logs, code snippets, and user preferences across sessions.',
+        specs: ['JSON & SQLite local persistence', 'Fast semantic note retrieval', 'Session history compaction'],
+      },
+      {
+        id: 'L5',
+        tab: 'L5: Security & Auth',
+        title: 'Layer 05 — Command Verification & Privilege Gate',
+        code: 'jarvis/sec/auth_gate.py',
+        summary:
+          'Protects sensitive file operations and system shutdown/network actions behind explicit confirmation checks and local execution logs.',
+        specs: ['Destructive-command confirmation', 'Audit trail logging', 'Local-first privacy architecture'],
+      },
+    ];
+
+    const MATRIX_ITEMS = [
+      {
+        id: 'skill-python',
+        kind: 'CORE SKILL',
+        category: 'AI_PYTHON',
+        title: 'Python Engineering & AI Automation',
+        shortDesc: 'Primary language for JARVIS, AI Dilawar, NLP pipelines, scripting, and backend APIs.',
+        fullDesc:
+          'Deep proficiency in Python 3 for building autonomous AI assistants, speech/CLI interfaces, automated workflows, data parsers, and web backends.',
+        bullets: [
+          'Event-driven assistant loops & modular plugin architectures',
+          'REST API integration, JSON data pipelines, and file automation',
+          'Clean object-oriented design & rapid prototyping',
+        ],
+        tags: ['Python 3', 'AsyncIO', 'Automation', 'AI Agents'],
+        meta: 'PROFICIENCY // CORE PRIMARY',
+      },
+      {
+        id: 'skill-c',
+        kind: 'CORE SKILL',
+        category: 'C_SYSTEMS',
+        title: 'C Programming & Memory Architecture',
+        shortDesc: 'Low-level systems programming, pointers, structs, dynamic allocation, and data structures.',
+        fullDesc:
+          'Strong command of ANSI/ISO C for writing deterministic, fast, memory-safe console engines, binary file managers, and algorithmic solutions.',
+        bullets: [
+          'Manual memory management, pointer arithmetic, and custom structs',
+          'Linked lists, stacks, queues, trees, and sorting/searching engines',
+          'Binary & text file persistence with zero external overhead',
+        ],
+        tags: ['C Programming', 'Pointers', 'Data Structures', 'GCC'],
+        meta: 'PROFICIENCY // SYSTEMS CORE',
+      },
+      {
+        id: 'proj-voice-os',
+        kind: 'PROJECT',
+        category: 'AI_PYTHON',
+        title: 'Voice-Controlled OS Automation Suite',
+        shortDesc: 'Hands-free terminal and desktop control engine driven by custom Python voice macros.',
+        fullDesc:
+          'A standalone automation module extracted from JARVIS that lets developers open projects, run Git commands, and monitor CPU/RAM via voice.',
+        bullets: [
+          'Custom voice macro bindings for VS Code, terminal, and browser',
+          'Real-time hardware & battery telemetry announcements',
+          'Configurable JSON command dictionary',
+        ],
+        tags: ['Python', 'OS Automation', 'Speech I/O'],
+        meta: 'DEPLOYMENT // DESKTOP UTILITY',
+      },
+      {
+        id: 'proj-campus-portal',
+        kind: 'PROJECT',
+        category: 'WEB_DB',
+        title: 'Smart Campus & Attendance Portal',
+        shortDesc: 'Web-based student attendance tracker, timetable viewer, and automated shortage calculator.',
+        fullDesc:
+          'Built to streamline classroom attendance management with structured student rosters, date-wise logs, and instant percentage analytics.',
+        bullets: [
+          'One-click session attendance marking & CSV/PDF report export',
+          'Automatic 75% attendance threshold alerts for students',
+          'Normalized SQL schema for courses, semesters, and records',
+        ],
+        tags: ['HTML/CSS/JS', 'Python', 'SQL Database'],
+        meta: 'DEPLOYMENT // CAMPUS SYSTEM',
+      },
+      {
+        id: 'proj-result-analyzer',
+        kind: 'PROJECT',
+        category: 'C_SYSTEMS',
+        title: 'Student Result & SGPA Analyzer in C',
+        shortDesc: 'High-speed C CLI application for processing semester marks, credit weights, and rank lists.',
+        fullDesc:
+          'Engineered in pure C to parse student subject marks, compute credit-weighted SGPA/CGPA, and generate formatted merit reports.',
+        bullets: [
+          'Fast struct-based sorting & binary search by roll number',
+          'Persistent record storage on disk',
+          'Zero-dependency terminal table renderer',
+        ],
+        tags: ['Pure C', 'File I/O', 'Algorithms'],
+        meta: 'DEPLOYMENT // CSE LAB & UTILITY',
+      },
+      {
+        id: 'proj-packet-monitor',
+        kind: 'PROJECT',
+        category: 'C_SYSTEMS',
+        title: 'Network & Port Diagnostics Utility',
+        shortDesc: 'Lightweight socket & latency probe tool for inspecting local network health and open ports.',
+        fullDesc:
+          'Built to explore computer networking fundamentals—measuring round-trip latency, checking host reachability, and logging socket responses.',
+        bullets: [
+          'TCP socket connection probing & timeout handling',
+          'Structured latency histograms in terminal',
+          'Cross-platform Linux/Windows socket wrappers',
+        ],
+        tags: ['C / Python', 'Sockets', 'Networking'],
+        meta: 'DEPLOYMENT // NETWORKING',
+      },
+      {
+        id: 'skill-cpp-dsa',
+        kind: 'CORE SKILL',
+        category: 'C_SYSTEMS',
+        title: 'C++ & Object-Oriented Problem Solving',
+        shortDesc: 'STL containers, classes, polymorphism, and competitive algorithmic problem solving.',
+        fullDesc:
+          'Applying C++ and Standard Template Library (vectors, maps, priority queues) to solve complex CSE algorithmic challenges cleanly.',
+        bullets: [
+          'OOP architecture: encapsulation, inheritance, and templates',
+          'Graph traversal, dynamic programming, and greedy algorithms',
+          'Time & space complexity optimization',
+        ],
+        tags: ['C++', 'STL', 'Algorithms', 'OOP'],
+        meta: 'PROFICIENCY // CSE CORE',
+      },
+      {
+        id: 'skill-web-sql-git',
+        kind: 'CORE SKILL',
+        category: 'WEB_DB',
+        title: 'Full-Stack Web, SQL, Linux & Git Workflow',
+        shortDesc: 'HTML5, CSS3, JavaScript, relational SQL databases, Linux CLI, and GitHub version control.',
+        fullDesc:
+          'End-to-end engineering toolkit for shipping responsive web interfaces, querying structured databases, and managing clean Git repositories.',
+        bullets: [
+          'Responsive UI development with modern CSS & JavaScript',
+          'SQL schema design, joins, indexing, and CRUD operations',
+          'Linux shell scripting & GitHub branching/release workflows',
+        ],
+        tags: ['JavaScript', 'SQL', 'Linux / Bash', 'Git & GitHub'],
+        meta: 'PROFICIENCY // FULL-STACK TOOLKIT',
+      },
+    ];
+
+    // =========================================================================
+    // 2. PORTRAIT IMAGE HANDLING (./IMG_5291.PNG + FALLBACK + LOCAL PICKER)
+    // =========================================================================
+
+    function activateEditorialFallbackPortrait() {
+      try {
+        const img = document.getElementById('dilawarPortraitImg');
+        const fallback = document.getElementById('editorialPortraitFallback');
+        if (img) img.classList.add('hidden');
+        if (fallback) {
+          fallback.classList.remove('hidden');
+          fallback.classList.add('flex');
+        }
+      } catch (err) {
+        console.error('Portrait fallback error:', err);
+      }
+    }
+
+    function initLocalPhotoPreviewPicker() {
+      try {
+        const picker = document.getElementById('localPhotoPicker');
+        const img = document.getElementById('dilawarPortraitImg');
+        const fallback = document.getElementById('editorialPortraitFallback');
+
+        picker?.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file || !img) return;
+          const objectUrl = URL.createObjectURL(file);
+          img.src = objectUrl;
+          img.classList.remove('hidden');
+          if (fallback) {
+            fallback.classList.add('hidden');
+            fallback.classList.remove('flex');
+          }
+          triggerPortraitScanEffect();
+          showToast('Portrait photo loaded into frame!');
+        });
+      } catch (err) {
+        console.error('Photo picker error:', err);
+      }
+    }
+
+    function triggerPortraitScanEffect() {
+      try {
+        const viewport = document.getElementById('portraitViewport');
+        if (!viewport) return;
+        const existing = viewport.querySelector('.portrait-scanline');
+        if (existing) existing.remove();
+
+        const line = document.createElement('div');
+        line.className = 'portrait-scanline';
+        viewport.appendChild(line);
+        setTimeout(() => line.remove(), 1200);
+      } catch (err) {
+        console.error('Scanline error:', err);
+      }
+    }
+
+    // =========================================================================
+    // 3. FIGMA MULTI-CURSOR SWARM & LIVE BOUNDING-BOX BUILD ENGINE (60FPS)
+    // =========================================================================
+
+    const CURSOR_PALETTE = [
+      { name: 'Dilawar.AI', color: '#EF4444' },
+      { name: 'UI.Architect', color: '#38BDF8' },
+      { name: 'Python.Bot', color: '#FACC15' },
+      { name: 'C.Kernel', color: '#34D399' },
+      { name: 'Layout.Sys', color: '#FB923C' },
+      { name: 'Grid.Node', color: '#F472B6' },
+      { name: 'Vector.07', color: '#A3E635' },
+      { name: 'Frame.08', color: '#C084FC' },
+      { name: 'Render.09', color: '#22D3EE' },
+      { name: 'Mesh.10', color: '#F87171' },
+      { name: 'Token.11', color: '#60A5FA' },
+      { name: 'Build.12', color: '#FBBF24' },
+    ];
+
+    class FigmaCursorSwarmEngine {
+      constructor() {
+        this.canvas = document.getElementById('cursorSwarmCanvas');
+        this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+        this.enabled = true;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        this.cursors = [];
+        this.builtElements = new WeakSet();
+        this.activeBuildJobs = [];
+        this.mode = 'SWIRL';
