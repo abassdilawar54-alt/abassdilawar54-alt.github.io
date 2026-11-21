@@ -86,24 +86,28 @@
 
     [data-build-node].node-hidden {
       opacity: 0;
+      visibility: hidden;
       transform: translateY(-28px) scale(0.96);
       filter: brightness(0.65) contrast(1.1);
     }
 
     [data-build-node].node-constructing {
       opacity: 0.45;
+      visibility: visible;
       transform: translateY(-10px) scale(0.985);
       filter: brightness(0.88);
     }
 
     [data-build-node].node-snapped {
       opacity: 1;
+      visibility: visible;
       transform: translateY(3px) scale(1.01);
       filter: brightness(1.12);
     }
 
     [data-build-node].node-ready {
       opacity: 1;
+      visibility: visible;
       transform: translateY(0) scale(1);
       filter: brightness(1);
     }
@@ -277,6 +281,16 @@
           <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 status-dot"></span>
           <span id="topLiveStatus">BUILDING</span>
         </span>
+
+        <button
+          type="button"
+          id="audioToggleBtn"
+          aria-label="Toggle helicopter audio"
+          class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-card px-2.5 py-1.5 font-mono text-xs font-semibold text-figmaCyan transition hover:border-figmaCyan hover:text-white"
+        >
+          <span id="audioToggleIcon">🔊</span>
+          <span id="audioToggleLabel" class="hidden sm:inline">SFX ON</span>
+        </button>
 
         <button
           type="button"
@@ -1069,339 +1083,248 @@
     });
 
     // =========================================================================
-    // 3. MULTI-CURSOR SWARM & LIVE BOUNDING-BOX BUILD ENGINE
+    // 3. REALISTIC WEB AUDIO HELICOPTER & AIR-DROP SOUND ENGINE
     // =========================================================================
-    const CURSORS_CONFIG = [
-      { label: 'Dilawar', color: '#EF4444' },
-      { label: 'UI', color: '#38BDF8' },
-      { label: 'Python', color: '#34D399' },
-      { label: 'C_Core', color: '#FACC15' },
-      { label: 'Frame', color: '#C084FC' },
-      { label: 'Media', color: '#FB923C' },
-      { label: 'AI_Bot', color: '#F472B6' },
-      { label: 'Layout', color: '#22D3EE' },
-    ];
-
-    function createSelectionFrame(el) {
-      const frame = document.createElement('div');
-      const isRed = el.dataset.frameColor === 'red';
-      frame.className = `figma-frame-box${isRed ? ' frame-red' : ''}`;
-
-      const rect = el.getBoundingClientRect();
-      const dims = `${Math.round(rect.width)}x${Math.round(rect.height)}`;
-      const title = el.dataset.nodeTitle || 'NODE';
-
-      const badge = document.createElement('span');
-      badge.className = 'figma-dimension-badge';
-      badge.textContent = `${dims} • ${title}`;
-      frame.appendChild(badge);
-
-      ['tl', 'tr', 'bl', 'br'].forEach((pos) => {
-        const handle = document.createElement('span');
-        handle.className = `figma-corner-handle ${pos}`;
-        frame.appendChild(handle);
-      });
-
-      return frame;
-    }
-
-    class MultiCursorBuilder {
-      constructor(canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.mode = 'SWIRL'; // 'SWIRL' | 'BUILD' | 'IDLE'
-        this.swirlStart = performance.now();
-        this.builtSet = new WeakSet();
-        this.jobs = [];
-        this.cursors = CURSORS_CONFIG.map((cfg, idx) => ({
-          id: idx,
-          label: cfg.label,
-          color: cfg.color,
-          x: this.width * 0.5,
-          y: this.height * 0.5,
-          targetX: null,
-          targetY: null,
-          angle: (idx / CURSORS_CONFIG.length) * Math.PI * 2,
-          orbitRadius: 68 + (idx % 3) * 20,
-          activeJobId: null,
-          trail: [],
-        }));
-
-        this.resize();
-        window.addEventListener('resize', () => this.resize());
-        window.addEventListener('scroll', () => this.revealVisibleNodes(), { passive: true });
+    class TacticalAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        this.rotorGain = null;
+        this.rotorOsc = null;
+        this.bladeLfo = null;
+        this.turbineGain = null;
+        this.turbineOsc = null;
+        this.noiseBuffer = null;
+        this.initialized = false;
       }
 
-      resize() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.canvas.width = Math.floor(this.width * dpr);
-        this.canvas.height = Math.floor(this.height * dpr);
-        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
+      init() {
+        if (this.initialized) {
+          if (this.ctx && this.ctx.state === 'suspended' && !this.muted) {
+            this.ctx.resume().catch(() => {});
+          }
+          return;
+        }
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
 
-      runSequence() {
-        const overlay = document.getElementById('openingBuildOverlay');
-        const statusLabel = document.getElementById('buildStatusLabel');
-        const topLiveStatus = document.getElementById('topLiveStatus');
-        const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
+        try {
+          this.ctx = new AudioCtx();
+          this.initialized = true;
 
-        if (statusLabel) statusLabel.textContent = 'Building profile...';
-        if (topLiveStatus) topLiveStatus.textContent = 'BUILDING';
-
-        this.builtSet = new WeakSet();
-        this.jobs = [];
-
-        nodes.forEach((node) => {
-          node.classList.remove('node-constructing', 'node-snapped', 'node-ready');
-          node.classList.add('node-hidden');
-          node.querySelectorAll('.figma-frame-box').forEach((f) => f.remove());
-        });
-
-        const cx = this.width * 0.5;
-        const cy = this.height * 0.5;
-        this.mode = 'SWIRL';
-        this.swirlStart = performance.now();
-
-        this.cursors.forEach((c, i) => {
-          const a = (i / this.cursors.length) * Math.PI * 2;
-          c.angle = a;
-          c.x = cx + Math.cos(a) * c.orbitRadius;
-          c.y = cy + Math.sin(a) * c.orbitRadius;
-          c.targetX = null;
-          c.targetY = null;
-          c.activeJobId = null;
-          c.trail = [];
-        });
-
-        if (overlay) overlay.style.opacity = '1';
-
-        setTimeout(() => {
-          if (statusLabel) statusLabel.textContent = 'Constructing elements...';
-        }, 550);
-
-        setTimeout(() => {
-          if (overlay) overlay.style.opacity = '0';
-          this.mode = 'BUILD';
-
-          const waves = [0, 1, 2, 3].map((w) => nodes.filter((n) => Number(n.dataset.wave) === w));
-          waves.forEach((group, wIdx) => {
-            setTimeout(() => {
-              group.forEach((el, idx) => this.buildNode(el, idx * 85));
-            }, wIdx * 320);
-          });
-
-          setTimeout(() => {
-            this.mode = 'IDLE';
-            if (statusLabel) statusLabel.textContent = 'Ready';
-            if (topLiveStatus) topLiveStatus.textContent = 'READY';
-            this.revealVisibleNodes();
-          }, 1750);
-        }, 1150);
-      }
-
-      pickCursors(count) {
-        const free = this.cursors.filter((c) => !c.activeJobId);
-        const pool = free.length >= count ? free : this.cursors;
-        return pool.slice(0, count);
-      }
-
-      buildNode(el, delayMs = 0) {
-        if (!el || this.builtSet.has(el)) return;
-        this.builtSet.add(el);
-
-        setTimeout(() => {
-          const rect = el.getBoundingClientRect();
-          if (rect.bottom < -40 || rect.top > this.height + 100) {
-            el.classList.remove('node-hidden', 'node-constructing');
-            el.classList.add('node-ready');
-            return;
+          // Pre-build 2-second white/pink noise buffer for rotor chop, wind & impacts
+          const sampleRate = this.ctx.sampleRate;
+          const length = sampleRate * 2;
+          this.noiseBuffer = this.ctx.createBuffer(1, length, sampleRate);
+          const data = this.noiseBuffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0;
+          for (let i = 0; i < length; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99765 * b0 + white * 0.099046;
+            b1 = 0.96300 * b1 + white * 0.2965164;
+            b2 = 0.57000 * b2 + white * 1.0526913;
+            data[i] = (b0 + b1 + b2 + white * 0.1848) * 0.22;
           }
 
-          el.classList.remove('node-hidden');
-          el.classList.add('node-constructing');
+          // Continuous low-frequency twin-rotor chop + turbine hum
+          this.rotorGain = this.ctx.createGain();
+          this.rotorGain.gain.value = 0.0001;
+          this.rotorGain.connect(this.ctx.destination);
 
-          const frame = createSelectionFrame(el);
-          el.appendChild(frame);
+          // Filtered noise for realistic "whop-whop-whop" blade slap
+          const bladeNoise = this.ctx.createBufferSource();
+          bladeNoise.buffer = this.noiseBuffer;
+          bladeNoise.loop = true;
 
-          if (el.dataset.buildNode === 'hero-portrait') {
-            triggerPortraitScan();
-          }
+          const bladeFilter = this.ctx.createBiquadFilter();
+          bladeFilter.type = 'lowpass';
+          bladeFilter.frequency.value = 165;
+          bladeFilter.Q.value = 2.4;
 
-          const jobId = `job_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-          const assigned = this.pickCursors(2);
-          assigned.forEach((c) => {
-            c.activeJobId = jobId;
-          });
+          const chopShaper = this.ctx.createGain();
+          chopShaper.gain.value = 0.5;
 
-          this.jobs.push({
-            id: jobId,
-            el,
-            frame,
-            cursors: assigned,
-            start: performance.now(),
-            duration: 680,
-          });
-        }, delayMs);
+          // LFO modulating blade slap at ~13.5 Hz (heavy twin-blade attack chopper)
+          this.bladeLfo = this.ctx.createOscillator();
+          this.bladeLfo.type = 'sine';
+          this.bladeLfo.frequency.value = 13.5;
+          const lfoDepth = this.ctx.createGain();
+          lfoDepth.gain.value = 0.48;
+          this.bladeLfo.connect(lfoDepth);
+          lfoDepth.connect(chopShaper.gain);
+
+          bladeNoise.connect(bladeFilter);
+          bladeFilter.connect(chopShaper);
+          chopShaper.connect(this.rotorGain);
+
+          // Sub-bass rotor thump oscillator
+          this.rotorOsc = this.ctx.createOscillator();
+          this.rotorOsc.type = 'triangle';
+          this.rotorOsc.frequency.value = 27;
+          const subGain = this.ctx.createGain();
+          subGain.gain.value = 0.35;
+          this.rotorOsc.connect(subGain);
+          subGain.connect(chopShaper);
+
+          // High-pitched turboshaft engine whine
+          this.turbineOsc = this.ctx.createOscillator();
+          this.turbineOsc.type = 'sine';
+          this.turbineOsc.frequency.value = 410;
+          this.turbineGain = this.ctx.createGain();
+          this.turbineGain.gain.value = 0.0001;
+          this.turbineOsc.connect(this.turbineGain);
+          this.turbineGain.connect(this.ctx.destination);
+
+          bladeNoise.start();
+          this.bladeLfo.start();
+          this.rotorOsc.start();
+          this.turbineOsc.start();
+        } catch (_) {
+          // Audio blocked until gesture
+        }
       }
 
-      revealVisibleNodes() {
-        const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
-        nodes.forEach((el, idx) => {
-          if (this.builtSet.has(el)) return;
-          const r = el.getBoundingClientRect();
-          if (r.top < this.height * 0.92 && r.bottom > 0) {
-            this.buildNode(el, (idx % 3) * 70);
+      setMuted(mute) {
+        this.muted = mute;
+        if (!this.initialized) return;
+        if (this.muted) {
+          if (this.rotorGain && this.ctx) {
+            this.rotorGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
           }
-        });
+          if (this.turbineGain && this.ctx) {
+            this.turbineGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.06);
+          }
+        } else if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
       }
 
-      update(now) {
-        const cx = this.width * 0.5;
-        const cy = this.height * 0.5;
-
-        // Advance active bounding-box construction jobs
-        for (let i = this.jobs.length - 1; i >= 0; i--) {
-          const job = this.jobs[i];
-          const progress = Math.max(0, Math.min(1, (now - job.start) / job.duration));
-          const rect = job.el.getBoundingClientRect();
-
-          const points = [
-            { x: rect.left + 8, y: rect.top + 8 },
-            { x: rect.right - 8, y: rect.top + 8 },
-            { x: rect.right - 8, y: rect.bottom - 8 },
-            { x: rect.left + 8, y: rect.bottom - 8 },
-          ];
-
-          job.cursors.forEach((c, cIdx) => {
-            const pIdx = Math.abs(Math.floor(progress * 3 + cIdx)) % points.length;
-            const pt = points[pIdx] || points[0];
-            c.targetX = Math.max(12, Math.min(this.width - 12, pt.x));
-            c.targetY = Math.max(12, Math.min(this.height - 12, pt.y));
-          });
-
-          if (progress >= 1) {
-            job.cursors.forEach((c) => {
-              if (c.activeJobId === job.id) c.activeJobId = null;
-            });
-
-            job.el.classList.remove('node-constructing');
-            job.el.classList.add('node-snapped');
-
-            if (job.frame) {
-              job.frame.style.opacity = '0';
-              setTimeout(() => job.frame.remove(), 340);
-            }
-
-            setTimeout(() => {
-              job.el.classList.remove('node-snapped');
-              job.el.classList.add('node-ready');
-            }, 260);
-
-            this.jobs.splice(i, 1);
-          }
+      updateFlightAudio(activeCount, avgSpeed, isDeploying) {
+        if (!this.initialized || !this.ctx || this.ctx.state !== 'running') return;
+        const now = this.ctx.currentTime;
+        if (this.muted || activeCount === 0) {
+          this.rotorGain.gain.setTargetAtTime(0.0001, now, 0.12);
+          this.turbineGain.gain.setTargetAtTime(0.0001, now, 0.12);
+          return;
         }
 
-        // Update cursor positions and trails
-        this.cursors.forEach((c) => {
-          if (this.mode === 'SWIRL') {
-            const elapsed = (now - this.swirlStart) * 0.001;
-            const radiusScale = Math.max(0.55, 1 - elapsed * 0.25);
-            c.angle += 0.052;
-            c.targetX = cx + Math.cos(c.angle) * c.orbitRadius * radiusScale;
-            c.targetY = cy + Math.sin(c.angle) * c.orbitRadius * radiusScale;
-          } else if (!c.activeJobId) {
-            c.angle += 0.015;
-            const anchorX = cx + Math.cos(c.angle + c.id) * (this.width * 0.28);
-            const anchorY = cy + Math.sin(c.angle * 1.2) * (this.height * 0.24);
-            c.targetX = Math.max(24, Math.min(this.width - 24, anchorX));
-            c.targetY = Math.max(48, Math.min(this.height - 24, anchorY));
-          }
+        // Scale volume & Doppler pitch dynamically with active formation count & speed
+        const formationBoost = Math.min(1.65, 0.75 + activeCount * 0.22);
+        const baseRotorVol = (isDeploying ? 0.22 : 0.09) * formationBoost;
+        const baseTurbineVol = (isDeploying ? 0.024 : 0.01) * formationBoost;
 
-          if (c.targetX !== null && c.targetY !== null) {
-            const ease = this.mode === 'SWIRL' ? 0.18 : 0.13;
-            c.x += (c.targetX - c.x) * ease;
-            c.y += (c.targetY - c.y) * ease;
-          }
+        const dopplerShift = Math.min(45, avgSpeed * 2.2);
+        this.bladeLfo.frequency.setTargetAtTime(12.8 + Math.min(3.5, avgSpeed * 0.22), now, 0.1);
+        this.turbineOsc.frequency.setTargetAtTime(395 + dopplerShift, now, 0.12);
 
-          c.trail.push({ x: c.x, y: c.y });
-          if (c.trail.length > 7) c.trail.shift();
-        });
+        this.rotorGain.gain.setTargetAtTime(baseRotorVol, now, 0.14);
+        this.turbineGain.gain.setTargetAtTime(baseTurbineVol, now, 0.14);
       }
 
-      draw() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
-        const alphaScale = this.mode === 'IDLE' ? 0.55 : 0.95;
+      playDropRelease() {
+        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
+        const now = this.ctx.currentTime;
 
-        this.cursors.forEach((c) => {
-          if (c.trail.length > 1) {
-            for (let i = 1; i < c.trail.length; i++) {
-              const p0 = c.trail[i - 1];
-              const p1 = c.trail[i];
-              this.ctx.beginPath();
-              this.ctx.moveTo(p0.x, p0.y);
-              this.ctx.lineTo(p1.x, p1.y);
-              this.ctx.strokeStyle = c.color;
-              this.ctx.globalAlpha = (i / c.trail.length) * 0.28 * alphaScale;
-              this.ctx.lineWidth = 1.6;
-              this.ctx.stroke();
-            }
-          }
+        // Pneumatic cargo clamp release click + parachute canopy air whoosh
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(240, now);
+        osc.frequency.exponentialRampToValueAtTime(68, now + 0.18);
+        gain.gain.setValueAtTime(0.11, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.2);
 
-          this.ctx.save();
-          this.ctx.globalAlpha = alphaScale;
-          this.ctx.translate(c.x, c.y);
+        if (this.noiseBuffer) {
+          const whoosh = this.ctx.createBufferSource();
+          whoosh.buffer = this.noiseBuffer;
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(650, now);
+          filter.frequency.exponentialRampToValueAtTime(220, now + 0.36);
+          filter.Q.value = 1.6;
 
-          // Crisp vector cursor pointer
-          this.ctx.beginPath();
-          this.ctx.moveTo(0, 0);
-          this.ctx.lineTo(0, 15);
-          this.ctx.lineTo(4.2, 11.2);
-          this.ctx.lineTo(7.5, 17.5);
-          this.ctx.lineTo(10, 16.2);
-          this.ctx.lineTo(6.8, 10);
-          this.ctx.lineTo(12, 10);
-          this.ctx.closePath();
-          this.ctx.fillStyle = c.color;
-          this.ctx.fill();
-          this.ctx.lineWidth = 1.2;
-          this.ctx.strokeStyle = '#070708';
-          this.ctx.stroke();
+          const wGain = this.ctx.createGain();
+          wGain.gain.setValueAtTime(0.001, now);
+          wGain.gain.linearRampToValueAtTime(0.13, now + 0.06);
+          wGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
-          // Name pill tag next to cursor
-          this.ctx.font = '600 9px "JetBrains Mono", monospace';
-          const textW = this.ctx.measureText(c.label).width;
-          const tagX = 12;
-          const tagY = 10;
-          const tagW = textW + 10;
-          const tagH = 15;
-
-          this.ctx.fillStyle = c.color;
-          this.ctx.beginPath();
-          this.ctx.roundRect(tagX, tagY, tagW, tagH, 3);
-          this.ctx.fill();
-
-          this.ctx.fillStyle = '#070708';
-          this.ctx.fillText(c.label, tagX + 5, tagY + 10.5);
-
-          this.ctx.restore();
-        });
+          whoosh.connect(filter);
+          filter.connect(wGain);
+          wGain.connect(this.ctx.destination);
+          whoosh.start(now);
+          whoosh.stop(now + 0.4);
+        }
       }
 
-      loop(now) {
-        this.update(now);
-        this.draw();
-        requestAnimationFrame((t) => this.loop(t));
+      playCargoImpact(isHeavy = false) {
+        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
+        const now = this.ctx.currentTime;
+
+        // Deep tactical crate touchdown thud
+        const thudOsc = this.ctx.createOscillator();
+        const thudGain = this.ctx.createGain();
+        thudOsc.type = 'sine';
+        thudOsc.frequency.setValueAtTime(isHeavy ? 115 : 135, now);
+        thudOsc.frequency.exponentialRampToValueAtTime(28, now + (isHeavy ? 0.34 : 0.24));
+
+        thudGain.gain.setValueAtTime(isHeavy ? 0.32 : 0.2, now);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, now + (isHeavy ? 0.36 : 0.25));
+
+        thudOsc.connect(thudGain);
+        thudGain.connect(this.ctx.destination);
+        thudOsc.start(now);
+        thudOsc.stop(now + 0.38);
+
+        // Metallic lock-in latch snap
+        if (this.noiseBuffer) {
+          const burst = this.ctx.createBufferSource();
+          burst.buffer = this.noiseBuffer;
+          const hp = this.ctx.createBiquadFilter();
+          hp.type = 'highpass';
+          hp.frequency.value = 900;
+
+          const bGain = this.ctx.createGain();
+          bGain.gain.setValueAtTime(isHeavy ? 0.14 : 0.08, now);
+          bGain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+
+          burst.connect(hp);
+          hp.connect(bGain);
+          bGain.connect(this.ctx.destination);
+          burst.start(now);
+          burst.stop(now + 0.12);
+        }
+      }
+
+      playFlarePop() {
+        if (this.muted || !this.initialized || !this.ctx || this.ctx.state !== 'running') return;
+        const now = this.ctx.currentTime;
+        if (!this.noiseBuffer) return;
+
+        const pop = this.ctx.createBufferSource();
+        pop.buffer = this.noiseBuffer;
+        const bp = this.ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.setValueAtTime(1200, now);
+        bp.frequency.exponentialRampToValueAtTime(320, now + 0.22);
+
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+
+        pop.connect(bp);
+        bp.connect(gain);
+        gain.connect(this.ctx.destination);
+        pop.start(now);
+        pop.stop(now + 0.25);
       }
     }
 
     // =========================================================================
-    // 4. INITIALIZATION & CONTROLS
-    // =========================================================================
-    // 3. REALISTIC MILITARY ATTACK HELICOPTER & CARGO DROP ENGINE
+    // 4. MULTI-HELICOPTER FORMATION AIR-DROP & CARGO ENGINE
     // =========================================================================
     function createSelectionFrame(el) {
       const frame = document.createElement('div');
@@ -1425,16 +1348,17 @@
     }
 
     class TacticalHelicopterDrop {
-      constructor(canvas) {
+      constructor(canvas, audioEngine) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
+        this.audio = audioEngine;
         this.width = window.innerWidth;
         this.height = window.innerHeight;
-        this.mode = 'INBOUND'; // 'INBOUND' | 'DEPLOY' | 'PATROL'
+        this.mode = 'FORMATION_DROP'; // 'FORMATION_DROP' | 'ESCORT'
         this.builtSet = new WeakSet();
+        this.choppers = [];
         this.drops = [];
         this.particles = [];
-        this.rotorPhase = 0;
         this.lastExhaustTime = 0;
 
         this.pointer = {
@@ -1445,18 +1369,6 @@
           down: false,
         };
 
-        this.heli = {
-          x: -240,
-          y: 120,
-          vx: 0,
-          vy: 0,
-          targetX: this.width * 0.5,
-          targetY: 120,
-          pitch: 0.08,
-          facing: 1,
-          spotlightAlpha: 0.9,
-        };
-
         this.resize();
         window.addEventListener('resize', () => this.resize());
         window.addEventListener('scroll', () => this.revealVisibleNodes(), { passive: true });
@@ -1464,7 +1376,8 @@
       }
 
       bindPointerEvents() {
-        const updatePointer = (x, y) => {
+        const unlockAndMove = (x, y) => {
+          this.audio?.init();
           this.pointer.x = x;
           this.pointer.y = y;
           this.pointer.active = true;
@@ -1472,14 +1385,17 @@
         };
 
         window.addEventListener('mousemove', (e) => {
-          updatePointer(e.clientX, e.clientY);
+          unlockAndMove(e.clientX, e.clientY);
         }, { passive: true });
 
         window.addEventListener('mousedown', (e) => {
-          updatePointer(e.clientX, e.clientY);
+          unlockAndMove(e.clientX, e.clientY);
           this.pointer.down = true;
-          // Fire defensive IR flare burst from helicopter on click
-          this.spawnFlareBurst(this.heli.x - this.heli.facing * 28, this.heli.y + 14);
+          const lead = this.choppers[0];
+          if (lead) {
+            this.spawnFlareBurst(lead.x - lead.facing * 28, lead.y + 14);
+            this.audio?.playFlarePop();
+          }
         }, { passive: true });
 
         window.addEventListener('mouseup', () => {
@@ -1489,14 +1405,14 @@
         window.addEventListener('touchstart', (e) => {
           const t = e.touches[0];
           if (t) {
-            updatePointer(t.clientX, t.clientY);
+            unlockAndMove(t.clientX, t.clientY);
             this.pointer.down = true;
           }
         }, { passive: true });
 
         window.addEventListener('touchmove', (e) => {
           const t = e.touches[0];
-          if (t) updatePointer(t.clientX, t.clientY);
+          if (t) unlockAndMove(t.clientX, t.clientY);
         }, { passive: true });
 
         window.addEventListener('touchend', () => {
@@ -1513,18 +1429,42 @@
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
+      createChopper({ id, callsign, role, startX, startY, altitudeY, speedX, payloadKeys, accentColor, isEscort = false }) {
+        return {
+          id,
+          callsign,
+          role,
+          x: startX,
+          y: startY,
+          vx: speedX,
+          vy: 0,
+          cruiseSpeedX: speedX,
+          altitudeY,
+          pitch: 0.1,
+          facing: 1,
+          rotorPhase: Math.random() * Math.PI * 2,
+          scale: isEscort ? 0.94 : 0.86,
+          payloadKeys: [...payloadKeys],
+          droppedKeys: new Set(),
+          accentColor,
+          isEscort,
+          exited: false,
+        };
+      }
+
       runSequence() {
         const overlay = document.getElementById('openingBuildOverlay');
         const statusLabel = document.getElementById('buildStatusLabel');
         const topLiveStatus = document.getElementById('topLiveStatus');
         const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
 
-        if (statusLabel) statusLabel.textContent = 'Attack Chopper Inbound...';
-        if (topLiveStatus) topLiveStatus.textContent = 'INBOUND';
+        if (statusLabel) statusLabel.textContent = 'Squadron Incoming — Line Formation...';
+        if (topLiveStatus) topLiveStatus.textContent = 'AIR-DROP';
 
         this.builtSet = new WeakSet();
         this.drops = [];
         this.particles = [];
+        this.mode = 'FORMATION_DROP';
 
         nodes.forEach((node) => {
           node.classList.remove('node-constructing', 'node-snapped', 'node-ready');
@@ -1532,57 +1472,62 @@
           node.querySelectorAll('.figma-frame-box').forEach((f) => f.remove());
         });
 
-        this.mode = 'INBOUND';
-        this.heli.x = -260;
-        this.heli.y = Math.min(140, this.height * 0.18);
-        this.heli.targetX = this.width * 0.62;
-        this.heli.targetY = Math.min(130, this.height * 0.16);
-        this.heli.facing = 1;
-        this.heli.spotlightAlpha = 1;
+        // 5 distinct helicopters enter one-by-one in line formation, each carrying its own unique payload
+        const formationPlan = [
+          {
+            id: 1,
+            callsign: 'ALPHA-01',
+            role: 'PHOTO DROP',
+            accentColor: '#EF4444',
+            altitudeY: Math.min(115, this.height * 0.14),
+            payloadKeys: ['hero-portrait', 'nav-logo'],
+            isEscort: true, // Stays on station after formation pass to escort cursor
+          },
+          {
+            id: 2,
+            callsign: 'BRAVO-02',
+            role: 'IDENTITY',
+            accentColor: '#38BDF8',
+            altitudeY: Math.min(155, this.height * 0.19),
+            payloadKeys: ['hero-greeting', 'hero-status-line'],
+          },
+          {
+            id: 3,
+            callsign: 'CHARLIE-03',
+            role: 'BANNER',
+            accentColor: '#EF4444',
+            altitudeY: Math.min(92, this.height * 0.11),
+            payloadKeys: ['hero-portfolio-word', 'nav-links'],
+          },
+          {
+            id: 4,
+            callsign: 'DELTA-04',
+            role: 'INTEL BIO',
+            accentColor: '#34D399',
+            altitudeY: Math.min(188, this.height * 0.23),
+            payloadKeys: ['hero-summary', 'hero-ai-jarvis'],
+          },
+          {
+            id: 5,
+            callsign: 'ECHO-05',
+            role: 'SYSTEMS',
+            accentColor: '#FACC15',
+            altitudeY: Math.min(138, this.height * 0.17),
+            payloadKeys: ['hero-actions', 'hero-metrics', 'hero-ai-dilawar'],
+          },
+        ];
+
+        const baseSpeed = Math.max(4.6, Math.min(7.2, this.width / 230));
+        this.choppers = formationPlan.map((cfg, idx) =>
+          this.createChopper({
+            ...cfg,
+            startX: -180 - idx * 270, // Staggered one-by-one line entry
+            startY: cfg.altitudeY - 22,
+            speedX: baseSpeed,
+          })
+        );
 
         if (overlay) overlay.style.opacity = '1';
-
-        setTimeout(() => {
-          if (statusLabel) statusLabel.textContent = 'Dropping Portrait & Intel...';
-          if (topLiveStatus) topLiveStatus.textContent = 'DROPPING';
-          this.mode = 'DEPLOY';
-
-          // Prioritize hero portrait & title first so the chopper visibly drops your photo & name
-          const priorityOrder = [
-            'nav-logo',
-            'nav-links',
-            'hero-portfolio-word',
-            'hero-portrait',
-            'hero-greeting',
-            'hero-status-line',
-            'hero-summary',
-            'hero-actions',
-            'hero-metrics',
-            'hero-ai-jarvis',
-            'hero-ai-dilawar',
-          ];
-
-          const ordered = [];
-          priorityOrder.forEach((key) => {
-            const el = nodes.find((n) => n.dataset.buildNode === key);
-            if (el) ordered.push(el);
-          });
-          nodes.forEach((n) => {
-            if (!ordered.includes(n)) ordered.push(n);
-          });
-
-          ordered.forEach((el, idx) => {
-            this.deployNode(el, idx * 210);
-          });
-
-          setTimeout(() => {
-            this.mode = 'PATROL';
-            if (statusLabel) statusLabel.textContent = 'Sector Secured';
-            if (topLiveStatus) topLiveStatus.textContent = 'ONLINE';
-            if (overlay) overlay.style.opacity = '0';
-            this.revealVisibleNodes();
-          }, 2700);
-        }, 850);
       }
 
       spawnSmokeAndSparks(x, y, count = 14) {
@@ -1604,18 +1549,18 @@
         }
       }
 
-      spawnExhaustPlume() {
-        const exhaustX = this.heli.x - this.heli.facing * 26;
-        const exhaustY = this.heli.y - 6;
+      spawnExhaustPlume(chopper) {
+        const exhaustX = chopper.x - chopper.facing * 24 * chopper.scale;
+        const exhaustY = chopper.y - 5 * chopper.scale;
         this.particles.push({
           x: exhaustX + (Math.random() - 0.5) * 4,
           y: exhaustY + (Math.random() - 0.5) * 3,
-          vx: -this.heli.facing * (1.4 + Math.random() * 1.2) + this.heli.vx * 0.2,
-          vy: (Math.random() - 0.5) * 0.45 - 0.15,
-          size: 4 + Math.random() * 4,
-          alpha: 0.22,
+          vx: -chopper.facing * (1.5 + Math.random() * 1.1) + chopper.vx * 0.2,
+          vy: (Math.random() - 0.5) * 0.4 - 0.15,
+          size: 3.5 + Math.random() * 3.5,
+          alpha: 0.2,
           life: 0,
-          maxLife: 24 + Math.random() * 12,
+          maxLife: 22 + Math.random() * 10,
           type: 'exhaust',
         });
       }
@@ -1626,7 +1571,7 @@
           this.particles.push({
             x,
             y,
-            vx: -this.heli.facing * (2.2 + Math.random() * 1.8) + Math.sin(spread) * 1.5,
+            vx: (Math.random() - 0.5) * 3.5 + Math.sin(spread) * 1.5,
             vy: 1.8 + Math.random() * 2.1,
             size: 3.2,
             alpha: 1,
@@ -1637,111 +1582,210 @@
         }
       }
 
-      deployNode(el, delayMs = 0) {
+      releasePayloadFromChopper(chopper, el) {
         if (!el || this.builtSet.has(el)) return;
         this.builtSet.add(el);
 
-        setTimeout(() => {
-          const rect = el.getBoundingClientRect();
-          if (rect.bottom < -40 || rect.top > this.height + 100) {
-            el.classList.remove('node-hidden', 'node-constructing');
-            el.classList.add('node-ready');
-            return;
-          }
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -40 || rect.top > this.height + 100) {
+          el.classList.remove('node-hidden', 'node-constructing');
+          el.classList.add('node-ready');
+          return;
+        }
 
-          const targetCenterX = rect.left + rect.width * 0.5;
-          const targetCenterY = rect.top + rect.height * 0.5;
+        const targetCenterX = rect.left + rect.width * 0.5;
+        const targetCenterY = rect.top + rect.height * 0.5;
+        const isPortrait = el.dataset.buildNode === 'hero-portrait';
 
-          // Steer helicopter above this element to release the tactical crate
-          this.heli.targetX = Math.max(130, Math.min(this.width - 130, targetCenterX));
-          this.heli.targetY = Math.max(78, Math.min(this.height * 0.36, rect.top - 75));
+        el.classList.remove('node-hidden');
+        el.classList.add('node-constructing');
 
-          el.classList.remove('node-hidden');
-          el.classList.add('node-constructing');
+        const frame = createSelectionFrame(el);
+        el.appendChild(frame);
 
-          const frame = createSelectionFrame(el);
-          el.appendChild(frame);
+        this.audio?.playDropRelease();
 
-          this.drops.push({
-            el,
-            frame,
-            startX: this.heli.x,
-            startY: this.heli.y + 18,
-            targetX: targetCenterX,
-            targetY: targetCenterY,
-            width: Math.min(110, Math.max(46, rect.width * 0.38)),
-            height: Math.min(54, Math.max(24, rect.height * 0.28)),
-            isPortrait: el.dataset.buildNode === 'hero-portrait',
-            start: performance.now(),
-            duration: 540,
-          });
-        }, delayMs);
+        const statusLabel = document.getElementById('buildStatusLabel');
+        if (statusLabel) {
+          statusLabel.textContent = `${chopper.callsign} Dropped ${el.dataset.nodeTitle || 'Payload'}`;
+        }
+
+        this.drops.push({
+          el,
+          frame,
+          callsign: chopper.callsign,
+          label: isPortrait ? 'IMG_5291.PNG' : (el.dataset.nodeTitle || 'INTEL DROP'),
+          startX: chopper.x,
+          startY: chopper.y + 16,
+          targetX: targetCenterX,
+          targetY: targetCenterY,
+          width: Math.min(118, Math.max(52, rect.width * 0.36)),
+          height: Math.min(54, Math.max(24, rect.height * 0.26)),
+          isPortrait,
+          start: performance.now(),
+          duration: isPortrait ? 780 : 620,
+        });
       }
 
       revealVisibleNodes() {
         const nodes = Array.from(document.querySelectorAll('[data-build-node]'));
+        const escort = this.choppers[0];
         nodes.forEach((el, idx) => {
           if (this.builtSet.has(el)) return;
           const r = el.getBoundingClientRect();
           if (r.top < this.height * 0.92 && r.bottom > 0) {
-            this.deployNode(el, (idx % 3) * 140);
+            setTimeout(() => {
+              if (this.builtSet.has(el)) return;
+              if (escort && !escort.exited) {
+                this.releasePayloadFromChopper(escort, el);
+              } else {
+                this.builtSet.add(el);
+                el.classList.remove('node-hidden', 'node-constructing');
+                el.classList.add('node-ready');
+              }
+            }, (idx % 3) * 140);
           }
         });
       }
 
       update(now) {
-        this.rotorPhase += 0.64;
+        const spawnExhaust = now - this.lastExhaustTime > 55;
+        if (spawnExhaust) this.lastExhaustTime = now;
 
-        if (now - this.lastExhaustTime > 45) {
-          this.spawnExhaustPlume();
-          this.lastExhaustTime = now;
-        }
+        // Every formation helicopter has dropped all of its assigned info payloads and no crates are still in flight
+        const formationDropsComplete =
+          this.mode === 'FORMATION_DROP' &&
+          this.choppers.every((c) => c.payloadKeys.every((k) => c.droppedKeys.has(k))) &&
+          this.drops.length === 0;
 
-        const cursorRecent = this.pointer.active && (now - this.pointer.lastMove < 4500);
+        let activeCount = 0;
+        let speedSum = 0;
 
-        // Helicopter flight kinematics: follows cursor after deployment or during patrol
-        if (this.mode === 'PATROL' && this.drops.length === 0) {
-          if (cursorRecent) {
-            // Escort position: hovers smoothly above & slightly offset from user's cursor
-            const hoverOffsetY = -88 + Math.sin(now * 0.004) * 6;
-            const hoverOffsetX = Math.cos(now * 0.0025) * 26;
-            this.heli.targetX = Math.max(120, Math.min(this.width - 120, this.pointer.x + hoverOffsetX));
-            this.heli.targetY = Math.max(66, Math.min(this.height - 90, this.pointer.y + hoverOffsetY));
-          } else {
-            const t = now * 0.00055;
-            this.heli.targetX = this.width * 0.5 + Math.cos(t) * (this.width * 0.36);
-            this.heli.targetY = 86 + Math.sin(t * 2) * 14;
+        // Update each helicopter in the one-by-one formation
+        this.choppers.forEach((c) => {
+          c.rotorPhase += 0.66;
+          if (c.exited) return;
+
+          activeCount++;
+          if (spawnExhaust && c.x > -140 && c.x < this.width + 140) {
+            this.spawnExhaustPlume(c);
           }
-        }
 
-        const dx = this.heli.targetX - this.heli.x;
-        const dy = this.heli.targetY - this.heli.y;
-        const ease = this.mode === 'INBOUND' ? 0.075 : (cursorRecent && this.mode === 'PATROL' ? 0.085 : 0.095);
+          if (this.mode === 'FORMATION_DROP') {
+            const finishedOwnDrops =
+              c.payloadKeys.every((k) => c.droppedKeys.has(k)) &&
+              !this.drops.some((d) => d.callsign === c.callsign);
 
-        this.heli.vx = dx * ease;
-        this.heli.vy = dy * ease;
-        this.heli.x += this.heli.vx;
-        this.heli.y += this.heli.vy;
+            if (formationDropsComplete && c.isEscort) {
+              // Switch ALPHA-01 right into cursor-following escort mode once all drops complete
+              this.mode = 'ESCORT';
+              const overlay = document.getElementById('openingBuildOverlay');
+              const topLiveStatus = document.getElementById('topLiveStatus');
+              if (overlay) overlay.style.opacity = '0';
+              if (topLiveStatus) topLiveStatus.textContent = 'ESCORT';
+              this.revealVisibleNodes();
+            } else if (!c.isEscort && (finishedOwnDrops || formationDropsComplete)) {
+              // Leave off-screen immediately once this helicopter finishes dropping its info
+              c.vx = Math.max(c.cruiseSpeedX * 1.9, 13);
+              c.x += c.vx;
+              c.vy = (-36 - c.y) * 0.1;
+              c.y += c.vy;
+              c.facing = 1;
+              c.pitch = -0.1;
+              if (c.x > this.width + 180) {
+                c.exited = true;
+              }
+            } else {
+              // Fly horizontally in formation across the sky
+              c.vx = c.cruiseSpeedX;
+              c.x += c.vx;
+              const bob = Math.sin(now * 0.004 + c.id * 1.4) * 5;
+              c.vy = (c.altitudeY + bob - c.y) * 0.08;
+              c.y += c.vy;
+              c.facing = 1;
+              c.pitch = 0.11;
 
-        if (cursorRecent && this.mode === 'PATROL' && Math.abs(this.pointer.x - this.heli.x) > 18) {
-          this.heli.facing = this.pointer.x >= this.heli.x ? 1 : -1;
-        } else if (Math.abs(this.heli.vx) > 0.6) {
-          this.heli.facing = this.heli.vx >= 0 ? 1 : -1;
-        }
-        const targetPitch = Math.max(-0.24, Math.min(0.24, this.heli.vx * 0.013));
-        this.heli.pitch += (targetPitch - this.heli.pitch) * 0.14;
+              // Check if chopper is passing over any of its assigned drop targets
+              c.payloadKeys.forEach((key) => {
+                if (c.droppedKeys.has(key)) return;
+                const el = document.querySelector(`[data-build-node="${key}"]`);
+                if (!el) {
+                  c.droppedKeys.add(key);
+                  return;
+                }
+                const rect = el.getBoundingClientRect();
+                const targetX = rect.left + rect.width * 0.5;
+                // Release slightly ahead of target center so forward momentum carries crate onto target
+                const releaseX = Math.max(90, Math.min(this.width - 90, targetX - 35));
+                if (c.x >= releaseX) {
+                  c.droppedKeys.add(key);
+                  this.releasePayloadFromChopper(c, el);
+                }
+              });
 
-        // Update active parachute cargo drops
+              // Once past right edge of viewport: non-escort choppers exit; ALPHA-01 transitions to cursor escort
+              if (c.x > this.width + 220) {
+                if (c.isEscort) {
+                  this.mode = 'ESCORT';
+                  c.x = this.width + 160;
+                  c.facing = -1;
+                  const overlay = document.getElementById('openingBuildOverlay');
+                  const topLiveStatus = document.getElementById('topLiveStatus');
+                  if (overlay) overlay.style.opacity = '0';
+                  if (topLiveStatus) topLiveStatus.textContent = 'ESCORT';
+                  this.revealVisibleNodes();
+                } else {
+                  c.exited = true;
+                }
+              }
+            }
+          } else if (this.mode === 'ESCORT' && c.isEscort) {
+            const cursorRecent = this.pointer.active && (now - this.pointer.lastMove < 4500);
+            let targetX;
+            let targetY;
+            if (cursorRecent) {
+              targetX = Math.max(120, Math.min(this.width - 120, this.pointer.x + Math.cos(now * 0.0025) * 26));
+              targetY = Math.max(66, Math.min(this.height - 90, this.pointer.y - 88 + Math.sin(now * 0.004) * 6));
+            } else {
+              const t = now * 0.00055;
+              targetX = this.width * 0.5 + Math.cos(t) * (this.width * 0.36);
+              targetY = 86 + Math.sin(t * 2) * 14;
+            }
+
+            c.vx = (targetX - c.x) * 0.085;
+            c.vy = (targetY - c.y) * 0.085;
+            c.x += c.vx;
+            c.y += c.vy;
+
+            if (cursorRecent && Math.abs(this.pointer.x - c.x) > 18) {
+              c.facing = this.pointer.x >= c.x ? 1 : -1;
+            } else if (Math.abs(c.vx) > 0.6) {
+              c.facing = c.vx >= 0 ? 1 : -1;
+            }
+            const targetPitch = Math.max(-0.22, Math.min(0.22, c.vx * 0.013));
+            c.pitch += (targetPitch - c.pitch) * 0.14;
+          }
+
+          speedSum += Math.hypot(c.vx, c.vy);
+        });
+
+        const avgSpeed = activeCount > 0 ? speedSum / activeCount : 0;
+        this.audio?.updateFlightAudio(activeCount, avgSpeed, this.mode === 'FORMATION_DROP');
+
+        // Update falling parachute crates
         for (let i = this.drops.length - 1; i >= 0; i--) {
           const d = this.drops[i];
           const progress = Math.max(0, Math.min(1, (now - d.start) / d.duration));
           d.progress = progress;
-          const easeDrop = progress * progress * (3 - 2 * progress);
-          d.curX = d.startX + (d.targetX - d.startX) * easeDrop;
-          d.curY = d.startY + (d.targetY - d.startY) * easeDrop;
+          // Realistic parabolic horizontal drift + parachute deceleration curve
+          const easeX = 1 - Math.pow(1 - progress, 2);
+          const easeY = progress * progress * (3 - 2 * progress);
+          d.curX = d.startX + (d.targetX - d.startX) * easeX;
+          d.curY = d.startY + (d.targetY - d.startY) * easeY;
 
           if (progress >= 1) {
-            this.spawnSmokeAndSparks(d.targetX, d.targetY, d.isPortrait ? 24 : 12);
+            this.spawnSmokeAndSparks(d.targetX, d.targetY, d.isPortrait ? 26 : 12);
+            this.audio?.playCargoImpact(d.isPortrait);
             if (d.isPortrait) {
               triggerPortraitScan();
             }
@@ -1763,7 +1807,7 @@
           }
         }
 
-        // Update impact dust, turbine exhaust & IR flares
+        // Update dust clouds, turbine exhaust & IR flares
         for (let i = this.particles.length - 1; i >= 0; i--) {
           const p = this.particles[i];
           p.life++;
@@ -1774,7 +1818,6 @@
           } else if (p.type === 'flare') {
             p.vy += 0.09;
             p.vx *= 0.98;
-            // Trail smoke behind flare
             if (p.life % 3 === 0) {
               this.particles.push({
                 x: p.x,
@@ -1798,56 +1841,61 @@
         }
       }
 
-      drawHelicopter() {
+      drawSingleHelicopter(chopper) {
+        if (chopper.exited) return;
         const ctx = this.ctx;
-        const { x, y, pitch, facing } = this.heli;
-        const isPatrol = this.mode === 'PATROL' && this.drops.length === 0;
-        const cursorActive = this.pointer.active && isPatrol;
+        const { x, y, pitch, facing, scale, rotorPhase, callsign, role, accentColor, isEscort } = chopper;
+        const cursorActive = this.pointer.active && this.mode === 'ESCORT' && isEscort;
 
         ctx.save();
         ctx.translate(x, y);
 
-        // Dynamic tactical searchlight tracking the user's cursor (or sweeping ground)
-        const noseX = facing * 42;
-        const noseY = 16;
-        const aimX = cursorActive ? (this.pointer.x - x) : facing * 55;
-        const aimY = cursorActive ? Math.max(60, this.pointer.y - y) : 250;
+        // Tactical callsign transponder tag above each helicopter in the line
+        ctx.font = '700 8px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = accentColor;
+        ctx.fillText(`${callsign} // ${role}`, 0, -34 * scale);
+
+        // Searchlight cone
+        const noseX = facing * 42 * scale;
+        const noseY = 16 * scale;
+        const aimX = cursorActive ? (this.pointer.x - x) : facing * 52 * scale;
+        const aimY = cursorActive ? Math.max(60, this.pointer.y - y) : 220 * scale;
 
         const beamGrad = ctx.createLinearGradient(noseX, noseY, aimX, aimY);
-        beamGrad.addColorStop(0, isPatrol ? 'rgba(56, 189, 248, 0.24)' : 'rgba(239, 68, 68, 0.26)');
+        beamGrad.addColorStop(0, cursorActive ? 'rgba(56, 189, 248, 0.22)' : 'rgba(239, 68, 68, 0.2)');
         beamGrad.addColorStop(1, 'rgba(7, 7, 8, 0)');
         ctx.fillStyle = beamGrad;
         ctx.beginPath();
         ctx.moveTo(noseX, noseY);
-        ctx.lineTo(aimX + 58, aimY);
-        ctx.lineTo(aimX - 58, aimY);
+        ctx.lineTo(aimX + 48 * scale, aimY);
+        ctx.lineTo(aimX - 48 * scale, aimY);
         ctx.closePath();
         ctx.fill();
 
-        // Subtle laser target designator line from chin turret to cursor
         if (cursorActive) {
           ctx.strokeStyle = this.pointer.down ? 'rgba(239, 68, 68, 0.75)' : 'rgba(56, 189, 248, 0.32)';
           ctx.lineWidth = this.pointer.down ? 1.5 : 1;
           ctx.setLineDash([4, 4]);
           ctx.beginPath();
-          ctx.moveTo(facing * 64, 18);
+          ctx.moveTo(facing * 64 * scale, 18 * scale);
           ctx.lineTo(this.pointer.x - x, this.pointer.y - y);
           ctx.stroke();
           ctx.setLineDash([]);
         }
 
-        ctx.scale(facing, 1);
+        ctx.scale(facing * scale, scale);
         ctx.rotate(pitch);
 
-        // Rotor downwash air-pressure rings beneath helicopter
-        const washPulse = (this.rotorPhase * 0.12) % 1;
+        // Rotor downwash air-pressure ring
+        const washPulse = (rotorPhase * 0.12) % 1;
         ctx.strokeStyle = `rgba(148, 163, 184, ${(1 - washPulse) * 0.16})`;
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.ellipse(0, 38 + washPulse * 28, 65 + washPulse * 45, 7 + washPulse * 5, 0, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Landing skids & struts
+        // Landing skids
         ctx.strokeStyle = '#334155';
         ctx.lineWidth = 2.6;
         ctx.beginPath();
@@ -1860,7 +1908,7 @@
         ctx.quadraticCurveTo(52, 28, 55, 23);
         ctx.stroke();
 
-        // Tail boom & vertical stabilizer fin
+        // Tail boom & stabilizer
         const tailGrad = ctx.createLinearGradient(-115, -14, -20, 8);
         tailGrad.addColorStop(0, '#1E242B');
         tailGrad.addColorStop(1, '#333D47');
@@ -1881,7 +1929,7 @@
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Tail rotor disc & spinning blades
+        // Tail rotor
         ctx.save();
         ctx.translate(-112, -12);
         ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
@@ -1889,7 +1937,7 @@
         ctx.beginPath();
         ctx.arc(0, 0, 13, 0, Math.PI * 2);
         ctx.stroke();
-        ctx.rotate(this.rotorPhase * 1.7);
+        ctx.rotate(rotorPhase * 1.7);
         ctx.strokeStyle = '#E2E8F0';
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -1900,7 +1948,7 @@
         ctx.stroke();
         ctx.restore();
 
-        // Armored attack fuselage body (stealth gunmetal + tactical slate shading)
+        // Armored fuselage
         const hullGrad = ctx.createLinearGradient(0, -22, 0, 20);
         hullGrad.addColorStop(0, '#475569');
         hullGrad.addColorStop(0.45, '#27303A');
@@ -1920,7 +1968,7 @@
         ctx.lineWidth = 1.2;
         ctx.stroke();
 
-        // Turbine engine intake nacelle & glowing exhaust nozzle
+        // Turboshaft nacelle & exhaust
         ctx.fillStyle = '#1E293B';
         ctx.beginPath();
         ctx.roundRect(-24, -15, 34, 9, 3);
@@ -1931,7 +1979,7 @@
         ctx.fillStyle = 'rgba(251, 146, 60, 0.65)';
         ctx.fillRect(-26, -13, 3, 5);
 
-        // Stub wing & rocket pod / AGM hardpoint
+        // Stub wing & rocket pod
         ctx.fillStyle = '#1E293B';
         ctx.beginPath();
         ctx.moveTo(-10, 2);
@@ -1941,13 +1989,12 @@
         ctx.closePath();
         ctx.fill();
 
-        // Tactical rocket pod under stub wing
         ctx.fillStyle = '#334155';
         ctx.fillRect(-6, 9, 22, 7);
-        ctx.fillStyle = '#EF4444';
+        ctx.fillStyle = accentColor;
         ctx.fillRect(14, 10, 3, 5);
 
-        // Tandem armored cockpit canopy with reflective cyan/amber HUD glass
+        // Armored cockpit canopy
         const glassGrad = ctx.createLinearGradient(14, -14, 52, 2);
         glassGrad.addColorStop(0, '#0F172A');
         glassGrad.addColorStop(0.5, '#1E3A5F');
@@ -1965,7 +2012,7 @@
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Nose FLIR electro-optical sensor ball & chin M230 chain gun turret
+        // Nose FLIR turret & chain gun
         ctx.fillStyle = '#0F172A';
         ctx.beginPath();
         ctx.arc(62, 7, 5, 0, Math.PI * 2);
@@ -1984,13 +2031,13 @@
         ctx.lineTo(74, 18);
         ctx.stroke();
 
-        // Crimson military insignia stripe & blinking anti-collision strobe
-        ctx.fillStyle = '#EF4444';
+        // Squadron insignia stripe & strobe
+        ctx.fillStyle = accentColor;
         ctx.fillRect(-38, -2, 16, 3);
-        const strobeOn = Math.sin(this.rotorPhase * 0.25) > 0;
+        const strobeOn = Math.sin(rotorPhase * 0.25) > 0;
         if (strobeOn) {
-          ctx.fillStyle = '#EF4444';
-          ctx.shadowColor = '#EF4444';
+          ctx.fillStyle = accentColor;
+          ctx.shadowColor = accentColor;
           ctx.shadowBlur = 12;
           ctx.beginPath();
           ctx.arc(-112, -23, 2.8, 0, Math.PI * 2);
@@ -1998,11 +2045,11 @@
           ctx.shadowBlur = 0;
         }
 
-        // Main rotor mast & high-speed blurred composite rotor blades
+        // Main rotor mast & spinning blades
         ctx.fillStyle = '#64748B';
         ctx.fillRect(-2, -26, 8, 9);
 
-        const bladeSpan = 126 * Math.abs(Math.cos(this.rotorPhase));
+        const bladeSpan = 126 * Math.abs(Math.cos(rotorPhase));
         const rotorGrad = ctx.createLinearGradient(-128, -26, 132, -26);
         rotorGrad.addColorStop(0, 'rgba(148, 163, 184, 0.12)');
         rotorGrad.addColorStop(0.5, 'rgba(226, 232, 240, 0.85)');
@@ -2015,7 +2062,6 @@
         ctx.lineTo(2 + bladeSpan, -26);
         ctx.stroke();
 
-        // Subtle rotor wash ellipse
         ctx.strokeStyle = 'rgba(226, 232, 240, 0.16)';
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -2031,12 +2077,11 @@
         const { x, y, down } = this.pointer;
         const accent = down ? '#EF4444' : '#38BDF8';
         const ringRadius = down ? 13 : 18;
-        const spin = this.rotorPhase * 0.04;
+        const spin = performance.now() * 0.0025;
 
         ctx.save();
         ctx.translate(x, y);
 
-        // Outer rotating tactical target brackets
         ctx.save();
         ctx.rotate(spin);
         ctx.strokeStyle = accent;
@@ -2049,7 +2094,6 @@
         }
         ctx.restore();
 
-        // Inner crosshair ticks
         ctx.strokeStyle = 'rgba(244, 244, 246, 0.85)';
         ctx.lineWidth = 1.2;
         ctx.beginPath();
@@ -2063,18 +2107,17 @@
         ctx.lineTo(0, 7);
         ctx.stroke();
 
-        // Center precision laser dot
         ctx.fillStyle = '#EF4444';
         ctx.beginPath();
         ctx.arc(0, 0, 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Live coordinates & callsign HUD readout
         ctx.font = '700 8px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
         ctx.fillStyle = accent;
         ctx.fillText(`LOCK ${Math.round(x)}:${Math.round(y)}`, 22, -6);
         ctx.fillStyle = 'rgba(226, 232, 240, 0.65)';
-        ctx.fillText(down ? 'FLARE DISPENSED' : 'ESCORT // CHOPPER-01', 22, 4);
+        ctx.fillText(down ? 'FLARE DISPENSED' : 'ESCORT // ALPHA-01', 22, 4);
 
         ctx.restore();
       }
@@ -2082,30 +2125,27 @@
       drawDropsAndParticles() {
         const ctx = this.ctx;
 
-        // Draw falling air-drop containers & mini-parachutes
         this.drops.forEach((d) => {
           ctx.save();
           ctx.translate(d.curX, d.curY);
 
-          // Deployment parachute canopy above crate
-          if (d.progress < 0.85) {
-            ctx.strokeStyle = 'rgba(226, 232, 240, 0.45)';
+          if (d.progress < 0.86) {
+            ctx.strokeStyle = 'rgba(226, 232, 240, 0.5)';
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(-14, -24);
+            ctx.moveTo(-16, -26);
             ctx.lineTo(-d.width * 0.35, -d.height * 0.5);
-            ctx.moveTo(14, -24);
+            ctx.moveTo(16, -26);
             ctx.lineTo(d.width * 0.35, -d.height * 0.5);
             ctx.stroke();
 
-            ctx.fillStyle = d.isPortrait ? 'rgba(239, 68, 68, 0.75)' : 'rgba(56, 189, 248, 0.65)';
+            ctx.fillStyle = d.isPortrait ? 'rgba(239, 68, 68, 0.8)' : 'rgba(56, 189, 248, 0.7)';
             ctx.beginPath();
-            ctx.arc(0, -24, 15, Math.PI, 0);
+            ctx.arc(0, -26, 17, Math.PI, 0);
             ctx.closePath();
             ctx.fill();
           }
 
-          // Tactical supply crate
           ctx.fillStyle = '#0E0F12';
           ctx.strokeStyle = d.isPortrait ? '#EF4444' : '#38BDF8';
           ctx.lineWidth = 1.6;
@@ -2115,14 +2155,13 @@
           ctx.stroke();
 
           ctx.fillStyle = d.isPortrait ? '#EF4444' : '#38BDF8';
-          ctx.font = '700 8px "JetBrains Mono", monospace';
+          ctx.font = '700 7.5px "JetBrains Mono", monospace';
           ctx.textAlign = 'center';
-          ctx.fillText(d.isPortrait ? 'IMG_5291.PNG' : 'INTEL DROP', 0, 3);
+          ctx.fillText(d.label.slice(0, 18), 0, 3);
 
           ctx.restore();
         });
 
-        // Draw touchdown dust clouds, turbine exhaust & glowing IR flares
         this.particles.forEach((p) => {
           const alpha = (1 - p.life / p.maxLife) * p.alpha;
           ctx.save();
@@ -2151,7 +2190,7 @@
       draw() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.drawDropsAndParticles();
-        this.drawHelicopter();
+        this.choppers.forEach((c) => this.drawSingleHelicopter(c));
         this.drawCustomTacticalCursor();
       }
 
@@ -2163,9 +2202,10 @@
     }
 
     // =========================================================================
-    // 4. INITIALIZATION & CONTROLS
+    // 5. INITIALIZATION & CONTROLS
     // =========================================================================
     let builderEngine = null;
+    let audioEngine = null;
 
     window.addEventListener('DOMContentLoaded', () => {
       const mobileBtn = document.getElementById('mobileNavToggle');
@@ -2181,18 +2221,36 @@
         });
       });
 
+      audioEngine = new TacticalAudioEngine();
+      // Attempt immediate init; browsers that require interaction will unlock on first pointer/click event
+      audioEngine.init();
+
+      const audioToggleBtn = document.getElementById('audioToggleBtn');
+      const audioToggleIcon = document.getElementById('audioToggleIcon');
+      const audioToggleLabel = document.getElementById('audioToggleLabel');
+
+      audioToggleBtn?.addEventListener('click', () => {
+        audioEngine.init();
+        const nextMuted = !audioEngine.muted;
+        audioEngine.setMuted(nextMuted);
+        if (audioToggleIcon) audioToggleIcon.textContent = nextMuted ? '🔇' : '🔊';
+        if (audioToggleLabel) audioToggleLabel.textContent = nextMuted ? 'SFX OFF' : 'SFX ON';
+        showToast(nextMuted ? 'Helicopter audio muted' : 'Helicopter audio enabled');
+      });
+
       const canvas = document.getElementById('cursorSwarmCanvas');
       if (canvas) {
-        builderEngine = new TacticalHelicopterDrop(canvas);
+        builderEngine = new TacticalHelicopterDrop(canvas, audioEngine);
         builderEngine.runSequence();
         requestAnimationFrame((t) => builderEngine.loop(t));
       }
 
       document.getElementById('replayBuildBtn')?.addEventListener('click', () => {
+        audioEngine?.init();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => {
           builderEngine?.runSequence();
-          showToast('Replaying tactical helicopter air-drop');
+          showToast('Squadron formation air-drop inbound');
         }, 180);
       });
     });
